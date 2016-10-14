@@ -41,6 +41,8 @@
     "njwt": "^0.3.1",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
+    "react": "^15.3.2",
+    "react-router": "^2.8.1",
     "supertest": "^2.0.0"
   },
   "devDependencies": {
