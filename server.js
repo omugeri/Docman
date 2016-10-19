@@ -5,18 +5,23 @@ const mongoose = require('mongoose');
 const router = require('./server/routes');
 const passport = require('passport');
 const webpack = require('webpack');
-require('dotenv').load();
-
-const app = express();
-const isDeveloping = process.env.NODE_ENV !== 'production';
-const port = process.env.PORT || 8080;
-
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 // It serves the files emitted from webpack over a connect server
 const webpackMiddleware = require('webpack-dev-middleware');
 const config = require('./webpack.config.js');
+const injectTapEventPlugin = require('react-tap-event-plugin');
+
+require('dotenv').load();
+injectTapEventPlugin();
+
+
+const app = express();
+const isDeveloping = process.env.NODE_ENV !== 'production';
+const port = process.env.PORT || 8080;
+
+
 
 if (isDeveloping) {
   const compiler = webpack(config);
