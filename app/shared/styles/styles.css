@@ -1,9 +1,9 @@
-#main-landing {
+#main {
    position: relative;
-   background-image: url("../images/landing_page.png");
+   background-image: url("../images/book_bg.jpg");
 }
 
-#color-overlay {
+#overlay {
    position: absolute;
    top: 0;
    left: 0;
