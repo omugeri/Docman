@@ -35,7 +35,7 @@ const docManTheme = getMuiTheme({
   }
 });
 function handleTouchTap() {
-  alert('onTouchTap triggered on the title component');
+  
 }
 
 
@@ -47,11 +47,15 @@ export default class Home extends React.Component {
             <div className={styles.overlay}>
               <div className={styles.color_}>
               <AppBar
-                iconElementRight={<RaisedButton
+                iconElementRight={
+                  <RaisedButton
                     secondary='true'
                     label="login"
-                    containerElement={<Link to="/login" />}
-                    className={style.button}/>}
+                    onTouchTap ={this.handleTouchTap}
+                    //containerElement={<Link to="/login" />}
+                    className={style.button}
+                    />
+                  }
               />
                 <h1> DOCMAN </h1>
                 <p> Out with the old in with the new.</p>
