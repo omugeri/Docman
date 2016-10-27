@@ -25,7 +25,7 @@
 h1 {
   text-align: center;
   margin: 0% 0% .5%;
-  color: #000;
+  color: #fff;
   padding-top: 12%;
   font-family: 'Bree Serif';
 }
@@ -33,15 +33,15 @@ h1 {
 p {
   text-align: center;
   font-size: 1.3em;
-  color: #000;
+  color: #fff;
 }
 .action {
   position: centre;
   margin-left:45%;
   margin-top: 1%;
 }
-.login {
-  background: #d71a94;
+.dialog {
+  background: #B66CF8;
   width: 20%;
   padding: 1.5% .8%;
   text-align: center;
@@ -49,4 +49,14 @@ p {
   margin-left: 5%;
   margin-top: -2%;
   font-family: 'Bree Serif';
+}
+.button {
+  position: centre;
+  /*margin-left:90%;*/
+  float: right;
+  margin-top: 3%;
+  margin-right: 5%;
+}
+.title{
+  background: #9C27B0;
 }

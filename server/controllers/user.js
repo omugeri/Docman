@@ -119,6 +119,7 @@ const userCntrl = {
         res.status(500).json({ err });
       }
       if (user.validPassword(user, req.body.password)) {
+        console.log('WE\'RE HERE');
         const token = generateToken(user.userName, user.role);
         return res.status(202).json(token);
       } else {
