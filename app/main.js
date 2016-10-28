@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom';
 import { Router, Route, browserHistory, IndexRoute } from 'react-router';
 import Home from './components/pages/LandingPage/Home.jsx';
 import Login from './components/pages/Authentication/Login.jsx';
-// import Menu from './components/pages/LandingPage/MenuBar.jsx';
 import Base from './components/pages/Dashboard/Base.jsx';
 
 render((
