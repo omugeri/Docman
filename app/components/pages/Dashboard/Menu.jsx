@@ -2,6 +2,11 @@ import React from 'react';
 import { Paper, Menu, MenuItem } from 'material-ui';
 import {MuiThemeProvider, getMuiTheme } from 'material-ui/styles';
 import Dashboardicon from 'material-ui/svg-icons/action/dashboard.js';
+import Usersicon from 'material-ui/svg-icons/action/supervisor-account.js';
+import Documentsicon from 'material-ui/svg-icons/action/assignment.js';
+import Rolesicon from 'material-ui/svg-icons/action/lock-open.js';
+
+
 import styles from '../../../shared/styles/styles.css';
 
 
@@ -22,7 +27,7 @@ const style = {
   paper: {
     display: 'inline-block',
     float: 'left',
-    height: '89%',
+    height: '92%',
     margin: '0px 0px 0px 0',
   },
   rightIcon: {
@@ -40,10 +45,16 @@ export default class SideMenu extends React.Component {
         <MuiThemeProvider muiTheme={getMuiTheme(docManTheme)}>
         <Paper style={style.paper}>
           <Menu>
-            <MenuItem primaryText='Dashboard' leftIcon={<Dashboardicon className={styles.material-icons.md-light}/>}/>
-            <MenuItem primaryText='Users' />
-            <MenuItem primaryText='Documents' />
-            <MenuItem primaryText='Roles' />
+            <MenuItem primaryText='Dashboard'
+                      leftIcon={<Dashboardicon/>}
+                      class='styles.material-icons white'
+                      />
+            <MenuItem primaryText='Users'
+                      leftIcon={<Usersicon />}/>
+            <MenuItem primaryText='Documents'
+                      leftIcon={<Documentsicon />}/>
+            <MenuItem primaryText='Roles'
+                      leftIcon={<Rolesicon />}/>
           </Menu>
         </Paper>
         </MuiThemeProvider>

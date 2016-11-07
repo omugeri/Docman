@@ -6,6 +6,8 @@ import { FlatButton} from 'material-ui';
 import {MuiThemeProvider, getMuiTheme } from 'material-ui/styles';
 import TopBar from './TopBar.jsx';
 import SideMenu from './Menu.jsx';
+import Info from './Info.jsx';
+import Display from './Display.jsx';
 
 
 
@@ -33,9 +35,11 @@ export default class Base extends React.Component {
   render() {
     return (
       <div className={styles.main} style={style}>
-        <div className={styles.overlay}>
+        <div>
           <TopBar />
           <SideMenu />
+          <Info />
+          <Display />
         </div>
       </div>
     );

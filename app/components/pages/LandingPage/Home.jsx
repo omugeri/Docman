@@ -75,10 +75,14 @@ export default class Home extends React.Component {
         userName: this.state.username,
         password: this.state.password,
       })
-      .end((err, res) => {
-        console.log('response is: ', res.text);
+      .end((err, res, callback) => {
+        if(res.text){
+          console.log('response is: ', res.text);
+          let token = res.text;
+        }
       });
   }
+
   render() {
     return (
       <div className={styles.main} style={style} >

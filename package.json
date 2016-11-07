@@ -58,6 +58,7 @@
     "path": "^0.12.7",
     "react": "^15.3.2",
     "react-addons-test-utils": "^15.3.2",
+    "react-d3-basic": "^1.6.11",
     "react-dom": "^15.3.2",
     "react-redux": "^4.4.5",
     "react-router": "^2.8.1",
