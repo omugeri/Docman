@@ -7,8 +7,8 @@ const div1 = {
   width: '36%',
   height: '25%',
   float: 'right',
-  'margin-top': '2%',
-  'margin-right': '5%'
+  'marginTop': '2%',
+  'marginRight': '5%'
 }
 const docManTheme = getMuiTheme({
   palette: {

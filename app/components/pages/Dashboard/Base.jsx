@@ -6,10 +6,6 @@ import { FlatButton} from 'material-ui';
 import {MuiThemeProvider, getMuiTheme } from 'material-ui/styles';
 import TopBar from './TopBar.jsx';
 import SideMenu from './Menu.jsx';
-import Info from './Info.jsx';
-import Display from './Display.jsx';
-
-
 
 const style = {
  backgroundImage: 'url(' + bgimage + ')',
@@ -38,8 +34,7 @@ export default class Base extends React.Component {
         <div>
           <TopBar />
           <SideMenu />
-          <Info />
-          <Display />
+
         </div>
       </div>
     );

@@ -45,18 +45,20 @@ if (isDeveloping) {
   app.use(bodyParser.json());
   app.use(middleware);
   app.use(webpackHotMiddleware(compiler));
+  router(app);
   app.get('*', function response(req, res) {
     res.write(middleware.fileSystem.readFileSync(path.join(__dirname, 'dist/index.html')));
     res.end();
   });
-  router(app);
+
 } else {
   // applies if running on production mode
   app.use(express.static(__dirname + '/dist'));
+  router(app);
   app.get('*', function response(req, res) {
     res.sendFile(path.join(__dirname, 'dist/index.html'));
   });
-  router(app);
+
 }
 
 // START THE server

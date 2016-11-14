@@ -1,26 +1,30 @@
 import React from 'react';
-import { Link } from 'react-router';
-import styles from '../../../shared/styles/styles.css';
-import {purple500} from 'material-ui/styles/colors';
-import {MuiThemeProvider, getMuiTheme } from 'material-ui/styles';
+import { Router, browserHistory } from 'react-router';
+import { purple500 } from 'material-ui/styles/colors';
+import { MuiThemeProvider, getMuiTheme } from 'material-ui/styles';
 import { RaisedButton, AppBar, IconButton } from 'material-ui';
-import bgimage from 'file!../../../shared/images/doc_bg.jpeg';
-import NavigationClose from 'material-ui/svg-icons/navigation/close';
-import Login from '../Authentication/Login.jsx';
 import request from 'superagent';
+import bgimage from 'file!../../../shared/images/doc_bg.jpeg';
+// import NavigationClose from 'material-ui/svg-icons/navigation/close';
+import styles from '../../../shared/styles/styles.css';
+import { loginAction } from '../../../actions/authActions'
+import Login from '../Authentication/Login.jsx';
+import configureStore from '../../../store/configureStore';
+
+const store = configureStore();
 
 
 const style = {
- backgroundImage: 'url(' + bgimage + ')',
- title: {
-   cursor: 'pointer',
- },
- button: {
-   primaryColor: purple500
- },
- palette: {
+  backgroundImage: 'url(' + bgimage + ')',
+  title: {
+    cursor: 'pointer',
+  },
+  button: {
+    primaryColor: purple500,
+  },
+  palette: {
     primary1Color: purple500,
-  }
+  },
 };
 const docManTheme = getMuiTheme({
   palette: {
@@ -34,7 +38,7 @@ const docManTheme = getMuiTheme({
     // canvasColor: '#9c27b0',
     // borderColor: '#BDBDBD'
 
-  }
+  },
 });
 
 
@@ -42,43 +46,45 @@ export default class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-                    username: '',
-                    password: '',
-                    open: false
-                  };
+      username: '',
+      password: '',
+      open: false,
+    };
     this.handleUsername = this.handleUsername.bind(this);
     this.handlePassword = this.handlePassword.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   handleUsername = (event) => {
-      this.setState({username: event.target.value});
+    this.setState({ username: event.target.value });
   }
   handlePassword = (event) => {
-    this.setState({password: event.target.value})
-
+    this.setState({ password: event.target.value });
   }
 
   handleOpen = () => {
     console.log('Gets here');
-    this.setState({open: true});
+    this.setState({ open: true });
   };
 
   handleClose = () => {
-    this.setState({open: false});
+    this.setState({ open: false });
   };
 
   handleSubmit = (event) => {
-    this.setState({open: false});
+    this.setState({ open: false });
     request
       .post('/api/users/login')
       .send({
         userName: this.state.username,
         password: this.state.password,
       })
-      .end((err, res, callback) => {
-        if(res.text){
+      .end((err, res) => {
+        if (res.text) {
           console.log('response is: ', res.text);
-          let token = res.text;
+          const token = res.text;
+          store.dispatch(loginAction(token));
+          console.log('KWA LOGIN',store.getState());
+          browserHistory.push('/dashboard');
         }
       });
   }
@@ -86,22 +92,23 @@ export default class Home extends React.Component {
   render() {
     return (
       <div className={styles.main} style={style} >
-        <MuiThemeProvider  muiTheme={getMuiTheme(docManTheme)}>
+        <MuiThemeProvider muiTheme={getMuiTheme(docManTheme)}>
           <div className={styles.color_}>
             <RaisedButton
-              secondary= 'true'
+              secondary
               label="login"
-              onTouchTap ={this.handleOpen}
+              onTouchTap={this.handleOpen}
               className={styles.button}
-              />
+            />
 
-            <Login open={this.state.open}
-                  handleClose={this.handleClose}
-                  handleSubmit={this.handleSubmit}
-                  handlePassword={this.handlePassword}
-                  handleUsername={this.handleUsername}
-                  username={this.state.username}
-                  password={this.state.password}
+            <Login
+              open={this.state.open}
+              handleClose={this.handleClose}
+              handleSubmit={this.handleSubmit}
+              handlePassword={this.handlePassword}
+              handleUsername={this.handleUsername}
+              username={this.state.username}
+              password={this.state.password}
             />
 
             <h1> DOCMAN </h1>
@@ -109,10 +116,10 @@ export default class Home extends React.Component {
             <p>Track files through the whole organization</p>
             <div>
               <RaisedButton
-              className={styles.action}
-              secondary='true'
-              label="GET STARTED"
-                />
+                className={styles.action}
+                secondary
+                label="GET STARTED"
+              />
             </div>
           </div>
 

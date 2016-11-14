@@ -4,8 +4,6 @@ const userCntrl = require('../controllers/user');
 const documentCntrl = require('../controllers/document');
 
 const router = express.Router();
-
-
 router.route('/login')
   .post(userCntrl.login);
 
