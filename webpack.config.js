@@ -7,6 +7,10 @@ module.exports = {
   /* maps to compiled source code per module so that
      errors map to correct file and line number
   */
+  name: 'chartComponent',
+  entry: {
+    line: './line.jsx',
+  },
   devtool: 'eval-source-map',
   entry: [
     'webpack-hot-middleware/client?reload=true', // allows hot reloading

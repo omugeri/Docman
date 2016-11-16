@@ -5,6 +5,7 @@ const nJwt = require('njwt');
 const secret = process.env.SECRET;
 
 const userCntrl = {
+
   authenticate: (req, res, next) => {
     // check header or url parameters or post parameters for token
     const token = req.body.token || req.query.token || req.headers['x-access-token'];
@@ -57,6 +58,7 @@ const userCntrl = {
   },
   all: (req, res) => {
     User.find((err, users) => {
+      console.log('I ALSO GET HERE');
       if (err) {
         return res.send(err);
       }
