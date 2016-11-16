@@ -7,7 +7,7 @@ export function loginAction(token) {
 
 export function logoutAction() {
   return {
-    type: 'DESTROY_TOKEN',
+    type: 'LOGOUT_ACTION',
     token: '',
   };
 }

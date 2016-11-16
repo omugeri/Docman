@@ -1,5 +1,6 @@
 import React from 'react';
 import { Router, browserHistory } from 'react-router';
+import { connect } from 'react-redux';
 import { purple500 } from 'material-ui/styles/colors';
 import { MuiThemeProvider, getMuiTheme } from 'material-ui/styles';
 import { RaisedButton, AppBar, IconButton } from 'material-ui';
@@ -9,10 +10,6 @@ import bgimage from 'file!../../../shared/images/doc_bg.jpeg';
 import styles from '../../../shared/styles/styles.css';
 import { loginAction } from '../../../actions/authActions'
 import Login from '../Authentication/Login.jsx';
-import configureStore from '../../../store/configureStore';
-
-const store = configureStore();
-
 
 const style = {
   backgroundImage: 'url(' + bgimage + ')',
@@ -26,21 +23,6 @@ const style = {
     primary1Color: purple500,
   },
 };
-const docManTheme = getMuiTheme({
-  palette: {
-    primary1Color: '#9C27B0',
-    // primary2Color: '#7B1FA2',
-    // primary3Color: '#B66CF8',
-    accent1Color: '#4CAF50',
-    // accent2Color: '#8BC34A',
-    // textColor: '#212121',
-    // secondaryTextColor: '#757575',
-    // canvasColor: '#9c27b0',
-    // borderColor: '#BDBDBD'
-
-  },
-});
-
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -62,7 +44,6 @@ export default class Home extends React.Component {
   }
 
   handleOpen = () => {
-    console.log('Gets here');
     this.setState({ open: true });
   };
 
@@ -70,7 +51,7 @@ export default class Home extends React.Component {
     this.setState({ open: false });
   };
 
-  handleSubmit = (event) => {
+  handleSubmit = () => {
     this.setState({ open: false });
     request
       .post('/api/users/login')
@@ -80,10 +61,9 @@ export default class Home extends React.Component {
       })
       .end((err, res) => {
         if (res.text) {
-          console.log('response is: ', res.text);
           const token = res.text;
-          store.dispatch(loginAction(token));
-          console.log('KWA LOGIN',store.getState());
+          window.localStorage.setItem('token', token);
+          console.log(token);
           browserHistory.push('/dashboard');
         }
       });
@@ -92,7 +72,6 @@ export default class Home extends React.Component {
   render() {
     return (
       <div className={styles.main} style={style} >
-        <MuiThemeProvider muiTheme={getMuiTheme(docManTheme)}>
           <div className={styles.color_}>
             <RaisedButton
               secondary
@@ -123,9 +102,13 @@ export default class Home extends React.Component {
             </div>
           </div>
 
-        </MuiThemeProvider>
       </div>
 
   );
   }
+}
+function mapStateToProps(state) {
+  return {
+    token: state.auth.token,
+  };
 }

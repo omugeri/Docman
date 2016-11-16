@@ -7,12 +7,6 @@ export function openDocuments(documents) {
 export function openRoles(roles) {
   return { type: 'OPEN_ROLES', roles}
 }
-export function closeUsers(users) {
-  return { type: 'CLOSE_USERS', users}
-}
-export function closeDocuments(documents) {
-  return { type: 'CLOSE_DOCUMENTS', documents}
-}
-export function closeRoles(roles) {
-  return { type: 'CLOSE_ROLES', roles}
+export function openDashboard(dashboard) {
+  return { type: 'OPEN_DASHBOARD', dashboard}
 }

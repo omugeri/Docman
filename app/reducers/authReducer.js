@@ -3,7 +3,7 @@ export default function authReducers(state={}, action) {
     case 'LOGIN_ACTION':
       return Object.assign({}, state, { token: action.token });
 
-    case 'DESTROY_TOKEN':
+    case 'LOGOUT_ACTION':
       return Object.assign({}, state, action.token);
 
     default:

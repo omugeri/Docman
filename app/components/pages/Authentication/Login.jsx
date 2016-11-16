@@ -1,17 +1,15 @@
 import React from 'react';
 import Dialog from 'material-ui/Dialog';
 import { FlatButton, TextField } from 'material-ui';
-import injectTapEventPlugin from 'react-tap-event-plugin';
-
-injectTapEventPlugin();
 
 const Dstyle = {
   height: '100%',
   maxHeight: 'none',
   width: '25%',
   maxWidth: 'none',
-
+  borderRadius: '10px'
 };
+
 export default class Login extends React.Component {
 
   render() {
@@ -31,7 +29,7 @@ export default class Login extends React.Component {
     return (
       <div >
         <Dialog
-          title="Login Dialog"
+          title="Login" color='#9C27B0'
           actions={actions}
           modal={true}
           open={this.props.open}
@@ -49,6 +47,7 @@ export default class Login extends React.Component {
               <br />
               <TextField
                 type='password'
+                floatingLabelText="password"
                 name='password'
                 value={this.props.password}
                 onChange={this.props.handlePassword}
