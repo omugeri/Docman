@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { Card, CardText, CardTitle, CardActions } from 'material-ui/Card';
 import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
-import { RaisedButton,
+import {
   FloatingActionButton,
   IconMenu,
   MenuItem,
@@ -11,7 +11,8 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import request from 'superagent';
 import Edit from './Edit.jsx';
-import { reloadPage } from '../../../actions/displayActions';
+import Delete from './Delete.jsx';
+import * as displayActions from '../../../actions/displayActions';
 import Pagination from './Pagination.jsx';
 
 const docStyle = {
@@ -37,19 +38,42 @@ class Document extends React.Component {
       error: false,
       permissions: 'Public',
       toggle: false,
+      edit: false,
+      delete: false,
     };
+    this.handleId = this.handleId.bind(this);
     this.handleTitle = this.handleTitle.bind(this);
     this.handleContent = this.handleContent.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleOpen = this.handleOpen.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+    this.handleDialog = this.handleDialog.bind(this);
+  }
+  handleDialog = (id) => {
+    this.setState({ delete: id });
+  }
+  handleDelClose = () => {
+    this.setState({ delete: false });
+  }
+  handleDelete = (doc) => {
+    console.log('GETS TO FUNCTION');
+    this.props.deleteDoc(doc);
   }
   handleExpand = () => {
     this.setState({ expanded: true });
   };
-  handleEdit = () => {
-    this.setState({ expanded: false });
+  handleEdit = (doc) => {
+    const currentId = doc._id;
+    this.setState({
+      edit: currentId,
+      title: doc.title,
+      content: doc.content,
+    });
+  }
+  handleCloseEdit = () => {
+    this.setState({ edit: false });
   }
   handleOpen = () => {
     this.setState({ open: true });
@@ -63,62 +87,26 @@ class Document extends React.Component {
   handleClose = () => {
     this.setState({ open: false });
   }
-  handleEdit = () => {
-    const id = this.props.doc_id;
-    this.props.editDoc(id);
+  handleEditSubmit = (doc) => {
+    this.props.handleEditSubmit(doc);
+  }
+  handleId = (id) => {
+    this.setState({ id });
   }
   handleSubmit = () => {
-    const token = window.localStorage.getItem('token').replace(/"/g, '');
-    request
-    .post('/api/documents')
-    .set({ 'x-access-token': token })
-    .send({
+    const newDoc = {
       title: this.state.title,
       content: this.state.content,
       permissions: this.state.permissions,
-    })
-      .end((err, res) => {
-        if (res.status === 200) {
-          this.props.reloadPage(this.props.page);
-          this.handleClose();
-          browserHistory.push('/dashboard');
-        } else {
-          this.setState({
-            error: true,
-          });
-        }
-      });
+    };
+    this.props.createDoc(newDoc);
+    this.handleClose();
   }
   handleToggle = () => {
     this.setState({ permissions: 'Private' });
-
   };
   render() {
     const docTable = this.props.display.map((doc) => {
-      const buttonActions = (doc) => {
-        if (doc.permissions === 'Private') {
-          return (
-            <div>
-              <CardActions>
-                <RaisedButton
-                  label="Read More"
-                  onTouchTap={this.handleExpand}
-                  secondary
-                />
-              </CardActions>
-            </div>
-          );
-        }
-        return (
-          <CardActions>
-            <RaisedButton
-              label="Read More"
-              onTouchTap={this.handleExpand}
-              secondary
-            />
-          </CardActions>
-        );
-      };
       return (
         <div key={doc._id}>
           <Card
@@ -134,10 +122,10 @@ class Document extends React.Component {
             >
               <MenuItem primaryText="Edit"
               value={doc._id}
-              onTouchTap={this.handleEdit}/>
+              onTouchTap={() => { this.handleEdit(doc); }} />
               <MenuItem primaryText="Delete"
               value={doc._id}
-              onTouchTap={this.handleDelete}
+              onTouchTap={() => { this.handleDialog(doc._id); }}
               />
             </IconMenu>
             <CardTitle
@@ -146,12 +134,42 @@ class Document extends React.Component {
               style={{float:'right'}}
             />
             <CardText
-              expandable={true}
+              expandable={false}
             >
               {doc.content}
             </CardText>
-            {buttonActions(doc)}
           </Card>
+          <div>
+          <Edit
+            open={this.state.edit === doc._id}
+            handleToggle={this.handleToggle}
+            handleClose={this.handleCloseEdit}
+            handleSubmit={() => {
+              const doc = {
+                id: this.state.edit,
+                title: this.state.title,
+                content: this.state.content,
+                permissions: this.state.permissions,
+              };
+              this.handleEditSubmit(doc); }}
+            handleContent={this.handleContent}
+            handleTitle={this.handleTitle}
+            doc={doc._id}
+            defaultTitle={doc.title}
+            defaultContent={doc.content}
+            title={this.state.title}
+            content={this.state.content}
+          />
+          </div>
+          <div>
+            <Delete
+              open={this.state.delete === doc._id}
+              handleClose={this.handleDelClose}
+              handleDelete={this.handleDelete}
+              title={doc.title}
+              id={doc._id}
+            />
+          </div>
         </div>
     );
     });
@@ -176,15 +194,14 @@ class Document extends React.Component {
           handleTitle={this.handleTitle}
           title={this.state.title}
           content={this.state.content}
-          handleEdit={this.handleEdit}
         />
+        </div>
         <div>
           {docTable}
         </div>
         <br />
-        <Pagination onDocumentChange={this.props.reload}/>
+        <Pagination onDocumentChange={this.props.reload} />
         </div>
-      </div>
     );
   }
 }
@@ -201,9 +218,11 @@ function mapStateToProps(state) {
     dashboardInfo: state.display.dashboard,
   };
 }
-export default connect(mapStateToProps, { reloadPage })(Document);
+export default connect(mapStateToProps, displayActions)(Document);
 
 Document.propTypes = {
   page: PropTypes.number,
-  reloadPage: PropTypes.func,
+  handleEditSubmit: PropTypes.func,
+  deleteDoc: PropTypes.func,
+  createDoc: PropTypes.func,
 };

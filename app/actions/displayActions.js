@@ -31,6 +31,34 @@ export function changePage(page) {
     page,
   };
 }
+export function editDoc(editDoc) {
+  return {
+    type: 'EDIT_DOC',
+    editDoc,
+  };
+}
+export function createDoc(doc) {
+  return (dispatch) => {
+    const token = window.localStorage.getItem('token').replace(/"/g, '');
+    request
+    .post('/api/documents')
+    .set({ 'x-access-token': token })
+    .send({
+      title: doc.title,
+      content: doc.content,
+      permissions: doc.permissions,
+    })
+      .end((err, res) => {
+        if (res.status === 200) {
+          dispatch(reloadPage(1));
+        } else {
+          this.setState({
+            error: true,
+          });
+        }
+      });
+  };
+}
 
 export function reloadPage(page) {
   return (dispatch) => {
@@ -54,6 +82,44 @@ export function reloadPage(page) {
           roles: false,
         };
         dispatch(openDocuments(documentsMenu));
+      });
+  };
+}
+export function handleEditSubmit(doc) {
+  return (dispatch) => {
+    const id = doc.id;
+    console.log('id is: ', doc);
+    const token = window.localStorage.getItem('token').replace(/"/g, '');
+    request
+      .put(`/api/documents/${id}`)
+      .set({ 'x-access-token': token })
+      .send({
+        title: doc.title,
+        content: doc.content,
+        permissions: doc.permissions,
+      })
+      .end((err, res) => {
+        if(res.status === 200) {
+          dispatch(reloadPage(1));
+        } else {
+          console.log('error: ', err);
+        }
+      });
+  };
+}
+export function deleteDoc(doc) {
+  return (dispatch) => {
+    const token = window.localStorage.getItem('token').replace(/"/g, '');
+    request
+      .delete(`/api/documents/${doc}`)
+      .set({ 'x-access-token': token })
+      .end((err, res) => {
+        if (res.status === 200) {
+          console.log(res.body.message);
+          dispatch(reloadPage(1));
+        } else {
+          console.log('err is: ', err);
+        }
       });
   };
 }
