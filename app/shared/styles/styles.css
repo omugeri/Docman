@@ -1,0 +1,100 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Lato';
+}
+
+.main {
+   position: relative;
+   /*background-image: url("book_bg.jpg");*/
+   font-family: 'Roboto', sans-serif;
+   height: 100vh;
+   width: 100%;
+   background-size: cover;
+}
+
+.overlay {
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   /*background-color: #7B1FA2;*/
+   opacity: 0.69;
+}
+h1 {
+  text-align: center;
+  margin: 0% 0% .5%;
+  color: #fff;
+  padding-top: 12%;
+  font-family: 'Bree Serif';
+}
+
+p {
+  text-align: center;
+  font-size: 1.3em;
+  color: #fff;
+}
+.action {
+  position: centre;
+  margin-left:45%;
+  margin-top: 1%;
+}
+.dialog {
+  background: #B66CF8;
+  width: 20%;
+  padding: 1.5% .8%;
+  text-align: center;
+  border-radius: .2em;
+  margin-left: 5%;
+  margin-top: -2%;
+  font-family: 'Bree Serif';
+}
+.button {
+  position: centre;
+  /*margin-left:90%;*/
+  float: right;
+  margin-top: 3%;
+  margin-right: 5%;
+}
+.title{
+  background: #9C27B0;
+}
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+/* Rules for sizing the icon. */
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
+
+/* Rules for using icons as black on a light background. */
+.material-icons.md-dark { color: rgba(0, 0, 0, 0.54); }
+.material-icons.md-dark.md-inactive { color: rgba(0, 0, 0, 0.26); }
+.material-icons.white { color: #ffffff; }
+
+/* Rules for using icons as white on a dark background. */
+.material-icons.md-light { color: rgba(255, 255, 255, 1); }
+.material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }

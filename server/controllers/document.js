@@ -1,6 +1,5 @@
 const Document = require('./../models/document');
 const User = require('./../models/user');
-const userCntrl = require('./user');
 
 const documentCntrl = {
   createDoc: (req, res) => {
@@ -12,7 +11,7 @@ const documentCntrl = {
 
     if (permissions === 'Admin') {
       document.permissions = req.body.permissions || 'Public';
-      document.owner = req.body.owner;
+      document.owner = owner;
     } else {
       document.permissions = 'Public';
       document.owner = owner;
