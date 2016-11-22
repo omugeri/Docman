@@ -39,7 +39,7 @@ export default class Edit extends React.Component {
               <TextField
                 floatingLabelText="Title"
                 name="title"
-                value={this.props.title}
+                defaultValue={this.props.defaultTitle}
                 onChange={this.props.handleTitle}
               /><br />
               <br />
@@ -49,7 +49,7 @@ export default class Edit extends React.Component {
                 rows={2}
                 floatingLabelText="Content"
                 name='content'
-                value={this.props.content}
+                defaultValue={this.props.defaultContent}
                 onChange={this.props.handleContent}
               />
               <br />
