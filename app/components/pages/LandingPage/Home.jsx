@@ -8,7 +8,7 @@ import request from 'superagent';
 import bgimage from 'file!../../../shared/images/doc_bg.jpeg';
 // import NavigationClose from 'material-ui/svg-icons/navigation/close';
 import styles from '../../../shared/styles/styles.css';
-import { loginAction } from '../../../actions/authActions'
+import { errorSet } from '../../../actions/authActions';
 import Login from '../Authentication/Login.jsx';
 
 const style = {
@@ -24,13 +24,15 @@ const style = {
   },
 };
 
-export default class Home extends React.Component {
+class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       username: '',
       password: '',
+      error: '',
       open: false,
+      register: false,
     };
     this.handleUsername = this.handleUsername.bind(this);
     this.handlePassword = this.handlePassword.bind(this);
@@ -50,9 +52,13 @@ export default class Home extends React.Component {
   handleClose = () => {
     this.setState({ open: false });
   };
-
+  handleRegister = () => {
+    this.setState({ register: true });
+  }
+  handleRegisterClose = () => {
+    this.setState({ register: false });
+  }
   handleSubmit = () => {
-    this.setState({ open: false });
     request
       .post('/api/users/login')
       .send({
@@ -60,11 +66,14 @@ export default class Home extends React.Component {
         password: this.state.password,
       })
       .end((err, res) => {
-        if (res.text) {
+        if (res.status === 202) {
+          this.setState({ open: false });
           const token = res.text;
           window.localStorage.setItem('token', token);
-          console.log(token);
           browserHistory.push('/dashboard');
+        } else {
+          const error = JSON.parse(res.text);
+          this.props.errorSet(error);
         }
       });
   }
@@ -88,6 +97,7 @@ export default class Home extends React.Component {
               handleUsername={this.handleUsername}
               username={this.state.username}
               password={this.state.password}
+              error={this.props.error}
             />
 
             <h1> DOCMAN </h1>
@@ -98,7 +108,9 @@ export default class Home extends React.Component {
                 className={styles.action}
                 secondary
                 label="GET STARTED"
+                onClick={this.handleRegister}
               />
+
             </div>
           </div>
 
@@ -109,6 +121,7 @@ export default class Home extends React.Component {
 }
 function mapStateToProps(state) {
   return {
-    token: state.auth.token,
+    error: state.auth.message,
   };
 }
+export default connect(mapStateToProps, { errorSet })(Home);

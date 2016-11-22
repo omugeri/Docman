@@ -120,13 +120,15 @@ const userCntrl = {
       if (err) {
         res.status(500).json({ err });
       }
-      if (user.validPassword(user, req.body.password)) {
-        console.log('WE\'RE HERE');
-        const token = generateToken(user.userName, user.role);
-        return res.status(202).json(token);
-      } else {
-        res.status(400).json({ message: 'Error logging in!' });
+      if (user) {
+        if (user.validPassword(user, req.body.password)) {
+          const token = generateToken(user.userName, user.role);
+          return res.status(202).json(token);
+        } else {
+          return res.status(400).json({ message: 'Error logging in!' });
+        }
       }
+      return res.status(400).json({ message: 'Error logging in!' });
     });
   },
   logout: (req, res) => {

@@ -14,7 +14,10 @@ export default function menuReducers(state={}, action) {
         roles: action.documents.roles,
         dashboard: action.documents.dashboard,
       });
-
+    case 'OPEN_USER_DOC':
+      return Object.assign({}, state, {
+        userDocOpen: action.userDocOpen,
+      });
     default:
       return state;
 

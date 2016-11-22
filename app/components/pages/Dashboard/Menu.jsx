@@ -1,16 +1,16 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
 import { Paper, Menu, MenuItem } from 'material-ui';
 import Dashboardicon from 'material-ui/svg-icons/action/dashboard.js';
 import Usersicon from 'material-ui/svg-icons/action/supervisor-account.js';
 import Documentsicon from 'material-ui/svg-icons/action/assignment.js';
-import Rolesicon from 'material-ui/svg-icons/action/lock-open.js';
 import request from 'superagent';
 // import styles from '../../../shared/styles/styles.css';
 import * as menuActions from '../../../actions/menuActions';
 import * as displayActions from '../../../actions/displayActions';
 import Info from './Info.jsx';
-import Display from './User.jsx';
+import User from './User.jsx';
 import Documents from './Document.jsx';
 
 const style = {
@@ -29,8 +29,7 @@ const style = {
   item: {
     height: '25%',
     padding: '10%',
-    // backgroundColor: '#9C27B0',
-    // opacity: '0.69'
+    color: '#fff',
   },
 };
 
@@ -61,6 +60,9 @@ class SideMenu extends React.Component {
       .accept('json')
       .end((err, res) => {
         const user = JSON.parse(res.text);
+        if (res.status === 401){
+          browserHistory.push('/');
+        }
         this.props.displayUsers(user);
         const userMenu = {
           users: true,
@@ -115,12 +117,6 @@ class SideMenu extends React.Component {
               onClick={this.onDocumentChange}
               style={style.item}
             />
-            <MenuItem
-              primaryText="Roles"
-              leftIcon={<Rolesicon />}
-              onClick={this.onRoleChange}
-              style={style.item}
-            />
           </Menu>
         </Paper>
         { this.props.documents ? <Documents
@@ -128,7 +124,7 @@ class SideMenu extends React.Component {
           reload={this.onDocumentChange}
         /> : true}
         { this.props.dashboard ? <Info display={this.props.dashboardInfo} /> : true }
-        { this.props.users ? <Display display={this.props.userInfo} /> : true }
+        { this.props.users ? <User display={this.props.userInfo} /> : true }
       </div>
     );
   }

@@ -11,18 +11,15 @@ const Dstyle = {
 };
 
 export default class Login extends React.Component {
-
   render() {
     const actions = [
       <FlatButton
         label="Cancel"
-        primary={true}
         onTouchTap={this.props.handleClose}
       />,
       <FlatButton
         label="Submit"
-        primary={true}
-        keyboardFocused={true}
+        //keyboardFocused={true}
         onTouchTap={this.props.handleSubmit}
       />,
     ];
@@ -39,6 +36,7 @@ export default class Login extends React.Component {
           <div>
             <form>
               <TextField
+                errorText={this.props.error}
                 floatingLabelText="UserName"
                 name="username"
                 value={this.props.username}
@@ -46,6 +44,7 @@ export default class Login extends React.Component {
               /><br />
               <br />
               <TextField
+                errorText={this.props.error}
                 type='password'
                 floatingLabelText="password"
                 name='password'

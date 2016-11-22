@@ -1,5 +1,5 @@
 import request from 'superagent';
-import { openDocuments } from './menuActions.js';
+import { openDocuments, openUserDoc } from './menuActions.js';
 
 export function displayUsers(users) {
   return {
@@ -7,6 +7,7 @@ export function displayUsers(users) {
     users,
   };
 }
+
 export function displayDocs(documents) {
   return {
     type: 'DISPLAY_DOCUMENTS',
@@ -37,6 +38,12 @@ export function editDoc(editDoc) {
     editDoc,
   };
 }
+export function userDoc(userDocs) {
+  return {
+    type: 'CURRENT_DOCS',
+    userDocs,
+  };
+}
 export function createDoc(doc) {
   return (dispatch) => {
     const token = window.localStorage.getItem('token').replace(/"/g, '');
@@ -59,6 +66,24 @@ export function createDoc(doc) {
       });
   };
 }
+export function selectedUser(row) {
+  return (dispatch, getState) => {
+    const docs = getState().display.users[row]._id;
+    const token = window.localStorage.getItem('token').replace(/"/g, '');
+    request
+      .get(`/api/users/${docs}/documents`)
+      .set({ 'x-access-token': token })
+      .end((err, res) => {
+        if (res.status === 200){
+          const userDocs = JSON.parse(res.text);
+          dispatch(userDoc(userDocs));
+          dispatch(openUserDoc({ userDocOpen: true }));
+        } else {
+          dispatch(errorSet(res.text));
+        }
+      });
+  };
+}
 
 export function reloadPage(page) {
   return (dispatch) => {
@@ -68,7 +93,7 @@ export function reloadPage(page) {
       .get('/api/documents/')
       .set({ 'x-access-token': token })
       .query({
-        limit: 6,
+        limit: 3,
         page,
       })
       .accept('json')
@@ -88,7 +113,6 @@ export function reloadPage(page) {
 export function handleEditSubmit(doc) {
   return (dispatch) => {
     const id = doc.id;
-    console.log('id is: ', doc);
     const token = window.localStorage.getItem('token').replace(/"/g, '');
     request
       .put(`/api/documents/${id}`)
@@ -99,10 +123,10 @@ export function handleEditSubmit(doc) {
         permissions: doc.permissions,
       })
       .end((err, res) => {
-        if(res.status === 200) {
+        if (res.status === 200) {
           dispatch(reloadPage(1));
         } else {
-          console.log('error: ', err);
+          return err;
         }
       });
   };
@@ -115,10 +139,9 @@ export function deleteDoc(doc) {
       .set({ 'x-access-token': token })
       .end((err, res) => {
         if (res.status === 200) {
-          console.log(res.body.message);
           dispatch(reloadPage(1));
         } else {
-          console.log('err is: ', err);
+          return err;
         }
       });
   };
