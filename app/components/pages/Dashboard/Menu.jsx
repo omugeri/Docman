@@ -49,7 +49,7 @@ class SideMenu extends React.Component {
       documents: false,
       roles: false,
     };
-    this.props.openDashboard(dashboard);
+    this.props.openDashboard(true);
   }
   onUserChange = () => {
     const token = window.localStorage.getItem('token').replace(/"/g, '');
@@ -64,13 +64,10 @@ class SideMenu extends React.Component {
           browserHistory.push('/');
         }
         this.props.displayUsers(user);
-        const userMenu = {
-          users: true,
-          dashboard: false,
-          documents: false,
-          roles: false,
-        };
-        this.props.openUsers(userMenu);
+
+        const users = true;
+
+        this.props.openUsers(users);
       });
   }
   onDocumentChange = () => {

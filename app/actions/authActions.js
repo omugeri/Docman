@@ -3,13 +3,6 @@ import request from 'superagent';
 import { displayUsers } from './displayActions';
 import { openUsers } from './menuActions';
 
-export function loginAction(token) {
-  return {
-    type: 'LOGIN_ACTION',
-    token,
-  };
-}
-
 export function logoutAction() {
   return {
     type: 'LOGOUT_ACTION',
@@ -32,12 +25,12 @@ export function registerClose() {
 export function reloadUser() {
   return (dispatch) => {
     const token = window.localStorage.getItem('token').replace(/"/g, '');
-    request
+    return request
       .get('/api/users/')
       .set({ 'x-access-token': token })
       .accept('json')
-      .end((err, res) => {
-        const user = JSON.parse(res.text);
+      .then((res) => {
+        const user = res.body;
         if (res.status === 401) {
           browserHistory.push('/');
         }
@@ -55,7 +48,7 @@ export function reloadUser() {
 export function create(user) {
   return (dispatch) => {
     const token = window.localStorage.getItem('token').replace(/"/g, '');
-    request
+    return request
     .post(`/api/users/`)
     .set({ 'x-access-token': token })
     .send({
@@ -65,13 +58,14 @@ export function create(user) {
       email: user.email,
       password: user.password,
     })
-      .end((err, res) => {
-        if (res.status === 200) {
-          dispatch(registerClose());
-          dispatch(reloadUser());
-        } else {
-          dispatch(errorSet(err));
-        }
-      });
+    .then((res) => {
+      if (res.status === 200) {
+        dispatch(registerClose());
+        dispatch(reloadUser());
+      }
+    })
+    .catch((err) => {
+      dispatch(errorSet(err));
+    });
   };
 }

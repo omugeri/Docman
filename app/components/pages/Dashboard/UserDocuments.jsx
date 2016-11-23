@@ -72,6 +72,6 @@ function mapStateToProps(state) {
 }
 export default connect(mapStateToProps, { displayActions, openUserDoc })(UserDocuments);
 
-Document.propTypes = {
+UserDocuments.propTypes = {
   page: PropTypes.number,
 };

@@ -2,7 +2,6 @@ import React from 'react';
 import { Router, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { purple500 } from 'material-ui/styles/colors';
-import { MuiThemeProvider, getMuiTheme } from 'material-ui/styles';
 import { RaisedButton, AppBar, IconButton } from 'material-ui';
 import request from 'superagent';
 import bgimage from 'file!../../../shared/images/doc_bg.jpeg';
@@ -24,7 +23,7 @@ const style = {
   },
 };
 
-class Home extends React.Component {
+export class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -103,15 +102,6 @@ class Home extends React.Component {
             <h1> DOCMAN </h1>
             <p> Out with the old in with the new.</p>
             <p>Track files through the whole organization</p>
-            <div>
-              <RaisedButton
-                className={styles.action}
-                secondary
-                label="GET STARTED"
-                onClick={this.handleRegister}
-              />
-
-            </div>
           </div>
 
       </div>
@@ -124,4 +114,5 @@ function mapStateToProps(state) {
     error: state.auth.message,
   };
 }
+
 export default connect(mapStateToProps, { errorSet })(Home);
