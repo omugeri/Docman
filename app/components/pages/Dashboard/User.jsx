@@ -67,7 +67,7 @@ class User extends React.Component {
                 <TableHeaderColumn>Status</TableHeaderColumn>
               </TableRow>
             </TableHeader>
-            <TableBody>
+            <TableBody style={{ textColor: '#000'}}>
               {userTable}
             </TableBody>
           </Table>
