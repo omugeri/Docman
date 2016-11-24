@@ -46,10 +46,10 @@ module.exports = {
     }, {
       test: /\.json?$/,
       loader: 'json'
-    }, {
-      test: /\.(png|jpg)$/,
-      loader: 'file?name=[path][name].[ext]&context=./app/shared/images'
-    }, {
+    // }, {
+    //   test: /\.(png|jpg)$/,
+    //   loader: 'file?name=[path][name].[ext]&context=./app/shared/images'
+    // }, {
       test: /\.css$/,
       loader: ExtractTextPlugin.extract('style', 'css?modules&localIdentName=[name]---[local]---[hash:base64:5]!postcss')
     }]
