@@ -13,7 +13,7 @@ const webpackMiddleware = require('webpack-dev-middleware');
 const config = require('./webpack.config.js');
 const injectTapEventPlugin = require('react-tap-event-plugin');
 
-require('dotenv').load();
+// require('dotenv').load();
 injectTapEventPlugin();
 
 
@@ -24,6 +24,7 @@ const port = process.env.PORT || 8080;
 
 
 if (isDeveloping) {
+  require('dotenv').load();
   const compiler = webpack(config);
   const middleware = webpackMiddleware(compiler, {
     publicPath: config.output.publicPath,

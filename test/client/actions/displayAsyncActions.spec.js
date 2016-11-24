@@ -103,4 +103,57 @@ describe('Display async actions', () => {
       expect(store.getActions()).to.eql(expectedActions);
     });
   });
+
+  it('simulates submitting an edited document', () => {
+    window.localStorage = {
+      getItem: () => {
+        return "\"token123\"";
+      },
+    };
+    const doc = {
+      id: 'hj098976fvu',
+      title: 'Names',
+      Content: 'too many names',
+      owner: 'ganjez',
+    };
+    const res = {
+      status: 200,
+    };
+    const id = 'hj098976fvu';
+    mock
+    .put(`/api/documents/${id}`, () => {
+      return res;
+    });
+    const expectedAction = [{
+      type: 'CHANGE_PAGE',
+      page: 1,
+    }];
+    const store = mockStore({ doc });
+    return store.dispatch(displayActions.handleEditSubmit(doc))
+    .then(() => {
+      expect(store.getActions()).to.eql(expectedAction);
+    });
+  });
+  it('simulates deleting documents', () => {
+    window.localStorage = {
+      getItem: () => {
+        return "\"token123\"";
+      },
+    };
+    const res = { status: 200 }
+    const doc = 'hj098976fvu';
+    mock
+    .del(`/api/documents/${doc}`, () => {
+      return res;
+    });
+    const expectedAction = [{
+      type: 'CHANGE_PAGE',
+      page: 1,
+    }];
+    const store = mockStore({ doc });
+    return store.dispatch(displayActions.deleteDoc(doc))
+    .then(() => {
+      expect(store.getActions()).to.eql(expectedAction);
+    });
+  });
 });

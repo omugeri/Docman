@@ -1,8 +1,8 @@
 import React from 'react';
-import { mount, shallow, render } from 'enzyme';
+import { shallow } from 'enzyme';
 import { expect } from 'chai';
 
-import Base from '../../../app/components/pages/Dashboard/Base.jsx';
+import Base from '../../../app/components/pages/Dashboard/Base';
 
 const wrapper = shallow(<Base />);
 

@@ -1,0 +1,557 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for components/pages/Dashboard/Menu.jsx</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../index.html">All files</a> / <a href="index.html">components/pages/Dashboard</a> Menu.jsx
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">37.5% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>15/40</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/10</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/8</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">37.5% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>15/40</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
+import { Paper, Menu, MenuItem } from 'material-ui';
+import Dashboardicon from 'material-ui/svg-icons/action/dashboard.js';
+import Usersicon from 'material-ui/svg-icons/action/supervisor-account.js';
+import Documentsicon from 'material-ui/svg-icons/action/assignment.js';
+import request from 'superagent';
+// import styles from '../../../shared/styles/styles.css';
+import * as menuActions from '../../../actions/menuActions';
+import * as displayActions from '../../../actions/displayActions';
+import Info from './Info.jsx';
+import User from './User.jsx';
+import Documents from './Document.jsx';
+&nbsp;
+const style = {
+  paper: {
+    display: 'inline-block',
+    float: 'left',
+    margin: '0px 0px 50px 0',
+  },
+  rightIcon: {
+    textAlign: 'center',
+    lineHeight: '24px',
+  },
+  leftIcon: {
+    color: '#ffffff',
+  },
+  item: {
+    height: '25%',
+    padding: '10%',
+    color: '#fff',
+  },
+};
+&nbsp;
+class SideMenu extends React.Component {
+<span class="fstat-no" title="function not covered" >  constructor(</span>props) <span class="cstat-no" title="statement not covered" >{</span>
+    super(props);
+<span class="cstat-no" title="statement not covered" >    this.onDashboardChange = this.onDashboardChange.bind(this);</span>
+<span class="cstat-no" title="statement not covered" >    this.onUserChange = this.onUserChange.bind(this);</span>
+<span class="cstat-no" title="statement not covered" >    this.onDocumentChange = this.onDocumentChange.bind(this);</span>
+<span class="cstat-no" title="statement not covered" >    this.onRoleChange = this.onRoleChange.bind(this);</span>
+  }
+  onDashboardChange = <span class="fstat-no" title="function not covered" >() =&gt; </span>{
+    c</span>onst token = <span class="cstat-no" title="statement not covered" >window.localStorage.getItem('token').replace(/"/g, '');
+    c</span>onst dashboard = <span class="cstat-no" title="statement not covered" >{
+      dashboard: true,
+      users: false,
+      documents: false,
+      roles: false,
+    };
+<span class="cstat-no" title="statement not covered" >    this.props.openDashboard(true);</span>
+  }
+  onUserChange = <span class="fstat-no" title="function not covered" >() =&gt; </span>{
+    c</span>onst token = <span class="cstat-no" title="statement not covered" >window.localStorage.getItem('token').replace(/"/g, '');
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    request</span>
+      .get('/api/users/')
+      .set({ 'x-access-token': token })
+      .accept('json')
+      .end(<span class="fstat-no" title="function not covered" >(</span>err, res) =&gt; {
+        c</span>onst user = <span class="cstat-no" title="statement not covered" >JSON.parse(res.text);
+<span class="cstat-no" title="statement not covered" >        if (res.status === 401){</span>
+<span class="cstat-no" title="statement not covered" >          browserHistory.push('/');</span>
+        }
+<span class="cstat-no" title="statement not covered" >        this.props.displayUsers(user);</span>
+&nbsp;
+        c</span>onst users = <span class="cstat-no" title="statement not covered" >true;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        this.props.openUsers(users);</span>
+      });
+  }
+  onDocumentChange = <span class="fstat-no" title="function not covered" >() =&gt; </span>{
+<span class="cstat-no" title="statement not covered" >    this.props.reloadPage(this.props.page);</span>
+  }
+  onRoleChange = <span class="fstat-no" title="function not covered" >() =&gt; </span>{
+    c</span>onst token = <span class="cstat-no" title="statement not covered" >window.localStorage.getItem('token').replace(/"/g, '');
+<span class="cstat-no" title="statement not covered" >    request</span>
+      .get('/api/roles/')
+      .set({ 'x-access-token': token })
+      .accept('json')
+      .end(<span class="fstat-no" title="function not covered" >(</span>res) =&gt; {
+        c</span>onst roles = <span class="cstat-no" title="statement not covered" >JSON.parse(res.text);
+<span class="cstat-no" title="statement not covered" >        this.props.displayRoles(roles);</span>
+        c</span>onst roleMenu = <span class="cstat-no" title="statement not covered" >{
+          dashboard: false,
+          users: false,
+          documents: false,
+          roles: true,
+        };
+<span class="cstat-no" title="statement not covered" >        this.props.openRoles(roleMenu);</span>
+      });
+  }
+  render() {
+<span class="cstat-no" title="statement not covered" >    return (</span>
+      &lt;div&gt;
+        &lt;Paper&gt;
+          &lt;Menu style={style.paper} &gt;
+            &lt;MenuItem
+              primaryText="Dashboard"
+              leftIcon={&lt;Dashboardicon className="styles.material-icons.md-light" /&gt;}
+              onClick={this.onDashboardChange}
+              style={style.item}
+            /&gt;
+            &lt;MenuItem
+              primaryText="Users"
+              leftIcon={&lt;Usersicon /&gt;}
+              onClick={this.onUserChange}
+              style={style.item}
+            /&gt;
+            &lt;MenuItem
+              primaryText="Documents"
+              leftIcon={&lt;Documentsicon /&gt;}
+              onClick={this.onDocumentChange}
+              style={style.item}
+            /&gt;
+          &lt;/Menu&gt;
+        &lt;/Paper&gt;
+        { this.props.documents ? &lt;Documents
+          display={this.props.docInfo}
+          reload={this.onDocumentChange}
+        /&gt; : true}
+        { this.props.dashboard ? &lt;Info display={this.props.dashboardInfo} /&gt; : true }
+        { this.props.users ? &lt;User display={this.props.userInfo} /&gt; : true }
+      &lt;/div&gt;
+    );
+  }
+}
+&nbsp;
+f</span>unction <span class="fstat-no" title="function not covered" >mapStateToProps(state) {
+<span class="cstat-no" title="statement not covered" >  return {</span>
+    dashboard: state.menu.dashboard,
+    users: state.menu.users,
+    documents: state.menu.documents,
+    roles: state.menu.roles,
+    userInfo: state.display.users,
+    roleInfo: state.display.roles,
+    docInfo: state.display.docs,
+    page: state.display.page,
+    dashboardInfo: state.display.dashboard,
+  };
+}
+export default connect(
+  mapStateToProps,
+  Object.assign({}, displayActions, menuActions)
+)(SideMenu);
+&nbsp;
+SideMenu.propTypes = {
+  dashboard: PropTypes.bool,
+  users: PropTypes.bool,
+  page: PropTypes.number,
+  documents: PropTypes.bool,
+  userInfo: PropTypes.array,
+  docInfo: PropTypes.array,
+  dashboardInfo: PropTypes.object,
+  openRoles: PropTypes.func,
+  openUsers: PropTypes.func,
+  openDashboard: PropTypes.func,
+  openDocuments: PropTypes.func,
+  displayDocs: PropTypes.func,
+  displayRoles: PropTypes.func,
+  displayUsers: PropTypes.func,
+  reloadPage: PropTypes.func,
+};
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Nov 23 2016 20:59:43 GMT+0300 (EAT)
+</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

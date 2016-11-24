@@ -12,7 +12,7 @@ const Dstyle = {
   borderRadius: '10px',
 };
 
-class Signup extends React.Component {
+export class Signup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -95,6 +95,7 @@ class Signup extends React.Component {
               /><br />
               <TextField
                 errorText={this.error}
+                type="email"
                 floatingLabelText="Email"
                 name="email"
                 value={this.email}
