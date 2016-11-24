@@ -22,9 +22,9 @@ const isDeveloping = process.env.NODE_ENV !== 'production';
 const port = process.env.PORT || 8080;
 
 
-
 if (isDeveloping) {
   require('dotenv').load();
+
   const compiler = webpack(config);
   const middleware = webpackMiddleware(compiler, {
     publicPath: config.output.publicPath,
