@@ -1,6 +1,6 @@
 const menu = {
   users: false,
-  documents: false,
+  documents: true,
   dashboard: false,
 }
 export default function menuReducers(state = menu, action) {
