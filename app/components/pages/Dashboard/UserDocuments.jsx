@@ -26,19 +26,19 @@ class UserDocuments extends React.Component {
         label="Cancel"
         secondary
         onTouchTap={this.handleClose}
-      />
+      />,
     ];
     const docTable = this.props.display.userDocs.map((doc) => {
       return (
         <div key={doc._id} >
-          <Card
-          >
+          <Card>
             <CardTitle
               title={doc.title}
               subtitle={doc.owner}
             />
             <CardText
               expandable={false}
+              style={{ textColor: '#000' }}
             >
               {doc.content}
             </CardText>
@@ -56,9 +56,9 @@ class UserDocuments extends React.Component {
           modal={false}
           autoScrollBodyContent={true}
         >
-        {/*<div>*/}
-          {docTable}
-        {/*</div>*/}
+          <div>
+            {docTable}
+          </div>
         </Dialog>
       </div>
     );
@@ -72,6 +72,8 @@ function mapStateToProps(state) {
 }
 export default connect(mapStateToProps, { displayActions, openUserDoc })(UserDocuments);
 
-Document.propTypes = {
-  page: PropTypes.number,
+UserDocuments.propTypes = {
+  userDocOpen: PropTypes.func,
+  openUserDoc: PropTypes.func,
+  display: PropTypes.func,
 };

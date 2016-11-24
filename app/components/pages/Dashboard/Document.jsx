@@ -86,6 +86,7 @@ class Document extends React.Component {
     this.setState({ open: false });
   }
   handleEditSubmit = (doc) => {
+    this.setState({ edit: false });
     this.props.handleEditSubmit(doc);
   }
   handleId = (id) => {

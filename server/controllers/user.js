@@ -1,8 +1,6 @@
-require('dotenv').load();
+// require('dotenv').load();
 const User = require('./../models/user');
 const nJwt = require('njwt');
-
-const secret = process.env.SECRET;
 
 const userCntrl = {
 
@@ -11,7 +9,7 @@ const userCntrl = {
     const token = req.body.token || req.query.token || req.headers['x-access-token'];
     if (token) {
       try {
-        const verified = nJwt.verify(token, secret);
+        const verified = nJwt.verify(token, process.env.SECRET);
         req.token = verified;
         next();
       } catch (e) {
@@ -58,7 +56,6 @@ const userCntrl = {
   },
   all: (req, res) => {
     User.find((err, users) => {
-      console.log('I ALSO GET HERE');
       if (err) {
         return res.send(err);
       }

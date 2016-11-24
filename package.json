@@ -8,9 +8,12 @@
   },
   "scripts": {
     "pretest": "node server/seeder/seeds.js",
-    "test": "mocha -w test/frontend/helpers/browser.js test/frontend/*.spec.js",
-    "start": "node server.js"
+    "testBend": "istanbul cover ./node_modules/mocha/bin/_mocha test/server/*.spec.js && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "test": "istanbul cover ./node_modules/mocha/bin/_mocha -- --compilers .js:babel-core/register -w --require test/client/helpers/browser.js test/client/**/*.spec.js && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "start": "node server.js",
+    "heroku-postbuild": "webpack"
   },
+
   "repository": {
     "type": "git",
     "url": "git+https://github.com/andela-omugeri/Checkpoint_3.git"
@@ -43,6 +46,7 @@
     "express-session": "^1.14.1",
     "extract-text-webpack-plugin": "^1.0.1",
     "html-webpack-plugin": "^2.22.0",
+    "istanbul": "^1.0.0-alpha.2",
     "jsdom": "^9.8.0",
     "jsonwebtoken": "^7.1.9",
     "material-ui": "^0.16.0",
@@ -56,10 +60,10 @@
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "path": "^0.12.7",
-    "react": "^15.3.2",
-    "react-addons-test-utils": "^15.3.2",
+    "react": "15.3.2",
+    "react-addons-test-utils": "15.3.2",
     "react-d3-basic": "^1.6.11",
-    "react-dom": "^15.3.2",
+    "react-dom": "15.3.2",
     "react-redux": "^4.4.5",
     "react-router": "^2.8.1",
     "react-tap-event-plugin": "^1.0.0",
@@ -84,11 +88,14 @@
     "eslint-plugin-react": "^6.2.2",
     "file-loader": "^0.9.0",
     "ignore-styles": "^5.0.1",
-    "istanbul": "^0.4.5",
+    "istanbul": "^1.0.0-alpha.2",
     "mocha": "^3.0.2",
     "mocha-lcov-reporter": "^1.2.0",
     "redux-devtools": "^3.3.1",
+    "redux-mock-store": "^1.2.1",
+    "sinon": "^1.17.6",
     "style-loader": "^0.13.1",
+    "superagent-mocker": "^0.5.2",
     "webpack": "^1.13.2",
     "webpack-dev-server": "^1.16.2"
   }
