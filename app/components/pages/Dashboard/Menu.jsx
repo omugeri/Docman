@@ -44,9 +44,9 @@ class SideMenu extends React.Component {
   onDashboardChange = () => {
     const token = window.localStorage.getItem('token').replace(/"/g, '');
     const dashboard = {
-      dashboard: true,
+      dashboard: false,
       users: false,
-      documents: false,
+      documents: true,
       roles: false,
     };
     this.props.openDashboard(true);
@@ -96,12 +96,12 @@ class SideMenu extends React.Component {
       <div>
         <Paper>
           <Menu style={style.paper} >
-            <MenuItem
+            {/*<MenuItem
               primaryText="Dashboard"
               leftIcon={<Dashboardicon className="styles.material-icons.md-light" />}
               onClick={this.onDashboardChange}
               style={style.item}
-            />
+            />*/}
             <MenuItem
               primaryText="Users"
               leftIcon={<Usersicon />}
