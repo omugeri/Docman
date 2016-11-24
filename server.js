@@ -3,10 +3,8 @@ const path = require('path');
 const express = require('express');
 const mongoose = require('mongoose');
 const router = require('./server/routes');
-const passport = require('passport');
 const webpack = require('webpack');
 const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 // It serves the files emitted from webpack over a connect server
 const webpackMiddleware = require('webpack-dev-middleware');

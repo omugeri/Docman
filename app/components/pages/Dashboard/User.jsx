@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Card, FloatingActionButton } from 'material-ui';
 import { Table, TableBody, TableHeader,
@@ -10,7 +10,6 @@ import Documents from './UserDocuments.jsx';
 
 
 const div2 = {
-  // width: '35%',
   float: 'left',
   marginTop: '2%',
   marginLeft: '5%',
@@ -54,24 +53,24 @@ class User extends React.Component {
         >
           <ContentAdd />
         </FloatingActionButton>
-        <div style={{width: '35%', float: 'left'}}>
-        <Card style={div2}>
-          <Table
-            onRowSelection={(row) => {
-              this.props.selectedUser(row);
-            }}
-          >
-            <TableHeader>
-              <TableRow >
-                <TableHeaderColumn>Full Name</TableHeaderColumn>
-                <TableHeaderColumn>Status</TableHeaderColumn>
-              </TableRow>
-            </TableHeader>
-            <TableBody style={{ textColor: '#000'}}>
-              {userTable}
-            </TableBody>
-          </Table>
-        </Card>
+        <div style={{ width: '50%', float: 'left' }}>
+          <Card style={div2}>
+            <Table
+              onRowSelection={(row) => {
+                this.props.selectedUser(row);
+              }}
+            >
+              <TableHeader>
+                <TableRow >
+                  <TableHeaderColumn>Full Name</TableHeaderColumn>
+                  <TableHeaderColumn>Status</TableHeaderColumn>
+                </TableRow>
+              </TableHeader>
+              <TableBody >
+                {userTable}
+              </TableBody>
+            </Table>
+          </Card>
         </div>
         <Signup
           open={this.state.register}
@@ -79,7 +78,6 @@ class User extends React.Component {
         />
         { this.props.userDocOpen ? <Documents
           display={this.props.docInfo}
-          //reload={this.onUserChange}
         /> : true}
       </div>
 
@@ -93,3 +91,8 @@ function mapStateToProps(state) {
   };
 }
 export default connect(mapStateToProps, { selectedUser })(User);
+User.propTypes = {
+  userDocOpen: PropTypes.func,
+  selectedUser: PropTypes.func,
+  display: PropTypes.func,
+};
