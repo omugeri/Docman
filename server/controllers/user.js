@@ -1,4 +1,4 @@
-require('dotenv').load();
+// require('dotenv').load();
 const User = require('./../models/user');
 const nJwt = require('njwt');
 
