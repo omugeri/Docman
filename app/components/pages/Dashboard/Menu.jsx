@@ -33,7 +33,6 @@ const style = {
 class SideMenu extends React.Component {
   constructor(props) {
     super(props);
-    this.onDashboardChange = this.onDashboardChange.bind(this);
     this.onUserChange = this.onUserChange.bind(this);
     this.onDocumentChange = this.onDocumentChange.bind(this);
     this.onRoleChange = this.onRoleChange.bind(this);
