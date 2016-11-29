@@ -92,7 +92,7 @@ function mapStateToProps(state) {
 }
 export default connect(mapStateToProps, { selectedUser })(User);
 User.propTypes = {
-  userDocOpen: PropTypes.func,
+  userDocOpen: PropTypes.boolean,
   selectedUser: PropTypes.func,
-  display: PropTypes.func,
+  display: PropTypes.array,
 };

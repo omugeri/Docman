@@ -105,6 +105,9 @@ class Document extends React.Component {
     this.setState({ permissions: 'Private' });
   };
   render() {
+    if(!this.props.display){
+      return (<div> Loading </div>)
+    }
     const docTable = this.props.display.map((doc) => {
       return (
         <div key={doc._id}>

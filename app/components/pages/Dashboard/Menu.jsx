@@ -137,6 +137,6 @@ SideMenu.propTypes = {
   openDocuments: PropTypes.func,
   displayDocs: PropTypes.func,
   displayRoles: PropTypes.func,
-  displayUsers: PropTypes.func,
+  displayUsers: PropTypes.array,
   reloadPage: PropTypes.func,
 };
