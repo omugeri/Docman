@@ -6,6 +6,7 @@ import { Table, TableBody, TableHeader,
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import Signup from '../Authentication/Signup.jsx';
 import { selectedUser } from '../../../actions/displayActions';
+import { errorSet } from '../../../actions/authActions';
 import Documents from './UserDocuments.jsx';
 
 
@@ -34,6 +35,7 @@ class User extends React.Component {
   }
   handleRegisterClose = () => {
     this.setState({ register: false });
+    this.props.errorSet('')
   }
   render() {
     const userTable = this.props.display.map((user) => {
@@ -90,7 +92,8 @@ function mapStateToProps(state) {
     userDocOpen: state.menu.userDocOpen,
   };
 }
-export default connect(mapStateToProps, { selectedUser })(User);
+const theActions = Object.assign({}, { selectedUser }, { errorSet });
+export default connect(mapStateToProps, theActions)(User);
 User.propTypes = {
   userDocOpen: PropTypes.boolean,
   selectedUser: PropTypes.func,

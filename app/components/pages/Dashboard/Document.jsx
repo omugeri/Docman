@@ -55,13 +55,18 @@ class Document extends React.Component {
   }
   handleDialog = (doc) => {
     const id = doc._id;
-    const user = window.localStorage.getItem('username');
-    if (user === doc.owner) {
+
+    if (this.props.user === doc.owner) {
+      this.setState({ toast: false });
       return this.setState({ delete: id });
-    } else {
-      this.props.errorSet('Cannot delete another user\'s d');
-      this.setState({ toast: true });
+    } else if (!this.props.user){
+      if (this.props.permissions === 'Admin') {
+        return this.setState({ delete: id });
+      }
     }
+    console.log(this.props.user);
+    this.props.errorSet('Cannot delete another user\'s document');
+    this.setState({ toast: true });
   }
   handleDelClose = () => {
     this.setState({ delete: false });
@@ -74,11 +79,16 @@ class Document extends React.Component {
   };
   handleEdit = (doc) => {
     const currentId = doc._id;
-    this.setState({
-      edit: currentId,
-      title: doc.title,
-      content: doc.content,
-    });
+    if (this.props.user === doc.owner) {
+      this.setState({ toast: false });
+      return this.setState({
+        edit: currentId,
+        title: doc.title,
+        content: doc.content,
+      });
+    }
+    this.props.errorSet('Cannot edit another user\'s document');
+    this.setState({ toast: true });
   }
   handleCloseEdit = () => {
     this.setState({ edit: false });
@@ -233,6 +243,8 @@ function mapStateToProps(state) {
     page: state.display.page,
     dashboardInfo: state.display.dashboard,
     error: state.auth.error,
+    user: window.localStorage.getItem('username'),
+    permissions: window.localStorage.getItem('permissions'),
   };
 }
 const docActions = Object.assign({}, { displayActions }, { errorSet });

@@ -1,6 +1,6 @@
 import React from 'react';
 import Dialog from 'material-ui/Dialog';
-import { FlatButton, TextField } from 'material-ui';
+import { FlatButton, TextField, Snackbar } from 'material-ui';
 import { connect } from 'react-redux';
 import { create } from '../../../actions/authActions';
 
@@ -22,6 +22,7 @@ export class Signup extends React.Component {
       username: '',
       password: '',
       error: '',
+      toast: false,
     };
     this.handleFirst = this.handleFirst.bind(this);
     this.handleLast = this.handleLast.bind(this);
@@ -80,7 +81,6 @@ export class Signup extends React.Component {
           <div>
             <form>
               <TextField
-                errorText={this.props.error}
                 floatingLabelText="First Name"
                 name="first"
                 value={this.first}
@@ -88,7 +88,6 @@ export class Signup extends React.Component {
                 style={{ width: '80%' }}
               /><br />
               <TextField
-                errorText={this.props.error}
                 floatingLabelText="Last Name"
                 name="last"
                 value={this.last}
@@ -96,7 +95,7 @@ export class Signup extends React.Component {
                 style={{ width: '80%' }}
               /><br />
               <TextField
-                errorText={this.error}
+                errorText={this.props.error}
                 type="email"
                 floatingLabelText="Email"
                 name="email"
@@ -113,7 +112,6 @@ export class Signup extends React.Component {
               /><br />
               <br />
               <TextField
-                errorText={this.error}
                 type="password"
                 floatingLabelText="password"
                 name="password"
@@ -124,12 +122,20 @@ export class Signup extends React.Component {
               <br />
             </form>
           </div>
+          <Snackbar
+            open={this.state.toast}
+            message={this.props.error}
+            autoHideDuration={4000}
+            onRequestClose={this.handleRequestClose}
+          />
         </Dialog>
       </div>
        );
   }
 }
 function mapStateToProps(state) {
-  return {};
+  return {
+    error: state.auth.error,
+  };
 }
 export default connect(mapStateToProps, { create })(Signup);
