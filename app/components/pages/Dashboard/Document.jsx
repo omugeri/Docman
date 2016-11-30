@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import { Card, CardText, CardTitle, CardActions } from 'material-ui/Card';
-import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import {
   FloatingActionButton,
@@ -13,7 +12,9 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import Edit from './Edit.jsx';
 import Delete from './Delete.jsx';
 import * as displayActions from '../../../actions/displayActions';
+import { errorSet } from '../../../actions/authActions';
 import Pagination from './Pagination.jsx';
+import Snackbar from 'material-ui/Snackbar';
 
 const docStyle = {
   width: '60%',
@@ -40,6 +41,7 @@ class Document extends React.Component {
       toggle: false,
       edit: false,
       delete: false,
+      toast: false,
     };
     this.handleId = this.handleId.bind(this);
     this.handleTitle = this.handleTitle.bind(this);
@@ -51,8 +53,15 @@ class Document extends React.Component {
     this.handleDelete = this.handleDelete.bind(this);
     this.handleDialog = this.handleDialog.bind(this);
   }
-  handleDialog = (id) => {
-    this.setState({ delete: id });
+  handleDialog = (doc) => {
+    const id = doc._id;
+    const user = window.localStorage.getItem('username');
+    if (user === doc.owner) {
+      return this.setState({ delete: id });
+    } else {
+      this.props.errorSet('Cannot delete another user\'s d');
+      this.setState({ toast: true });
+    }
   }
   handleDelClose = () => {
     this.setState({ delete: false });
@@ -128,7 +137,7 @@ class Document extends React.Component {
               onTouchTap={() => { this.handleEdit(doc); }} />
               <MenuItem primaryText="Delete"
               value={doc._id}
-              onTouchTap={() => { this.handleDialog(doc._id); }}
+              onTouchTap={() => { this.handleDialog(doc); }}
               />
             </IconMenu>
             <CardTitle
@@ -171,6 +180,7 @@ class Document extends React.Component {
               handleDelete={this.handleDelete}
               title={doc.title}
               id={doc._id}
+              owner={doc.owner}
             />
           </div>
         </div>
@@ -200,6 +210,12 @@ class Document extends React.Component {
         <div>
           {docTable}
         </div>
+        <Snackbar
+          open={this.state.toast}
+          message={this.props.error}
+          autoHideDuration={4000}
+          onRequestClose={this.handleRequestClose}
+        />
         <Pagination onDocumentChange={this.props.reload} />
         </div>
     );
@@ -216,9 +232,11 @@ function mapStateToProps(state) {
     docInfo: state.display.docs,
     page: state.display.page,
     dashboardInfo: state.display.dashboard,
+    error: state.auth.error,
   };
 }
-export default connect(mapStateToProps, displayActions)(Document);
+const docActions = Object.assign({}, { displayActions }, { errorSet });
+export default connect(mapStateToProps, docActions)(Document);
 
 Document.propTypes = {
   page: PropTypes.number,
