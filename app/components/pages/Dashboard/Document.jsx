@@ -9,21 +9,20 @@ import {
   IconButton } from 'material-ui';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import request from 'superagent';
 import Edit from './Edit.jsx';
 import Delete from './Delete.jsx';
 import * as displayActions from '../../../actions/displayActions';
 import Pagination from './Pagination.jsx';
 
 const docStyle = {
-  width: '30%',
-  float: 'left',
+  width: '60%',
+  // float: 'left',
   marginTop: '2%',
-  marginLeft: '5%',
+  marginLeft: '30%',
 };
 const style = {
-  float: 'right',
-  marginRight: '2%',
+  float: 'left',
+  marginLeft: '10%',
   marginTop: '2%',
 };
 
@@ -58,7 +57,6 @@ class Document extends React.Component {
     this.setState({ delete: false });
   }
   handleDelete = (doc) => {
-    console.log('GETS TO FUNCTION');
     this.props.deleteDoc(doc);
   }
   handleExpand = () => {
@@ -88,6 +86,7 @@ class Document extends React.Component {
     this.setState({ open: false });
   }
   handleEditSubmit = (doc) => {
+    this.setState({ edit: false });
     this.props.handleEditSubmit(doc);
   }
   handleId = (id) => {
@@ -106,6 +105,9 @@ class Document extends React.Component {
     this.setState({ permissions: 'Private' });
   };
   render() {
+    if(!this.props.display){
+      return (<div> Loading </div>)
+    }
     const docTable = this.props.display.map((doc) => {
       return (
         <div key={doc._id}>
@@ -175,7 +177,6 @@ class Document extends React.Component {
     });
     return (
       <div>
-      <div>
         <FloatingActionButton
           secondary={true}
           style={style}
@@ -183,7 +184,6 @@ class Document extends React.Component {
         >
           <ContentAdd />
         </FloatingActionButton>
-        </div>
         <div>
         <Edit
           open={this.state.open}
@@ -199,7 +199,6 @@ class Document extends React.Component {
         <div>
           {docTable}
         </div>
-        <br />
         <Pagination onDocumentChange={this.props.reload} />
         </div>
     );

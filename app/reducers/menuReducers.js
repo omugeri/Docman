@@ -1,20 +1,26 @@
-export default function menuReducers(state={}, action) {
+const menu = {
+  users: false,
+  documents: true,
+  dashboard: false,
+};
+export default function menuReducers(state = menu, action) {
   switch (action.type) {
     case 'OPEN_USERS':
       return Object.assign({}, state, {
-        users: action.users.users,
-        documents: action.users.documents,
-        roles: action.users.roles,
-        dashboard: action.users.dashboard,
+        users: action.users,
+        documents: false,
+        dashboard: false,
       });
     case 'OPEN_DOCUMENTS':
       return Object.assign({}, state, {
-        users: action.documents.users,
-        documents: action.documents.documents,
-        roles: action.documents.roles,
-        dashboard: action.documents.dashboard,
+        users: false,
+        documents: action.documents,
+        dashboard: false,
       });
-
+    case 'OPEN_USER_DOC':
+      return Object.assign({}, state, {
+        userDocOpen: action.userDocOpen,
+      });
     default:
       return state;
 

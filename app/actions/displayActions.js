@@ -1,5 +1,6 @@
 import request from 'superagent';
-import { openDocuments } from './menuActions.js';
+import { openDocuments, openUserDoc } from './menuActions.js';
+import { errorSet } from './authActions.js';
 
 export function displayUsers(users) {
   return {
@@ -7,18 +8,14 @@ export function displayUsers(users) {
     users,
   };
 }
+
 export function displayDocs(documents) {
   return {
     type: 'DISPLAY_DOCUMENTS',
     documents,
   };
 }
-export function displayRoles(roles) {
-  return {
-    type: 'DISPLAY_ROLES',
-    roles,
-  };
-}
+
 export function displayDashboard(info) {
   return {
     type: 'DISPLAY_DASHBOARD',
@@ -37,10 +34,16 @@ export function editDoc(editDoc) {
     editDoc,
   };
 }
+export function userDoc(userDocs) {
+  return {
+    type: 'CURRENT_DOCS',
+    userDocs,
+  };
+}
 export function createDoc(doc) {
   return (dispatch) => {
     const token = window.localStorage.getItem('token').replace(/"/g, '');
-    request
+    return request
     .post('/api/documents')
     .set({ 'x-access-token': token })
     .send({
@@ -48,13 +51,27 @@ export function createDoc(doc) {
       content: doc.content,
       permissions: doc.permissions,
     })
-      .end((err, res) => {
+    .then((res) => {
+      if (res.status === 200) {
+        dispatch(reloadPage(1));
+      }
+    });
+  };
+}
+export function selectedUser(row) {
+  return (dispatch, getState) => {
+    const docs = getState().display.users[row]._id;
+    const token = window.localStorage.getItem('token').replace(/"/g, '');
+    return request
+      .get(`/api/users/${docs}/documents`)
+      .set({ 'x-access-token': token })
+      .then((res) => {
         if (res.status === 200) {
-          dispatch(reloadPage(1));
+          const userDocs = res.body;
+          dispatch(userDoc(userDocs));
+          dispatch(openUserDoc(true));
         } else {
-          this.setState({
-            error: true,
-          });
+          dispatch(errorSet(res.text));
         }
       });
   };
@@ -64,33 +81,28 @@ export function reloadPage(page) {
   return (dispatch) => {
     dispatch(changePage(page));
     const token = window.localStorage.getItem('token').replace(/"/g, '');
-    request
+    return (request
       .get('/api/documents/')
       .set({ 'x-access-token': token })
       .query({
-        limit: 6,
+        limit: 3,
         page,
       })
       .accept('json')
-      .end((err, res) => {
-        const documents = JSON.parse(res.text);
+      .then((res) => {
+        const documents = res.body;
         dispatch(displayDocs(documents));
-        const documentsMenu = {
-          dashboard: false,
-          users: false,
-          documents: true,
-          roles: false,
-        };
+        const documentsMenu = true;
         dispatch(openDocuments(documentsMenu));
-      });
+      })
+    )
   };
 }
 export function handleEditSubmit(doc) {
   return (dispatch) => {
     const id = doc.id;
-    console.log('id is: ', doc);
     const token = window.localStorage.getItem('token').replace(/"/g, '');
-    request
+    return request
       .put(`/api/documents/${id}`)
       .set({ 'x-access-token': token })
       .send({
@@ -98,11 +110,9 @@ export function handleEditSubmit(doc) {
         content: doc.content,
         permissions: doc.permissions,
       })
-      .end((err, res) => {
-        if(res.status === 200) {
+      .then((res) => {
+        if (res.status === 200) {
           dispatch(reloadPage(1));
-        } else {
-          console.log('error: ', err);
         }
       });
   };
@@ -110,15 +120,14 @@ export function handleEditSubmit(doc) {
 export function deleteDoc(doc) {
   return (dispatch) => {
     const token = window.localStorage.getItem('token').replace(/"/g, '');
-    request
-      .delete(`/api/documents/${doc}`)
+    return request
+      .del(`/api/documents/${doc}`)
       .set({ 'x-access-token': token })
-      .end((err, res) => {
+      .then((res) => {
         if (res.status === 200) {
-          console.log(res.body.message);
           dispatch(reloadPage(1));
         } else {
-          console.log('err is: ', err);
+          return res;
         }
       });
   };

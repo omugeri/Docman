@@ -1,8 +1,8 @@
 require('babel-register')();
 
-var jsdom = require('jsdom').jsdom;
+const jsdom = require('jsdom').jsdom;
 
-var exposedProperties = ['window', 'navigator', 'document'];
+const exposedProperties = ['window', 'navigator', 'document'];
 
 global.document = jsdom('');
 global.window = document.defaultView;
@@ -22,7 +22,7 @@ function noop() {
 }
 
 require.extensions['.css'] = noop;
-documentRef = document;
+const documentRef = document;
 
 const m = require('module');
 const originalLoader = m._load;

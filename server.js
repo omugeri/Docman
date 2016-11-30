@@ -3,43 +3,43 @@ const path = require('path');
 const express = require('express');
 const mongoose = require('mongoose');
 const router = require('./server/routes');
-const passport = require('passport');
 const webpack = require('webpack');
 const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 // It serves the files emitted from webpack over a connect server
 const webpackMiddleware = require('webpack-dev-middleware');
 const config = require('./webpack.config.js');
 const injectTapEventPlugin = require('react-tap-event-plugin');
 
-require('dotenv').load();
+// require('dotenv').load();
 injectTapEventPlugin();
-
 
 const app = express();
 const isDeveloping = process.env.NODE_ENV !== 'production';
 const port = process.env.PORT || 8080;
 
+// the mpromise is deprecated so had to plugin another library
+mongoose.Promise = global.Promise;
 
+// applies if running on production mode
+app.use(express.static(__dirname + '/dist'));
 
 if (isDeveloping) {
+  require('dotenv').load();
+
   const compiler = webpack(config);
   const middleware = webpackMiddleware(compiler, {
     publicPath: config.output.publicPath,
-    contentBase: 'src',
+    historyApiFallback: true,
     stats: {
       colors: true,
       hash: false,
       timings: true,
       chunks: false,
       chunkModules: false,
-      modules: false
-    }
+      modules: false,
+    },
   });
-
-  // the mpromise is deprecated so had to plugin another library
-  mongoose.Promise = global.Promise;
   mongoose.connect('mongodb://localhost/docman');
 
   app.use(bodyParser.json());
@@ -50,15 +50,16 @@ if (isDeveloping) {
     res.write(middleware.fileSystem.readFileSync(path.join(__dirname, 'dist/index.html')));
     res.end();
   });
-
 } else {
-  // applies if running on production mode
+    // applies if running on production mode
+  mongoose.connect(process.env.MONGOLAB_URI);
+
   app.use(express.static(__dirname + '/dist'));
   router(app);
   app.get('*', function response(req, res) {
+    console.log('KITU TU');
     res.sendFile(path.join(__dirname, 'dist/index.html'));
   });
-
 }
 
 // START THE server

@@ -1,9 +1,9 @@
 import React from 'react';
 import { MuiThemeProvider, getMuiTheme } from 'material-ui/styles';
-import styles from './shared/styles/styles.css';
-import bgimage from 'file!./shared/images/doc_bg.jpeg';
 import { purple500 } from 'material-ui/styles/colors';
 import injectTapEventPlugin from 'react-tap-event-plugin';
+import bgimage from 'file!./shared/images/doc_bg.jpeg';
+import styles from './shared/styles/styles.css';
 
 injectTapEventPlugin();
 
@@ -42,8 +42,9 @@ const App = props => (
       {props.children}
     </div>
   </MuiThemeProvider>
-)
+);
+
 App.propTypes = {
-  children: React.PropTypes.node
+  children: React.PropTypes.node,
 };
 export default App;

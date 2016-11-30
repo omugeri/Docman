@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react';
 import { BottomNavigation, BottomNavigationItem } from 'material-ui/BottomNavigation';
 import NavigationArrowForward from 'material-ui/svg-icons/navigation/arrow-forward';
 import NavigationArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
-import Paper from 'material-ui/Paper';
 import { connect } from 'react-redux';
 import { reloadPage } from '../../../actions/displayActions';
 
@@ -22,7 +21,6 @@ class Pagination extends React.Component {
   previous = () => {
     if (this.props.page > 1) {
       const page = this.props.page - 1;
-      console.log('SHOULD CHANGE TO: ', page);
       this.props.reloadPage(page);
     }
   }
@@ -41,9 +39,9 @@ class Pagination extends React.Component {
   }
   render() {
     return (
-      // <Paper zDepth={1} style={paperStyle}>
       <BottomNavigation
-        style={paperStyle}>
+        style={paperStyle}
+      >
         <BottomNavigationItem
           label="Previous"
           icon={<NavigationArrowBack />}
@@ -55,7 +53,6 @@ class Pagination extends React.Component {
           onTouchTap={this.next}
         />
       </BottomNavigation>
-      // </Paper>
     );
   }
 }

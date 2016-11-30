@@ -1,16 +1,13 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
 import { Paper, Menu, MenuItem } from 'material-ui';
-import Dashboardicon from 'material-ui/svg-icons/action/dashboard.js';
 import Usersicon from 'material-ui/svg-icons/action/supervisor-account.js';
 import Documentsicon from 'material-ui/svg-icons/action/assignment.js';
-import Rolesicon from 'material-ui/svg-icons/action/lock-open.js';
 import request from 'superagent';
-// import styles from '../../../shared/styles/styles.css';
 import * as menuActions from '../../../actions/menuActions';
 import * as displayActions from '../../../actions/displayActions';
-import Info from './Info.jsx';
-import Display from './User.jsx';
+import User from './User.jsx';
 import Documents from './Document.jsx';
 
 const style = {
@@ -29,28 +26,16 @@ const style = {
   item: {
     height: '25%',
     padding: '10%',
-    // backgroundColor: '#9C27B0',
-    // opacity: '0.69'
+    color: '#fff',
   },
 };
 
 class SideMenu extends React.Component {
   constructor(props) {
     super(props);
-    this.onDashboardChange = this.onDashboardChange.bind(this);
     this.onUserChange = this.onUserChange.bind(this);
     this.onDocumentChange = this.onDocumentChange.bind(this);
     this.onRoleChange = this.onRoleChange.bind(this);
-  }
-  onDashboardChange = () => {
-    const token = window.localStorage.getItem('token').replace(/"/g, '');
-    const dashboard = {
-      dashboard: true,
-      users: false,
-      documents: false,
-      roles: false,
-    };
-    this.props.openDashboard(dashboard);
   }
   onUserChange = () => {
     const token = window.localStorage.getItem('token').replace(/"/g, '');
@@ -61,14 +46,14 @@ class SideMenu extends React.Component {
       .accept('json')
       .end((err, res) => {
         const user = JSON.parse(res.text);
+        if (res.status === 401) {
+          browserHistory.push('/');
+        }
         this.props.displayUsers(user);
-        const userMenu = {
-          users: true,
-          dashboard: false,
-          documents: false,
-          roles: false,
-        };
-        this.props.openUsers(userMenu);
+
+        const users = true;
+
+        this.props.openUsers(users);
       });
   }
   onDocumentChange = () => {
@@ -98,12 +83,6 @@ class SideMenu extends React.Component {
         <Paper>
           <Menu style={style.paper} >
             <MenuItem
-              primaryText="Dashboard"
-              leftIcon={<Dashboardicon className="styles.material-icons.md-light" />}
-              onClick={this.onDashboardChange}
-              style={style.item}
-            />
-            <MenuItem
               primaryText="Users"
               leftIcon={<Usersicon />}
               onClick={this.onUserChange}
@@ -115,20 +94,13 @@ class SideMenu extends React.Component {
               onClick={this.onDocumentChange}
               style={style.item}
             />
-            <MenuItem
-              primaryText="Roles"
-              leftIcon={<Rolesicon />}
-              onClick={this.onRoleChange}
-              style={style.item}
-            />
           </Menu>
         </Paper>
         { this.props.documents ? <Documents
           display={this.props.docInfo}
           reload={this.onDocumentChange}
         /> : true}
-        { this.props.dashboard ? <Info display={this.props.dashboardInfo} /> : true }
-        { this.props.users ? <Display display={this.props.userInfo} /> : true }
+        { this.props.users ? <User display={this.props.userInfo} /> : true }
       </div>
     );
   }
@@ -153,7 +125,6 @@ export default connect(
 )(SideMenu);
 
 SideMenu.propTypes = {
-  dashboard: PropTypes.bool,
   users: PropTypes.bool,
   page: PropTypes.number,
   documents: PropTypes.bool,
@@ -166,6 +137,6 @@ SideMenu.propTypes = {
   openDocuments: PropTypes.func,
   displayDocs: PropTypes.func,
   displayRoles: PropTypes.func,
-  displayUsers: PropTypes.func,
+  displayUsers: PropTypes.array,
   reloadPage: PropTypes.func,
 };

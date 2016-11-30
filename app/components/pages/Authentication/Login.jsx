@@ -1,28 +1,26 @@
 import React from 'react';
 import Dialog from 'material-ui/Dialog';
 import { FlatButton, TextField } from 'material-ui';
+import { connect } from 'react-redux';
 
 const Dstyle = {
   height: '100%',
   maxHeight: 'none',
   width: '25%',
   maxWidth: 'none',
-  borderRadius: '10px'
+  borderRadius: '10px',
 };
 
-export default class Login extends React.Component {
-
+export class Login extends React.Component {
   render() {
     const actions = [
       <FlatButton
         label="Cancel"
-        primary={true}
         onTouchTap={this.props.handleClose}
       />,
       <FlatButton
         label="Submit"
-        primary={true}
-        keyboardFocused={true}
+        //keyboardFocused={true}
         onTouchTap={this.props.handleSubmit}
       />,
     ];
@@ -39,6 +37,7 @@ export default class Login extends React.Component {
           <div>
             <form>
               <TextField
+                errorText={this.props.error}
                 floatingLabelText="UserName"
                 name="username"
                 value={this.props.username}
@@ -46,6 +45,7 @@ export default class Login extends React.Component {
               /><br />
               <br />
               <TextField
+                errorText={this.props.error}
                 type='password'
                 floatingLabelText="password"
                 name='password'
@@ -60,3 +60,9 @@ export default class Login extends React.Component {
        );
   }
 }
+function mapStateToProps (state) {
+  return {
+    error: state.auth.error,
+  }
+}
+export default connect(mapStateToProps)(Login);
