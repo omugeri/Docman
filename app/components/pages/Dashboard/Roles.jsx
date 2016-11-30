@@ -1,16 +1,14 @@
 import React, { PropTypes } from 'react';
 import { Card, CardText, CardTitle, CardActions } from 'material-ui/Card';
-import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import {
   FloatingActionButton,
   IconMenu,
   MenuItem,
   IconButton } from 'material-ui';
-import CircularProgress from 'material-ui/CircularProgress';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import Edit from './Edit.jsx';
+import EditRole from './EditRole.jsx';
 import Delete from './Delete.jsx';
 import * as displayActions from '../../../actions/displayActions';
 import Pagination from './Pagination.jsx';
@@ -32,11 +30,9 @@ class Roles extends React.Component {
     super(props);
     this.state = {
       title: '',
-      expanded: false,
       open: false,
       error: false,
-      permissions: 'Public',
-      toggle: false,
+      toast: false,
       edit: false,
       delete: false,
     };
@@ -45,7 +41,6 @@ class Roles extends React.Component {
     this.handleClose = this.handleClose.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleOpen = this.handleOpen.bind(this);
-    this.handleToggle = this.handleToggle.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.handleDialog = this.handleDialog.bind(this);
   }
@@ -56,11 +51,8 @@ class Roles extends React.Component {
     this.setState({ delete: false });
   }
   handleDelete = (role) => {
-    this.props.deleteDoc(role);
+    this.props.deleteRole(role.id);
   }
-  handleExpand = () => {
-    this.setState({ expanded: true });
-  };
   handleEdit = (role) => {
     const currentId = role._id;
     this.setState({
@@ -83,7 +75,7 @@ class Roles extends React.Component {
   }
   handleEditSubmit = (role) => {
     this.setState({ edit: false });
-    this.props.handleEditSubmit(role);
+    this.props.handleEditRole(role);
   }
   handleId = (id) => {
     this.setState({ id });
@@ -92,22 +84,16 @@ class Roles extends React.Component {
     const newRole = {
       title: this.state.title,
     };
-    this.props.createDoc(newRole);
+    this.props.createRole(newRole);
+    this.setState({ toast: true });
     this.handleClose();
   }
-  handleToggle = () => {
-    this.setState({ permissions: 'Private' });
-  };
   render() {
-    while (!this.props.display){
-      return (<div> <CircularProgress /> </div>)
-    }
-    const roleTable = this.props.display.map((role) => {
+    const roleTable = this.props.roleInfo.map((role) => {
       return (
         <div key={role._id}>
           <Card
             style={roleStyle}
-            expanded={this.state.expanded}
             onExpandChange={this.handleExpandChange}
           >
             <IconMenu
@@ -131,7 +117,7 @@ class Roles extends React.Component {
             </CardText>
           </Card>
           <div>
-          <Edit
+          <EditRole
             open={this.state.edit === role._id}
             handleToggle={this.handleToggle}
             handleClose={this.handleCloseEdit}
@@ -141,7 +127,6 @@ class Roles extends React.Component {
                 title: this.state.title,
               };
               this.handleEditSubmit(role); }}
-            handleContent={this.handleContent}
             handleTitle={this.handleTitle}
             role={role._id}
             defaultTitle={role.title}
@@ -170,7 +155,7 @@ class Roles extends React.Component {
           <ContentAdd />
         </FloatingActionButton>
         <div>
-        <Edit
+        <EditRole
           open={this.state.open}
           handleToggle={this.handleToggle}
           handleClose={this.handleClose}
@@ -189,15 +174,10 @@ class Roles extends React.Component {
 }
 function mapStateToProps(state) {
   return {
-    dashboard: state.menu.dashboard,
     users: state.menu.users,
-    roleuments: state.menu.roleuments,
-    roles: state.menu.roles,
-    userInfo: state.display.users,
-    roleInfo: state.display.roles,
+    rolesMenu: state.menu.roles,
     roleInfo: state.display.roles,
     page: state.display.page,
-    dashboardInfo: state.display.dashboard,
   };
 }
 export default connect(mapStateToProps, displayActions)(Roles);

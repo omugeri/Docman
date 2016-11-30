@@ -7,7 +7,7 @@ export default function displayReducers(state={}, action) {
       return Object.assign({}, state, action.documents);
 
     case 'DISPLAY_ROLES':
-      return Object.assign({}, state, action.roles);
+      return Object.assign({}, state, { roles: action.roles });
 
     case 'CHANGE_PAGE':
       return Object.assign({}, state, { page: action.page });
