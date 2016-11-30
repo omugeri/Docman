@@ -21,9 +21,6 @@ const port = process.env.PORT || 8080;
 // the mpromise is deprecated so had to plugin another library
 mongoose.Promise = global.Promise;
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-
 // applies if running on production mode
 app.use(express.static(__dirname + '/dist'));
 
@@ -33,7 +30,7 @@ if (isDeveloping) {
   const compiler = webpack(config);
   const middleware = webpackMiddleware(compiler, {
     publicPath: config.output.publicPath,
-    contentBase: 'src',
+    historyApiFallback: true,
     stats: {
       colors: true,
       hash: false,
@@ -43,17 +40,27 @@ if (isDeveloping) {
       modules: false,
     },
   });
+  mongoose.connect('mongodb://localhost/docman');
+
+  app.use(bodyParser.json());
   app.use(middleware);
   app.use(webpackHotMiddleware(compiler));
-  mongoose.connect('mongodb://localhost/docman');
+  router(app);
+  app.get('*', function response(req, res) {
+    res.write(middleware.fileSystem.readFileSync(path.join(__dirname, 'dist/index.html')));
+    res.end();
+  });
 } else {
+    // applies if running on production mode
   mongoose.connect(process.env.MONGOLAB_URI);
-}
 
-router(app);
-app.get('*', function response(req, res) {
-  res.sendFile(path.join(__dirname, 'dist/index.html'));
-});
+  app.use(express.static(__dirname + '/dist'));
+  router(app);
+  app.get('*', function response(req, res) {
+    console.log('KITU TU');
+    res.sendFile(path.join(__dirname, 'dist/index.html'));
+  });
+}
 
 // START THE server
 app.listen(port);

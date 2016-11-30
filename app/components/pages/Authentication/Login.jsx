@@ -1,16 +1,17 @@
 import React from 'react';
 import Dialog from 'material-ui/Dialog';
 import { FlatButton, TextField } from 'material-ui';
+import { connect } from 'react-redux';
 
 const Dstyle = {
   height: '100%',
   maxHeight: 'none',
   width: '25%',
   maxWidth: 'none',
-  borderRadius: '10px'
+  borderRadius: '10px',
 };
 
-export default class Login extends React.Component {
+export class Login extends React.Component {
   render() {
     const actions = [
       <FlatButton
@@ -59,3 +60,9 @@ export default class Login extends React.Component {
        );
   }
 }
+function mapStateToProps (state) {
+  return {
+    error: state.auth.error,
+  }
+}
+export default connect(mapStateToProps)(Login);

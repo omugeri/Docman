@@ -2,7 +2,7 @@ const menu = {
   users: false,
   documents: true,
   dashboard: false,
-}
+};
 export default function menuReducers(state = menu, action) {
   switch (action.type) {
     case 'OPEN_USERS':

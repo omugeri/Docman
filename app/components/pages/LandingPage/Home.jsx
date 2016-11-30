@@ -5,9 +5,9 @@ import { purple500 } from 'material-ui/styles/colors';
 import { RaisedButton, AppBar, IconButton } from 'material-ui';
 import request from 'superagent';
 import bgimage from 'file!../../../shared/images/doc_bg.jpeg';
-// import NavigationClose from 'material-ui/svg-icons/navigation/close';
 import styles from '../../../shared/styles/styles.css';
-import { errorSet } from '../../../actions/authActions';
+import * as authActions from '../../../actions/authActions';
+import * as displayActions from '../../../actions/displayActions';
 import Login from '../Authentication/Login.jsx';
 
 const style = {
@@ -69,10 +69,11 @@ export class Home extends React.Component {
           this.setState({ open: false });
           const token = res.text;
           window.localStorage.setItem('token', token);
+          this.props.reloadPage(1);
           browserHistory.push('/dashboard');
         } else {
           const error = JSON.parse(res.text);
-          this.props.errorSet(error);
+          this.props.errorSet(error.message);
         }
       });
   }
@@ -115,4 +116,7 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { errorSet })(Home);
+export default connect(
+  mapStateToProps,
+  Object.assign({}, displayActions, authActions)
+  )(Home);

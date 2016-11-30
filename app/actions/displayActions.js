@@ -81,7 +81,7 @@ export function reloadPage(page) {
   return (dispatch) => {
     dispatch(changePage(page));
     const token = window.localStorage.getItem('token').replace(/"/g, '');
-    return request
+    return (request
       .get('/api/documents/')
       .set({ 'x-access-token': token })
       .query({
@@ -94,7 +94,8 @@ export function reloadPage(page) {
         dispatch(displayDocs(documents));
         const documentsMenu = true;
         dispatch(openDocuments(documentsMenu));
-      });
+      })
+    )
   };
 }
 export function handleEditSubmit(doc) {
