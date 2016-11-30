@@ -1,5 +1,5 @@
 import request from 'superagent';
-import { openDocuments, openUserDoc } from './menuActions.js';
+import { openDocuments, openUserDoc, openRoles } from './menuActions.js';
 import { errorSet } from './authActions.js';
 
 export function displayUsers(users) {
@@ -13,6 +13,13 @@ export function displayDocs(documents) {
   return {
     type: 'DISPLAY_DOCUMENTS',
     documents,
+  };
+}
+
+export function displayRoles(roles) {
+  return {
+    type: 'DISPLAY_ROLES',
+    roles,
   };
 }
 
@@ -94,6 +101,28 @@ export function reloadPage(page) {
         dispatch(displayDocs(documents));
         const documentsMenu = true;
         dispatch(openDocuments(documentsMenu));
+      })
+    )
+  };
+}
+export function reloadRoles(page) {
+  return (dispatch) => {
+    dispatch(changePage(page));
+    const token = window.localStorage.getItem('token').replace(/"/g, '');
+    return (request
+      .get('/api/roles/')
+      .set({ 'x-access-token': token })
+      .query({
+        limit: 3,
+        page,
+      })
+      .accept('json')
+      .then((res) => {
+        const roles = res.body;
+        console.log('RESPONSE IS: ', roles);
+        dispatch(displayRoles(roles));
+        const rolesMenu = true;
+        dispatch(openRoles(rolesMenu));
       })
     )
   };

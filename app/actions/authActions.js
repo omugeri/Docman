@@ -20,7 +20,13 @@ export function registerClose() {
   return {
     type: 'REGISTER_OPEN',
     register: false,
-  }
+  };
+}
+export function setPermission(permissions) {
+  return {
+    type: 'SET_PERMISSION',
+    permissions: permissions,
+  };
 }
 export function reloadUser() {
   return (dispatch) => {

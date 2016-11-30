@@ -46,7 +46,7 @@
     "express-session": "^1.14.1",
     "extract-text-webpack-plugin": "^1.0.1",
     "html-webpack-plugin": "^2.22.0",
-    "istanbul": "^1.0.0-alpha.2",
+    "istanbul": "1.0.0-alpha.2",
     "jsdom": "^9.8.0",
     "jsonwebtoken": "^7.1.9",
     "material-ui": "^0.16.0",

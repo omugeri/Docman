@@ -1,7 +1,7 @@
 const menu = {
   users: false,
   documents: true,
-  dashboard: false,
+  roles: false,
 };
 export default function menuReducers(state = menu, action) {
   switch (action.type) {
@@ -9,17 +9,24 @@ export default function menuReducers(state = menu, action) {
       return Object.assign({}, state, {
         users: action.users,
         documents: false,
-        dashboard: false,
+        roles: false,
       });
     case 'OPEN_DOCUMENTS':
       return Object.assign({}, state, {
         users: false,
         documents: action.documents,
-        dashboard: false,
+        roles: false,
       });
     case 'OPEN_USER_DOC':
       return Object.assign({}, state, {
         userDocOpen: action.userDocOpen,
+      });
+
+    case 'OPEN_ROLES':
+      return Object.assign({}, state, {
+        users: false,
+        documents: false,
+        roles: action.roles,
       });
     default:
       return state;

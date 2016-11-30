@@ -4,11 +4,13 @@ import { browserHistory } from 'react-router';
 import { Paper, Menu, MenuItem } from 'material-ui';
 import Usersicon from 'material-ui/svg-icons/action/supervisor-account.js';
 import Documentsicon from 'material-ui/svg-icons/action/assignment.js';
+import Rolesicon from 'material-ui/svg-icons/communication/vpn-key.js';
 import request from 'superagent';
 import * as menuActions from '../../../actions/menuActions';
 import * as displayActions from '../../../actions/displayActions';
 import User from './User.jsx';
 import Documents from './Document.jsx';
+import Roles from './Roles.jsx';
 
 const style = {
   paper: {
@@ -35,7 +37,7 @@ class SideMenu extends React.Component {
     super(props);
     this.onUserChange = this.onUserChange.bind(this);
     this.onDocumentChange = this.onDocumentChange.bind(this);
-    this.onRoleChange = this.onRoleChange.bind(this);
+    this.onRolesChange = this.onRolesChange.bind(this);
   }
   onUserChange = () => {
     const token = window.localStorage.getItem('token').replace(/"/g, '');
@@ -59,23 +61,8 @@ class SideMenu extends React.Component {
   onDocumentChange = () => {
     this.props.reloadPage(this.props.page);
   }
-  onRoleChange = () => {
-    const token = window.localStorage.getItem('token').replace(/"/g, '');
-    request
-      .get('/api/roles/')
-      .set({ 'x-access-token': token })
-      .accept('json')
-      .end((res) => {
-        const roles = JSON.parse(res.text);
-        this.props.displayRoles(roles);
-        const roleMenu = {
-          dashboard: false,
-          users: false,
-          documents: false,
-          roles: true,
-        };
-        this.props.openRoles(roleMenu);
-      });
+  onRolesChange = () => {
+    this.props.reloadRoles(this.props.page);
   }
   render() {
     return (
@@ -94,6 +81,14 @@ class SideMenu extends React.Component {
               onClick={this.onDocumentChange}
               style={style.item}
             />
+            {this.props.permissions === 'Admin' && (
+              <MenuItem
+                primaryText="Roles"
+                leftIcon={<Rolesicon />}
+                onClick={this.onRolesChange}
+                style={style.item}
+              />
+            )}
           </Menu>
         </Paper>
         { this.props.documents ? <Documents
@@ -101,6 +96,10 @@ class SideMenu extends React.Component {
           reload={this.onDocumentChange}
         /> : true}
         { this.props.users ? <User display={this.props.userInfo} /> : true }
+        { this.props.documents ? <Roles
+          display={this.props.roles}
+          reload={this.onRolesChange}
+        /> : true}
       </div>
     );
   }
@@ -117,6 +116,7 @@ function mapStateToProps(state) {
     docInfo: state.display.docs,
     page: state.display.page,
     dashboardInfo: state.display.dashboard,
+    permissions: window.localStorage.getItem('permissions'),
   };
 }
 export default connect(
@@ -125,6 +125,7 @@ export default connect(
 )(SideMenu);
 
 SideMenu.propTypes = {
+  permissions: PropTypes.string,
   users: PropTypes.bool,
   page: PropTypes.number,
   documents: PropTypes.bool,

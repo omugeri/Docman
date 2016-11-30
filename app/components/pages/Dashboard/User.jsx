@@ -53,7 +53,7 @@ class User extends React.Component {
         >
           <ContentAdd />
         </FloatingActionButton>
-        <div style={{ width: '50%', float: 'left' }}>
+        <div style={{ width: '70%', float: 'left' }}>
           <Card style={div2}>
             <Table
               onRowSelection={(row) => {
