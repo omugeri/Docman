@@ -9,7 +9,7 @@
   "scripts": {
     "pretest": "node server/seeder/seeds.js",
     "testBend": "istanbul cover ./node_modules/mocha/bin/_mocha test/server/*.spec.js && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "test": "istanbul cover ./node_modules/mocha/bin/_mocha -- --compilers .js:babel-core/register -w --require test/client/helpers/browser.js test/client/**/*.spec.js && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "test": "istanbul cover ./node_modules/mocha/bin/_mocha -- --compilers .js:babel-core/register --require test/client/helpers/browser.js test/client/**/*.spec.js && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "start": "node server.js",
     "heroku-postbuild": "webpack"
   },

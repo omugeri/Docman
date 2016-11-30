@@ -1,8 +1,13 @@
 const menu = {
   users: false,
   documents: true,
+<<<<<<< HEAD
   roles: false,
 };
+=======
+  dashboard: false,
+}
+>>>>>>> develop
 export default function menuReducers(state = menu, action) {
   switch (action.type) {
     case 'OPEN_USERS':
