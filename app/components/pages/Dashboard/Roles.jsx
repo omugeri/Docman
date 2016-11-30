@@ -15,7 +15,7 @@ import Delete from './Delete.jsx';
 import * as displayActions from '../../../actions/displayActions';
 import Pagination from './Pagination.jsx';
 
-const docStyle = {
+const roleStyle = {
   width: '60%',
   // float: 'left',
   marginTop: '2%',
@@ -27,12 +27,11 @@ const style = {
   marginTop: '2%',
 };
 
-class Document extends React.Component {
+class Roles extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       title: '',
-      content: '',
       expanded: false,
       open: false,
       error: false,
@@ -43,7 +42,6 @@ class Document extends React.Component {
     };
     this.handleId = this.handleId.bind(this);
     this.handleTitle = this.handleTitle.bind(this);
-    this.handleContent = this.handleContent.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleOpen = this.handleOpen.bind(this);
@@ -57,18 +55,18 @@ class Document extends React.Component {
   handleDelClose = () => {
     this.setState({ delete: false });
   }
-  handleDelete = (doc) => {
-    this.props.deleteDoc(doc);
+  handleDelete = (role) => {
+    this.props.deleteDoc(role);
   }
   handleExpand = () => {
     this.setState({ expanded: true });
   };
-  handleEdit = (doc) => {
-    const currentId = doc._id;
+  handleEdit = (role) => {
+    const currentId = role._id;
     this.setState({
       edit: currentId,
-      title: doc.title,
-      content: doc.content,
+      title: role.title,
+      content: role.content,
     });
   }
   handleCloseEdit = () => {
@@ -80,26 +78,21 @@ class Document extends React.Component {
   handleTitle = (event) => {
     this.setState({ title: event.target.value });
   }
-  handleContent = (event) => {
-    this.setState({ content: event.target.value });
-  }
   handleClose = () => {
     this.setState({ open: false });
   }
-  handleEditSubmit = (doc) => {
+  handleEditSubmit = (role) => {
     this.setState({ edit: false });
-    this.props.handleEditSubmit(doc);
+    this.props.handleEditSubmit(role);
   }
   handleId = (id) => {
     this.setState({ id });
   }
   handleSubmit = () => {
-    const newDoc = {
+    const newRole = {
       title: this.state.title,
-      content: this.state.content,
-      permissions: this.state.permissions,
     };
-    this.props.createDoc(newDoc);
+    this.props.createDoc(newRole);
     this.handleClose();
   }
   handleToggle = () => {
@@ -109,11 +102,11 @@ class Document extends React.Component {
     while (!this.props.display){
       return (<div> <CircularProgress /> </div>)
     }
-    const docTable = this.props.display.map((doc) => {
+    const roleTable = this.props.display.map((role) => {
       return (
-        <div key={doc._id}>
+        <div key={role._id}>
           <Card
-            style={docStyle}
+            style={roleStyle}
             expanded={this.state.expanded}
             onExpandChange={this.handleExpandChange}
           >
@@ -124,53 +117,44 @@ class Document extends React.Component {
               iconStyle={{float: 'right'}}
             >
               <MenuItem primaryText="Edit"
-              value={doc._id}
-              onTouchTap={() => { this.handleEdit(doc); }} />
+              value={role._id}
+              onTouchTap={() => { this.handleEdit(role); }} />
               <MenuItem primaryText="Delete"
-              value={doc._id}
-              onTouchTap={() => { this.handleDialog(doc._id); }}
+              value={role._id}
+              onTouchTap={() => { this.handleDialog(role._id); }}
               />
             </IconMenu>
-            <CardTitle
-              title={doc.title}
-              subtitle={doc.owner}
-              style={{float:'right'}}
-            />
             <CardText
               expandable={false}
             >
-              {doc.content}
+              {role.title}
             </CardText>
           </Card>
           <div>
           <Edit
-            open={this.state.edit === doc._id}
+            open={this.state.edit === role._id}
             handleToggle={this.handleToggle}
             handleClose={this.handleCloseEdit}
             handleSubmit={() => {
-              const doc = {
+              const role = {
                 id: this.state.edit,
                 title: this.state.title,
-                content: this.state.content,
-                permissions: this.state.permissions,
               };
-              this.handleEditSubmit(doc); }}
+              this.handleEditSubmit(role); }}
             handleContent={this.handleContent}
             handleTitle={this.handleTitle}
-            doc={doc._id}
-            defaultTitle={doc.title}
-            defaultContent={doc.content}
+            role={role._id}
+            defaultTitle={role.title}
             title={this.state.title}
-            content={this.state.content}
           />
           </div>
           <div>
             <Delete
-              open={this.state.delete === doc._id}
+              open={this.state.delete === role._id}
               handleClose={this.handleDelClose}
               handleDelete={this.handleDelete}
-              title={doc.title}
-              id={doc._id}
+              title={role.title}
+              id={role._id}
             />
           </div>
         </div>
@@ -191,16 +175,14 @@ class Document extends React.Component {
           handleToggle={this.handleToggle}
           handleClose={this.handleClose}
           handleSubmit={this.handleSubmit}
-          handleContent={this.handleContent}
           handleTitle={this.handleTitle}
           title={this.state.title}
-          content={this.state.content}
         />
         </div>
         <div>
-          {docTable}
+          {roleTable}
         </div>
-        <Pagination onDocumentChange={this.props.reload} />
+        <Pagination onRolesChange={this.props.reload} />
         </div>
     );
   }
@@ -209,18 +191,18 @@ function mapStateToProps(state) {
   return {
     dashboard: state.menu.dashboard,
     users: state.menu.users,
-    documents: state.menu.documents,
+    roleuments: state.menu.roleuments,
     roles: state.menu.roles,
     userInfo: state.display.users,
     roleInfo: state.display.roles,
-    docInfo: state.display.docs,
+    roleInfo: state.display.roles,
     page: state.display.page,
     dashboardInfo: state.display.dashboard,
   };
 }
-export default connect(mapStateToProps, displayActions)(Document);
+export default connect(mapStateToProps, displayActions)(Roles);
 
-Document.propTypes = {
+Roles.propTypes = {
   page: PropTypes.number,
   handleEditSubmit: PropTypes.func,
   deleteDoc: PropTypes.func,

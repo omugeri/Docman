@@ -67,7 +67,10 @@ export class Home extends React.Component {
       .end((err, res) => {
         if (res.status === 202) {
           this.setState({ open: false });
-          const token = res.text;
+          const token = res.body.token
+          const permissions = res.body.permissions
+          this.props.setPermission(permissions);
+          window.localStorage.setItem('permissions', permissions);
           window.localStorage.setItem('token', token);
           this.props.reloadPage(1);
           browserHistory.push('/dashboard');

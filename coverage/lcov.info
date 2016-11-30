@@ -3,12 +3,12 @@ SF:/Users/riwhiz/Desktop/Projects/Docman/app/actions/authActions.js
 FN:6,logoutAction
 FN:13,errorSet
 FN:19,registerClose
-FN:25,reloadUser
-FN:26,(anonymous_5)
+FN:25,setPermission
+FN:31,reloadUser
 FN:32,(anonymous_6)
-FN:48,create
-FN:49,(anonymous_8)
-FN:61,(anonymous_9)
+FN:38,(anonymous_7)
+FN:54,create
+FN:55,(anonymous_9)
 FN:67,(anonymous_10)
 FNF:10
 FNH:9
@@ -52,7 +52,7 @@ BRDA:34,0,1,1
 BRDA:62,1,0,1
 BRDA:62,1,1,0
 BRF:4
-BRH:2
+BRH:0
 end_of_record
 TN:
 SF:/Users/riwhiz/Desktop/Projects/Docman/app/actions/displayActions.js
@@ -154,7 +154,7 @@ BRDA:113,2,1,0
 BRDA:126,3,0,1
 BRDA:126,3,1,0
 BRF:8
-BRH:4
+BRH:0
 end_of_record
 TN:
 SF:/Users/riwhiz/Desktop/Projects/Docman/app/actions/menuActions.js
@@ -253,3 +253,4 @@ BRDA:8,2,3,0
 BRF:8
 BRH:6
 end_of_record
+>>>>>>> develop

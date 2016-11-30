@@ -119,11 +119,14 @@ const userCntrl = {
       }
       if (user) {
         if (user.validPassword(user, req.body.password)) {
-          const token = generateToken(user.userName, user.role);
+          let token = generateToken(user.userName, user.role);
+          token = Object.assign({}, { token }, {
+            username: user.userName,
+            permissions: user.role,
+          });
           return res.status(202).json(token);
-        } else {
-          return res.status(400).json({ message: 'Error logging in!' });
         }
+        return res.status(400).json({ message: 'Error logging in!' });
       }
       return res.status(400).json({ message: 'Error logging in!' });
     });

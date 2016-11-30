@@ -6,23 +6,20 @@ import TopBar from './TopBar.jsx';
 import SideMenu from './Menu.jsx';
 
 const style = {
- backgroundImage: 'url(' + bgimage + ')',
- title: {
-   cursor: 'pointer',
- }
+  backgroundImage: 'url(' + bgimage + ')',
+  title: {
+    cursor: 'pointer',
+  },
 };
 
-export default class Base extends React.Component {
-  render() {
-    return (
-      <div className={styles.main} style={style}>
-        <div>
-          <TopBar />
-          <SideMenu />
+export default function Base() {
+  return (
+    <div className={styles.main} style={style}>
+      <div>
+        <TopBar />
+        <SideMenu />
 
-        </div>
       </div>
-    );
-  }
-
+    </div>
+  );
 }

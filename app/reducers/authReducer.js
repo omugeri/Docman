@@ -1,8 +1,5 @@
 export default function authReducers(state={}, action) {
   switch (action.type) {
-    // case 'LOGIN_ACTION':
-    //   return Object.assign({}, state, { token: action.token });
-
     case 'LOGOUT_ACTION':
       return Object.assign({}, state, {
         message: action.message,
@@ -10,6 +7,9 @@ export default function authReducers(state={}, action) {
 
     case 'SET_ERROR':
       return Object.assign({}, state, { error: action.error });
+
+    case 'SET_PERMISSION':
+      return Object.assign({}, state, { permissions: action.permissions });
 
     default:
       return state;

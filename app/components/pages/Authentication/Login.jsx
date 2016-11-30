@@ -60,7 +60,7 @@ export class Login extends React.Component {
        );
   }
 }
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   return {
     error: state.auth.error,
   }
