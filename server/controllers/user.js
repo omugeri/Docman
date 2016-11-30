@@ -126,9 +126,9 @@ const userCntrl = {
           });
           return res.status(202).json(token);
         }
-        return res.status(400).json({ message: 'Error logging in!' });
+        return res.status(400).json({ message: 'Incorrect username and password!' });
       }
-      return res.status(400).json({ message: 'Error logging in!' });
+      return res.status(400).json({ message: 'Incorrect username and password!' });
     });
   },
   logout: (req, res) => {

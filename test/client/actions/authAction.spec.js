@@ -34,7 +34,7 @@ describe('async authentication actions', () => {
   });
 
   it('simulates failed login', () => {
-    const error = { error: 'Error loggin in' };
+    const error = { error: 'Incorrect username and password!' };
     const expectedAction = {
       type: 'SET_ERROR',
       error,

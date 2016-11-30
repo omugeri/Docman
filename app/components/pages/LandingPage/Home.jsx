@@ -50,6 +50,7 @@ export class Home extends React.Component {
 
   handleClose = () => {
     this.setState({ open: false });
+    this.props.errorSet('');
   };
   handleRegister = () => {
     this.setState({ register: true });
