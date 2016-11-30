@@ -105,7 +105,7 @@ class Document extends React.Component {
   handleClose = () => {
     this.setState({ open: false });
   }
-  handleEditSubmit = (doc) => {
+  handleEditDoc = (doc) => {
     this.setState({ edit: false });
     this.props.handleEditSubmit(doc);
   }
@@ -173,7 +173,7 @@ class Document extends React.Component {
                 content: this.state.content,
                 permissions: this.state.permissions,
               };
-              this.handleEditSubmit(doc); }}
+              this.handleEditDoc(doc); }}
             handleContent={this.handleContent}
             handleTitle={this.handleTitle}
             doc={doc._id}
@@ -247,7 +247,7 @@ function mapStateToProps(state) {
     permissions: window.localStorage.getItem('permissions'),
   };
 }
-const docActions = Object.assign({}, { displayActions }, { errorSet });
+const docActions = Object.assign({}, displayActions, { errorSet });
 export default connect(mapStateToProps, docActions)(Document);
 
 Document.propTypes = {

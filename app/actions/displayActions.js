@@ -1,6 +1,6 @@
 import request from 'superagent';
 import { openDocuments, openUserDoc, openRoles } from './menuActions.js';
-import { errorSet } from './authActions.js';
+import { errorSet, notification } from './authActions.js';
 
 export function displayUsers(users) {
   return {
@@ -65,6 +65,23 @@ export function createDoc(doc) {
     });
   };
 }
+export function createRole(role) {
+  return (dispatch) => {
+    const token = window.localStorage.getItem('token').replace(/"/g, '');
+    return request
+    .post('/api/roles')
+    .set({ 'x-access-token': token })
+    .send({
+      title: role.title,
+    })
+    .then((res) => {
+      if (res.status === 200) {
+        dispatch(notification('Role successfully added'));
+        dispatch(reloadRoles(1));
+      }
+    });
+  };
+}
 export function selectedUser(row) {
   return (dispatch, getState) => {
     const docs = getState().display.users[row]._id;
@@ -102,7 +119,7 @@ export function reloadPage(page) {
         const documentsMenu = true;
         dispatch(openDocuments(documentsMenu));
       })
-    )
+    );
   };
 }
 export function reloadRoles(page) {
@@ -119,12 +136,11 @@ export function reloadRoles(page) {
       .accept('json')
       .then((res) => {
         const roles = res.body;
-        console.log('RESPONSE IS: ', roles);
         dispatch(displayRoles(roles));
         const rolesMenu = true;
         dispatch(openRoles(rolesMenu));
       })
-    )
+    );
   };
 }
 export function handleEditSubmit(doc) {
@@ -146,6 +162,23 @@ export function handleEditSubmit(doc) {
       });
   };
 }
+export function handleEditRole(role) {
+  return (dispatch) => {
+    const id = role.id;
+    const token = window.localStorage.getItem('token').replace(/"/g, '');
+    return request
+      .put(`/api/roles/${id}`)
+      .set({ 'x-access-token': token })
+      .send({
+        title: role.title,
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          dispatch(reloadRoles(1));
+        }
+      });
+  };
+}
 export function deleteDoc(doc) {
   return (dispatch) => {
     const token = window.localStorage.getItem('token').replace(/"/g, '');
@@ -155,6 +188,23 @@ export function deleteDoc(doc) {
         .then((res) => {
           if (res.status === 200) {
             dispatch(reloadPage(1));
+          } else {
+            return res;
+          }
+        });
+  };
+}
+
+export function deleteRole(role) {
+  return (dispatch) => {
+    console.log('GETS HERE');
+    const token = window.localStorage.getItem('token').replace(/"/g, '');
+      return request
+        .del(`/api/roles/${role}`)
+        .set({ 'x-access-token': token })
+        .then((res) => {
+          if (res.status === 200) {
+            dispatch(reloadRoles(1));
           } else {
             return res;
           }

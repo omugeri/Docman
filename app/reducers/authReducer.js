@@ -8,6 +8,9 @@ export default function authReducers(state={}, action) {
     case 'SET_ERROR':
       return Object.assign({}, state, { error: action.error });
 
+    case 'NOTIFICATION':
+      return Object.assign({}, state, { message: action.message });
+
     case 'SET_PERMISSION':
       return Object.assign({}, state, { permissions: action.permissions });
 

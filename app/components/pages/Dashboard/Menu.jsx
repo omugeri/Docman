@@ -96,7 +96,7 @@ class SideMenu extends React.Component {
           reload={this.onDocumentChange}
         /> : true}
         { this.props.users ? <User display={this.props.userInfo} /> : true }
-        { this.props.documents ? <Roles
+        { this.props.roles ? <Roles
           display={this.props.roles}
           reload={this.onRolesChange}
         /> : true}
