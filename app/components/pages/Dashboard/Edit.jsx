@@ -41,6 +41,7 @@ export default class Edit extends React.Component {
                 name="title"
                 defaultValue={this.props.defaultTitle}
                 onChange={this.props.handleTitle}
+                style={{ width: '80%' }}
               /><br />
               <br />
               <TextField
@@ -51,6 +52,7 @@ export default class Edit extends React.Component {
                 name='content'
                 defaultValue={this.props.defaultContent}
                 onChange={this.props.handleContent}
+                style={{ width: '80%' }}
               />
               <br />
             </form>

@@ -68,10 +68,13 @@ export function create(user) {
       if (res.status === 200) {
         dispatch(registerClose());
         dispatch(reloadUser());
+      } else if (res.status === 409) {
+        this.setState({ toast: true });
+        dispatch(errorSet('The email address already exists.'));
       }
     })
     .catch((err) => {
-      dispatch(errorSet(err));
+      dispatch(errorSet('The email address already exists.'));
     });
   };
 }

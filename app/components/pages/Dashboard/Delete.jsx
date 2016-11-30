@@ -3,6 +3,11 @@ import {Dialog, RaisedButton, FlatButton} from 'material-ui';
 
 export default class Delete extends React.Component {
   render(){
+    const docDetails = {
+      id: this.props.id,
+      owner: this.props.owner,
+      title: this.props.owner,
+    };
     const actions = [
       <FlatButton
         label='Cancel'
@@ -12,7 +17,7 @@ export default class Delete extends React.Component {
       <FlatButton
         label='Delete'
         primary={true}
-        onTouchTap={() => { this.props.handleDelete(this.props.id); }}
+        onTouchTap={() => { this.props.handleDelete(docDetails); }}
         />
     ];
     return (

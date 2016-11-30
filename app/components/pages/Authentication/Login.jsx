@@ -42,6 +42,7 @@ export class Login extends React.Component {
                 name="username"
                 value={this.props.username}
                 onChange={this.props.handleUsername}
+                style={{ width: '80%' }}
               /><br />
               <br />
               <TextField
@@ -51,6 +52,7 @@ export class Login extends React.Component {
                 name='password'
                 value={this.props.password}
                 onChange={this.props.handlePassword}
+                style={{ width: '80%' }}
               />
               <br />
             </form>
