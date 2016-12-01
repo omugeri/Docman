@@ -11,15 +11,10 @@ const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
 
 describe('async authentication actions', () => {
-  const credentials = {
-    userName: 'riwhiz',
-    password: 'olive',
-  };
-
   beforeEach(() => {
     mock.clearRoutes();
   });
-  const user = {
+  let user = {
     token: 'token123',
     user: 'riwhiz',
   };
@@ -39,7 +34,7 @@ describe('async authentication actions', () => {
       type: 'SET_ERROR',
       error,
     };
-    expect(authActions.errorSet(error)).to.eql(expectedAction)
+    expect(authActions.errorSet(error)).to.eql(expectedAction);
   });
 
   it('simulates logout', () => {
@@ -70,22 +65,23 @@ describe('async authentication actions', () => {
     };
     window.localStorage = {
       getItem: () => {
-      return  "\"token123\"";
-      }
-    }
+        return "\"token123\"";
+      },
+    };
     mock
       .get('/api/users/', () => {
         return res;
       });
     const expectedActions = [
       { type: 'DISPLAY_USERS', users: res.body },
-      { type: 'OPEN_USERS', users: {
+      { type: 'OPEN_USERS',
+      users: {
         "dashboard": false,
         "documents": false,
         "roles": false,
         "users": true,
-      } }
-    ]
+      } },
+    ];
     const store = mockStore({ });
 
     return store.dispatch(authActions.reloadUser())
@@ -94,7 +90,7 @@ describe('async authentication actions', () => {
       });
   });
   it('simulates creating a new user', () => {
-    const user = {
+    let user = {
         firstName: 'Alex',
         lastName: 'Mugane',
         userName: 'ganjez',
@@ -104,8 +100,8 @@ describe('async authentication actions', () => {
 
     window.localStorage = {
       getItem: () => {
-      return  "\"token123\"";
-      }
+        return "\"token123\"";
+      },
     };
     const res = {
       status: 200,
@@ -131,5 +127,5 @@ describe('async authentication actions', () => {
       .then(() => {
         expect(store.getActions()).to.eql(expectedActions);
       });
-  })
+  });
 });

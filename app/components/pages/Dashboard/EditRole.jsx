@@ -1,8 +1,6 @@
 import React from 'react';
-import { Card, CardActions } from 'material-ui/Card';
 import Dialog from 'material-ui/Dialog';
-import { FlatButton, TextField, Toggle } from 'material-ui';
-import AppStyles from '../../../shared/styles/styles.css';
+import { FlatButton, TextField } from 'material-ui';
 
 const editStyle = {
   textAlign: 'center',

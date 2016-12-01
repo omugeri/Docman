@@ -16,12 +16,7 @@ export function errorSet(error) {
     error,
   };
 }
-export function notification(message) {
-  return {
-    type: 'NOTIFICATION',
-    message,
-  };
-}
+
 export function registerClose() {
   return {
     type: 'REGISTER_OPEN',

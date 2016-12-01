@@ -20,7 +20,6 @@ export class Login extends React.Component {
       />,
       <FlatButton
         label="Submit"
-        //keyboardFocused={true}
         onTouchTap={this.props.handleSubmit}
       />,
     ];
@@ -65,6 +64,6 @@ export class Login extends React.Component {
 function mapStateToProps(state) {
   return {
     error: state.auth.error,
-  }
+  };
 }
 export default connect(mapStateToProps)(Login);

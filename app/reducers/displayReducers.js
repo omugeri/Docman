@@ -1,4 +1,4 @@
-export default function displayReducers(state={page: 1}, action) {
+export default function displayReducers(state={ page: 1 }, action) {
   switch (action.type) {
     case 'DISPLAY_USERS':
       return Object.assign({}, state, action.users);
@@ -13,7 +13,6 @@ export default function displayReducers(state={page: 1}, action) {
       return Object.assign({}, state, { page: action.page });
 
     case 'CURRENT_DOCS':
-    console.log(action.userDocs);
       return Object.assign({}, state, {
         userDocs: action.userDocs,
       });

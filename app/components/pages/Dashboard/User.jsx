@@ -47,12 +47,11 @@ class User extends React.Component {
     return (
       <div>
         <RaisedButton
-          label='Add User'
+          label="Add User"
           secondary={true}
           style={style}
           onTouchTap={this.handleRegister}
-        >
-        </RaisedButton>
+        />
         <div style={{ width: '70%', float: 'left' }}>
           <Card style={div2}>
             <Table

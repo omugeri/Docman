@@ -82,7 +82,7 @@ describe('Display async actions', () => {
         title: 'Names',
         Content: 'too many names',
         owner: 'ganjez',
-      }
+      },
     };
     const docs = 'hi09876b';
     mock
@@ -140,7 +140,7 @@ describe('Display async actions', () => {
         return "\"token123\"";
       },
     };
-    const res = { status: 200 }
+    const res = { status: 200 };
     const doc = 'hj098976fvu';
     mock
     .del(`/api/documents/${doc}`, () => {

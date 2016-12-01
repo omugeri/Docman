@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Card, CardText, CardTitle, CardActions } from 'material-ui/Card';
+import { Card, CardText, CardTitle } from 'material-ui/Card';
 import { connect } from 'react-redux';
 import {
   IconMenu,
@@ -59,7 +59,7 @@ class Document extends React.Component {
     if (this.props.user === doc.owner) {
       this.setState({ toast: false });
       return this.setState({ delete: id });
-    } else if (!this.props.user){
+    } else if (!this.props.user) {
       if (this.props.permissions === 'Admin') {
         return this.setState({ delete: id });
       }
@@ -126,7 +126,7 @@ class Document extends React.Component {
     this.setState({ permissions: 'Private' });
   };
   render() {
-    if (!this.props.display){
+    if (!this.props.display) {
       return (<div></div>)
     }
     const docTable = this.props.display.map((doc) => {
@@ -139,22 +139,22 @@ class Document extends React.Component {
           >
             <IconMenu
               iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
-              anchorOrigin={{horizontal: 'left', vertical: 'top'}}
-              targetOrigin={{horizontal: 'left', vertical: 'top'}}
-              iconStyle={{float: 'right'}}
+              anchorOrigin={{ horizontal: 'left', vertical: 'top'}}
+              targetOrigin={{ horizontal: 'left', vertical: 'top'}}
+              iconStyle={{ float: 'right' }}
             >
               <MenuItem primaryText="Edit"
-              value={doc._id}
-              onTouchTap={() => { this.handleEdit(doc); }} />
+                value={doc._id}
+                onTouchTap={() => { this.handleEdit(doc); }} />
               <MenuItem primaryText="Delete"
-              value={doc._id}
-              onTouchTap={() => { this.handleDialog(doc); }}
+                value={doc._id}
+                onTouchTap={() => { this.handleDialog(doc); }}
               />
             </IconMenu>
             <CardTitle
               title={doc.title}
               subtitle={doc.owner}
-              style={{float:'right'}}
+              style={{ float:'right' }}
             />
             <CardText
               expandable={false}
@@ -163,26 +163,26 @@ class Document extends React.Component {
             </CardText>
           </Card>
           <div>
-          <Edit
-            open={this.state.edit === doc._id}
-            handleToggle={this.handleToggle}
-            handleClose={this.handleCloseEdit}
-            handleSubmit={() => {
-              const doc = {
-                id: this.state.edit,
-                title: this.state.title,
-                content: this.state.content,
-                permissions: this.state.permissions,
-              };
-              this.handleEditDoc(doc); }}
-            handleContent={this.handleContent}
-            handleTitle={this.handleTitle}
-            doc={doc._id}
-            defaultTitle={doc.title}
-            defaultContent={doc.content}
-            title={this.state.title}
-            content={this.state.content}
-          />
+            <Edit
+              open={this.state.edit === doc._id}
+              handleToggle={this.handleToggle}
+              handleClose={this.handleCloseEdit}
+              handleSubmit={() => {
+                const doc = {
+                  id: this.state.edit,
+                  title: this.state.title,
+                  content: this.state.content,
+                  permissions: this.state.permissions,
+                };
+                this.handleEditDoc(doc); }}
+              handleContent={this.handleContent}
+              handleTitle={this.handleTitle}
+              doc={doc._id}
+              defaultTitle={doc.title}
+              defaultContent={doc.content}
+              title={this.state.title}
+              content={this.state.content}
+            />
           </div>
           <div>
             <Delete
@@ -205,20 +205,19 @@ class Document extends React.Component {
             secondary={true}
             style={style}
             onTouchTap={this.handleOpen}
-          >
-          </RaisedButton>
+          />
         </div>
         <div >
-        <Edit
-          open={this.state.open}
-          handleToggle={this.handleToggle}
-          handleClose={this.handleClose}
-          handleSubmit={this.handleSubmit}
-          handleContent={this.handleContent}
-          handleTitle={this.handleTitle}
-          title={this.state.title}
-          content={this.state.content}
-        />
+          <Edit
+            open={this.state.open}
+            handleToggle={this.handleToggle}
+            handleClose={this.handleClose}
+            handleSubmit={this.handleSubmit}
+            handleContent={this.handleContent}
+            handleTitle={this.handleTitle}
+            title={this.state.title}
+            content={this.state.content}
+          />
         </div>
         <div style={docStyle}>
           {docTable}
@@ -231,7 +230,7 @@ class Document extends React.Component {
           autoHideDuration={4000}
           onRequestClose={this.handleRequestClose}
         />
-        </div>
+      </div>
     );
   }
 }
@@ -255,7 +254,6 @@ const docActions = Object.assign({}, displayActions, { errorSet });
 export default connect(mapStateToProps, docActions)(Document);
 
 Document.propTypes = {
-  page: PropTypes.number,
   handleEditSubmit: PropTypes.func,
   deleteDoc: PropTypes.func,
   createDoc: PropTypes.func,

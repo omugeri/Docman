@@ -1,8 +1,6 @@
 import React from 'react';
-import { Card, CardActions } from 'material-ui/Card';
 import Dialog from 'material-ui/Dialog';
 import { FlatButton, TextField, Toggle } from 'material-ui';
-import AppStyles from '../../../shared/styles/styles.css';
 
 const editStyle = {
   textAlign: 'center',
@@ -49,7 +47,7 @@ export default class Edit extends React.Component {
                 fullWidth={true}
                 rows={2}
                 floatingLabelText="Content"
-                name='content'
+                name="content"
                 defaultValue={this.props.defaultContent}
                 onChange={this.props.handleContent}
                 style={{ width: '80%' }}

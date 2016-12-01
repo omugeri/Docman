@@ -1,6 +1,6 @@
 import request from 'superagent';
 import { openDocuments, openUserDoc, openRoles } from './menuActions.js';
-import { errorSet, notification } from './authActions.js';
+import { errorSet } from './authActions.js';
 
 export function displayUsers(users) {
   return {
@@ -185,33 +185,33 @@ export function handleEditRole(role) {
 export function deleteDoc(doc) {
   return (dispatch) => {
     const token = window.localStorage.getItem('token').replace(/"/g, '');
-      return request
-        .del(`/api/documents/${doc}`)
-        .set({ 'x-access-token': token })
-        .then((res) => {
-          if (res.status === 200) {
-            dispatch(errorSet('Document successfully deleted'));
-            dispatch(reloadPage(1));
-          } else {
-            return res;
-          }
-        });
+    return request
+      .del(`/api/documents/${doc}`)
+      .set({ 'x-access-token': token })
+      .then((res) => {
+        if (res.status === 200) {
+          dispatch(errorSet('Document successfully deleted'));
+          dispatch(reloadPage(1));
+        } else {
+          return res;
+        }
+      });
   };
 }
 
 export function deleteRole(role) {
   return (dispatch) => {
     const token = window.localStorage.getItem('token').replace(/"/g, '');
-      return request
-        .del(`/api/roles/${role}`)
-        .set({ 'x-access-token': token })
-        .then((res) => {
-          if (res.status === 200) {
-            dispatch(errorSet('Role successfully deleted'));
-            dispatch(reloadRoles(1));
-          } else {
-            return res;
-          }
-        });
+    return request
+      .del(`/api/roles/${role}`)
+      .set({ 'x-access-token': token })
+      .then((res) => {
+        if (res.status === 200) {
+          dispatch(errorSet('Role successfully deleted'));
+          dispatch(reloadRoles(1));
+        } else {
+          return res;
+        }
+      });
   };
 }

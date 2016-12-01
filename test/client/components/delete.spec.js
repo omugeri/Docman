@@ -11,11 +11,10 @@ describe('<Delete />', () => {
     const wrapper = shallow(<Delete />);
     expect(wrapper.find('Dialog')).to.be.defined;
   });
-  // it('should have child Components', () => {
-  //   const handleOpen = sinon.stub();
-  //   const wrapper = mountWithContext(<Delete onTouchTap={handleOpen}/>);
-  //   console.log(wrapper.debug());
-  //   wrapper.find('Dialog').simulate('click');
-  //   expect(handleOpen.calledOnce).to.be.false;
-  // });
+  it('should have child Components', () => {
+    const handleOpen = sinon.stub();
+    const wrapper = mountWithContext(<Delete onTouchTap={handleOpen}/>);
+    wrapper.find('Dialog').simulate('click');
+    expect(handleOpen.calledOnce).to.be.false;
+  });
 });

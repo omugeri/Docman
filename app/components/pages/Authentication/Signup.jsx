@@ -83,14 +83,12 @@ export class Signup extends React.Component {
             <form>
               <TextField
                 floatingLabelText="First Name"
-                //hintText="first"
                 value={this.first}
                 onChange={this.handleFirst}
                 style={{ width: '80%' }}
               /><br />
               <TextField
                 floatingLabelText="Last Name"
-                //hintText="last"
                 value={this.last}
                 onChange={this.handleLast}
                 style={{ width: '80%' }}
@@ -99,14 +97,12 @@ export class Signup extends React.Component {
                 errorText={this.props.error}
                 type="email"
                 floatingLabelText="Email"
-                //hintText="email"
                 value={this.email}
                 onChange={this.handleEmail}
                 style={{ width: '80%' }}
               /><br />
               <TextField
                 floatingLabelText="UserName"
-                //hintText="username"
                 value={this.username}
                 onChange={this.handleUsername}
                 style={{ width: '80%' }}
@@ -115,7 +111,6 @@ export class Signup extends React.Component {
               <TextField
                 type="password"
                 floatingLabelText="password"
-                //hintText="password"
                 value={this.password}
                 onChange={this.handlePassword}
                 style={{ width: '80%' }}

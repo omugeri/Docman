@@ -1,8 +1,8 @@
 import React from 'react';
-import { Router, browserHistory } from 'react-router';
+import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { purple500 } from 'material-ui/styles/colors';
-import { RaisedButton, AppBar, IconButton } from 'material-ui';
+import { RaisedButton } from 'material-ui';
 import request from 'superagent';
 import bgimage from 'file!../../../shared/images/doc_bg.jpeg';
 import styles from '../../../shared/styles/styles.css';

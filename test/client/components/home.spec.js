@@ -18,11 +18,11 @@ describe('<Home />', () => {
     expect(wrapper.props().handlePassword).to.be.defined;
     expect(wrapper.props().handleSubmit).to.be.defined;
   });
-  // it('simulates calling handleOpen', () => {
-  //   const handleOpen = sinon.stub();
-  //   const wrapper = shallowWithContext(<Home />)
-  //   const button = wrapper.childAt(0).childAt(0);
-  //   wrapper.childAt(0).childAt(0).simulate('touchTap');
-  //   expect(handleOpen.calledOnce).to.be.true;
-  // })
+  it('simulates calling handleOpen', () => {
+    const handleOpen = sinon.stub();
+    const wrapper = shallowWithContext(<Home />)
+    const button = wrapper.childAt(0).childAt(0);
+    wrapper.childAt(0).childAt(0).simulate('touchTap');
+    expect(handleOpen.calledOnce).to.be.true;
+  });
 });

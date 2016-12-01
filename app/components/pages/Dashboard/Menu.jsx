@@ -140,4 +140,5 @@ SideMenu.propTypes = {
   displayRoles: PropTypes.func,
   displayUsers: PropTypes.func,
   reloadPage: PropTypes.func,
+  reloadRoles: PropTypes.func,
 };

@@ -21,7 +21,6 @@ export class Search extends React.Component {
   }
   handleSubmit = () => {
     const searchDate = (this.state.search).toISOString().replace(/T.*/g, '');
-    console.log(searchDate);
     this.props.searchQuery(searchDate);
   }
   render() {
@@ -32,7 +31,7 @@ export class Search extends React.Component {
             hintText="Search by date"
             value={this.state.search}
             onChange={this.handleSearch}
-            //textFieldStyle={{ width: '10%' }}
+            textFieldStyle={{ width: '80%' }}
             className={Style.search}
           />
         </div>

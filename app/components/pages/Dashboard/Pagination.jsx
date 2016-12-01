@@ -72,4 +72,5 @@ Pagination.propTypes = {
   page: PropTypes.number,
   pages: PropTypes.number,
   reloadPage: PropTypes.func,
+  onDocumentChange: PropTypes.func,
 };

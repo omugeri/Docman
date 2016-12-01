@@ -6,7 +6,6 @@
 
 .main {
    position: relative;
-   /*background-image: url("book_bg.jpg");*/
    font-family: 'Roboto', sans-serif;
    height: 100vh;
    width: 100%;
@@ -19,7 +18,6 @@
    left: 0;
    width: 100%;
    height: 100%;
-   /*background-color: #7B1FA2;*/
    opacity: 0.69;
 }
 h1 {
@@ -52,7 +50,6 @@ p {
 }
 .button {
   position: centre;
-  /*margin-left:90%;*/
   float: right;
   margin-top: 3%;
   margin-right: 5%;

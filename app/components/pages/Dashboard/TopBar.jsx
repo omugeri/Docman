@@ -1,12 +1,12 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
+import { connect } from 'react-redux';
 import { FlatButton, AppBar } from 'material-ui';
 import { logoutAction, errorSet } from '../../../actions/authActions';
-import { connect } from 'react-redux';
 import Search from './Search.jsx';
 
 
-class TopBar extends React.Component {
+export class TopBar extends React.Component {
   constructor(props) {
     super(props);
     this.logout = this.logout.bind(this);
