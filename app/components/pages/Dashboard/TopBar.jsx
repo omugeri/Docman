@@ -19,6 +19,7 @@ class Base extends React.Component {
     return (
       <AppBar
         title="DOCMAN"
+        iconElementLeft={<div></div>}
         iconElementRight={<FlatButton
           label="Logout"
           onClick={this.logout}
@@ -30,7 +31,8 @@ class Base extends React.Component {
 }
 function mapStateToProps(state) {
   return {
-    error:state.auth.error,
+    error: state.auth.error,
+    user: window.localStorage.getItem('username'),
   };
 }
 export default connect(mapStateToProps, { logoutAction })(Base);
