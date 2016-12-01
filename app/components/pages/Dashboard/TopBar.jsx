@@ -3,9 +3,10 @@ import { browserHistory } from 'react-router';
 import { FlatButton, AppBar } from 'material-ui';
 import { logoutAction, errorSet } from '../../../actions/authActions';
 import { connect } from 'react-redux';
+import Search from './Search.jsx';
 
 
-class Base extends React.Component {
+class TopBar extends React.Component {
   constructor(props) {
     super(props);
     this.logout = this.logout.bind(this);
@@ -20,7 +21,7 @@ class Base extends React.Component {
     return (
       <AppBar
         title="DOCMAN"
-        iconElementLeft={<div></div>}
+        iconElementLeft={<Search />}
         iconElementRight={<FlatButton
           label="Logout"
           onClick={this.logout}
@@ -36,4 +37,4 @@ function mapStateToProps(state) {
     user: window.localStorage.getItem('username'),
   };
 }
-export default connect(mapStateToProps, { logoutAction, errorSet })(Base);
+export default connect(mapStateToProps, { logoutAction, errorSet })(TopBar);
