@@ -8,7 +8,7 @@ import { reloadPage } from '../../../actions/displayActions';
 const paperStyle = {
   backgroundColor: '#ffff',
   width: '70%',
-  marginTop: '15%',
+  marginTop: '5%',
   marginLeft: '20%',
 };
 

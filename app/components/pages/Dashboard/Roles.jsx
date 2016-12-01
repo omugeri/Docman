@@ -6,6 +6,7 @@ import {
   IconMenu,
   MenuItem,
   IconButton } from 'material-ui';
+import Snackbar from 'material-ui/Snackbar';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import EditRole from './EditRole.jsx';
@@ -51,7 +52,9 @@ class Roles extends React.Component {
     this.setState({ delete: false });
   }
   handleDelete = (role) => {
+    this.setState({ toast: false });
     this.props.deleteRole(role.id);
+    this.setState({ toast: true });
   }
   handleEdit = (role) => {
     const currentId = role._id;
@@ -75,12 +78,16 @@ class Roles extends React.Component {
   }
   handleEditSubmit = (role) => {
     this.setState({ edit: false });
-    this.props.handleEditRole(role);
+    this.setState({ toast: false });
+    (this.props.handleEditRole(role)).then(
+      this.setState({ toast: true })
+    );
   }
   handleId = (id) => {
     this.setState({ id });
   }
   handleSubmit = () => {
+    this.setState({ toast: false });
     const newRole = {
       title: this.state.title,
     };
@@ -167,6 +174,12 @@ class Roles extends React.Component {
         <div>
           {roleTable}
         </div>
+        <Snackbar
+          open={this.state.toast}
+          message={this.props.error}
+          autoHideDuration={4000}
+          onRequestClose={this.handleRequestClose}
+        />
         <Pagination onRolesChange={this.props.reload} />
         </div>
     );
@@ -178,6 +191,7 @@ function mapStateToProps(state) {
     rolesMenu: state.menu.roles,
     roleInfo: state.display.roles,
     page: state.display.page,
+    error: state.auth.error,
   };
 }
 export default connect(mapStateToProps, displayActions)(Roles);

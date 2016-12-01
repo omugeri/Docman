@@ -61,6 +61,7 @@ class User extends React.Component {
               onRowSelection={(row) => {
                 this.props.selectedUser(row);
               }}
+              height='80%'
             >
               <TableHeader>
                 <TableRow >

@@ -5,7 +5,9 @@ import {
   FloatingActionButton,
   IconMenu,
   MenuItem,
-  IconButton } from 'material-ui';
+  IconButton,
+  RaisedButton,
+} from 'material-ui';
 import CircularProgress from 'material-ui/CircularProgress';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
@@ -17,15 +19,16 @@ import Pagination from './Pagination.jsx';
 import Snackbar from 'material-ui/Snackbar';
 
 const docStyle = {
-  width: '60%',
-  // float: 'left',
+  width: '80%',
   marginTop: '2%',
-  marginLeft: '30%',
+  marginLeft: '10%',
 };
 const style = {
-  // float: 'left',
-  marginLeft: '10%',
+  textAlign: 'centre',
+  marginLeft: '30%',
   marginTop: '2%',
+  marginBottom: '3%',
+  // width: '15%'
 };
 
 class Document extends React.Component {
@@ -64,7 +67,6 @@ class Document extends React.Component {
         return this.setState({ delete: id });
       }
     }
-    console.log(this.props.user);
     this.props.errorSet('Cannot delete another user\'s document');
     this.setState({ toast: true });
   }
@@ -72,7 +74,8 @@ class Document extends React.Component {
     this.setState({ delete: false });
   }
   handleDelete = (doc) => {
-    this.props.deleteDoc(doc);
+    this.props.deleteDoc(doc.id);
+    this.setState({ toast: true });
   }
   handleExpand = () => {
     this.setState({ expanded: true });
@@ -108,6 +111,7 @@ class Document extends React.Component {
   handleEditDoc = (doc) => {
     this.setState({ edit: false });
     this.props.handleEditSubmit(doc);
+    this.setState({ toast: true });
   }
   handleId = (id) => {
     this.setState({ id });
@@ -125,8 +129,8 @@ class Document extends React.Component {
     this.setState({ permissions: 'Private' });
   };
   render() {
-    while (!this.props.display){
-      return (<div> <CircularProgress /> </div>)
+    if (!this.props.display){
+      return (<div></div>)
     }
     const docTable = this.props.display.map((doc) => {
       return (
@@ -198,14 +202,16 @@ class Document extends React.Component {
     });
     return (
       <div>
-        <FloatingActionButton
-          secondary={true}
-          style={style}
-          onTouchTap={this.handleOpen}
-        >
-          <ContentAdd />
-        </FloatingActionButton>
         <div>
+          <RaisedButton
+            label='Add Document'
+            secondary={true}
+            style={style}
+            onTouchTap={this.handleOpen}
+          >
+          </RaisedButton>
+        </div>
+        <div >
         <Edit
           open={this.state.open}
           handleToggle={this.handleToggle}
@@ -217,16 +223,17 @@ class Document extends React.Component {
           content={this.state.content}
         />
         </div>
-        <div>
+        <div style={docStyle}>
           {docTable}
+          <Pagination onDocumentChange={this.props.reload} />
         </div>
+
         <Snackbar
           open={this.state.toast}
           message={this.props.error}
           autoHideDuration={4000}
           onRequestClose={this.handleRequestClose}
         />
-        <Pagination onDocumentChange={this.props.reload} />
         </div>
     );
   }

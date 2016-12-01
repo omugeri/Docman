@@ -60,6 +60,7 @@ export function createDoc(doc) {
     })
     .then((res) => {
       if (res.status === 200) {
+        dispatch(errorSet('Document successfully added'));
         dispatch(reloadPage(1));
       }
     });
@@ -76,7 +77,7 @@ export function createRole(role) {
     })
     .then((res) => {
       if (res.status === 200) {
-        dispatch(notification('Role successfully added'));
+        dispatch(errorSet('Role successfully added'));
         dispatch(reloadRoles(1));
       }
     });
@@ -157,6 +158,7 @@ export function handleEditSubmit(doc) {
       })
       .then((res) => {
         if (res.status === 200) {
+          dispatch(errorSet('Document successfully updated'));
           dispatch(reloadPage(1));
         }
       });
@@ -174,6 +176,7 @@ export function handleEditRole(role) {
       })
       .then((res) => {
         if (res.status === 200) {
+          dispatch(errorSet('Role successfully updated'));
           dispatch(reloadRoles(1));
         }
       });
@@ -187,6 +190,7 @@ export function deleteDoc(doc) {
         .set({ 'x-access-token': token })
         .then((res) => {
           if (res.status === 200) {
+            dispatch(errorSet('Document successfully deleted'));
             dispatch(reloadPage(1));
           } else {
             return res;
@@ -197,13 +201,13 @@ export function deleteDoc(doc) {
 
 export function deleteRole(role) {
   return (dispatch) => {
-    console.log('GETS HERE');
     const token = window.localStorage.getItem('token').replace(/"/g, '');
       return request
         .del(`/api/roles/${role}`)
         .set({ 'x-access-token': token })
         .then((res) => {
           if (res.status === 200) {
+            dispatch(errorSet('Role successfully deleted'));
             dispatch(reloadRoles(1));
           } else {
             return res;
