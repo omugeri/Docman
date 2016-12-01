@@ -2,26 +2,23 @@ import React, { PropTypes } from 'react';
 import { Card, CardText, CardTitle, CardActions } from 'material-ui/Card';
 import { connect } from 'react-redux';
 import {
-  FloatingActionButton,
   IconMenu,
   MenuItem,
   IconButton,
   RaisedButton,
+  Snackbar,
 } from 'material-ui';
-import CircularProgress from 'material-ui/CircularProgress';
-import ContentAdd from 'material-ui/svg-icons/content/add';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import Edit from './Edit.jsx';
 import Delete from './Delete.jsx';
 import * as displayActions from '../../../actions/displayActions';
 import { errorSet } from '../../../actions/authActions';
 import Pagination from './Pagination.jsx';
-import Snackbar from 'material-ui/Snackbar';
 
 const docStyle = {
-  width: '80%',
+  width: '70%',
   marginTop: '2%',
-  marginLeft: '10%',
+  marginLeft: '20%',
 };
 const style = {
   textAlign: 'centre',

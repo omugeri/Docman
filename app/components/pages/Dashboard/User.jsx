@@ -1,9 +1,8 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { Card, FloatingActionButton } from 'material-ui';
+import { Card, RaisedButton } from 'material-ui';
 import { Table, TableBody, TableHeader,
   TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
-import ContentAdd from 'material-ui/svg-icons/content/add';
 import Signup from '../Authentication/Signup.jsx';
 import { selectedUser } from '../../../actions/displayActions';
 import { errorSet } from '../../../actions/authActions';
@@ -17,8 +16,8 @@ const div2 = {
   height: '50%',
 };
 const style = {
-  float: 'left',
-  marginLeft: '5%',
+  textAlign: 'centre',
+  marginLeft: '30%',
   marginTop: '2%',
 };
 class User extends React.Component {
@@ -47,14 +46,13 @@ class User extends React.Component {
     });
     return (
       <div>
-
-        <FloatingActionButton
+        <RaisedButton
+          label='Add User'
           secondary={true}
           style={style}
           onTouchTap={this.handleRegister}
         >
-          <ContentAdd />
-        </FloatingActionButton>
+        </RaisedButton>
         <div style={{ width: '70%', float: 'left' }}>
           <Card style={div2}>
             <Table

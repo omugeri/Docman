@@ -52,16 +52,6 @@ const TestUsers = [
     role: 'User',
   },
   {
-    userName: 'joykare',
-    name: {
-      first: 'Joy',
-      last: 'Waruguru',
-    },
-    email: 'joy@gmail.com',
-    password: bcrypt.hashSync('joykare', bcrypt.genSaltSync(8), null),
-    role: 'User',
-  },
-  {
     userName: 'blonde',
     name: {
       first: 'Jacky',

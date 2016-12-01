@@ -2,12 +2,11 @@ import React, { PropTypes } from 'react';
 import { Card, CardText, CardTitle, CardActions } from 'material-ui/Card';
 import { connect } from 'react-redux';
 import {
-  FloatingActionButton,
+  RaisedButton,
   IconMenu,
   MenuItem,
   IconButton } from 'material-ui';
 import Snackbar from 'material-ui/Snackbar';
-import ContentAdd from 'material-ui/svg-icons/content/add';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import EditRole from './EditRole.jsx';
 import Delete from './Delete.jsx';
@@ -16,13 +15,12 @@ import Pagination from './Pagination.jsx';
 
 const roleStyle = {
   width: '60%',
-  // float: 'left',
-  marginTop: '2%',
+  marginTop: '1%',
   marginLeft: '30%',
 };
 const style = {
-  // float: 'left',
-  marginLeft: '10%',
+  textAlign: 'centre',
+  marginLeft: '30%',
   marginTop: '2%',
 };
 
@@ -154,13 +152,13 @@ class Roles extends React.Component {
     });
     return (
       <div>
-        <FloatingActionButton
+        <RaisedButton
+          label='Add Label'
           secondary={true}
           style={style}
           onTouchTap={this.handleOpen}
         >
-          <ContentAdd />
-        </FloatingActionButton>
+        </RaisedButton>
         <div>
         <EditRole
           open={this.state.open}
@@ -180,7 +178,6 @@ class Roles extends React.Component {
           autoHideDuration={4000}
           onRequestClose={this.handleRequestClose}
         />
-        <Pagination onRolesChange={this.props.reload} />
         </div>
     );
   }

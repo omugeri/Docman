@@ -16,7 +16,7 @@ const style = {
   paper: {
     display: 'inline-block',
     float: 'left',
-    margin: '0px 0px 50px 0',
+    marginLeft: '0',
   },
   rightIcon: {
     textAlign: 'center',

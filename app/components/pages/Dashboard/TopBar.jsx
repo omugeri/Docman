@@ -1,7 +1,7 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
 import { FlatButton, AppBar } from 'material-ui';
-import { logoutAction } from '../../../actions/authActions';
+import { logoutAction, errorSet } from '../../../actions/authActions';
 import { connect } from 'react-redux';
 
 
@@ -11,6 +11,7 @@ class Base extends React.Component {
     this.logout = this.logout.bind(this);
   }
   logout = () => {
+    this.props.errorSet('');
     this.props.logoutAction();
     window.localStorage.removeItem('token');
     browserHistory.push('/');
@@ -35,4 +36,4 @@ function mapStateToProps(state) {
     user: window.localStorage.getItem('username'),
   };
 }
-export default connect(mapStateToProps, { logoutAction })(Base);
+export default connect(mapStateToProps, { logoutAction, errorSet })(Base);
