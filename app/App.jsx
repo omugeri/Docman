@@ -27,9 +27,9 @@ const docManTheme = getMuiTheme({
     primary3Color: '#B66CF8',
     accent1Color: '#4CAF50',
     accent2Color: '#8BC34A',
-    textColor: '#9c27b0',
+    textColor: '#000019',
+    alternateTextColor: '#fff',
     secondaryTextColor: '#757575',
-    // canvasColor: '#e5b1ff',
     canvasColor: '#fff',
 
     borderColor: '#BDBDBD',

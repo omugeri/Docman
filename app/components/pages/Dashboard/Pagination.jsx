@@ -38,20 +38,22 @@ class Pagination extends React.Component {
     }
   }
   render() {
-    return (
+    const { page } = this.props;
+    const { pages } = this.props;
+    return page && (
       <BottomNavigation
         style={paperStyle}
       >
-        <BottomNavigationItem
+        { page > 1 ? <BottomNavigationItem
           label="Previous"
           icon={<NavigationArrowBack />}
           onTouchTap={this.previous}
-        />
-        <BottomNavigationItem
+        /> : <span>Page 1 of {pages}</span> }
+        { page !== pages ? <BottomNavigationItem
           label="Next"
           icon={<NavigationArrowForward />}
           onTouchTap={this.next}
-        />
+        /> : <span>Page {pages} of {pages}</span> }
       </BottomNavigation>
     );
   }

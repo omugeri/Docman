@@ -28,6 +28,12 @@ export default function menuReducers(state = menu, action) {
         documents: false,
         roles: action.roles,
       });
+
+    case 'OPEN_RESULTS':
+      return Object.assign({}, state, {
+        resultsMenu: action.resultsMenu,
+      });
+
     default:
       return state;
 
