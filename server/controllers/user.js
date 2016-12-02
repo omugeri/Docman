@@ -113,7 +113,6 @@ const userCntrl = {
     });
   },
   login: (req, res) => {
-    console.log('REQUEST IS: ', req);
     User.findOne({ userName: req.body.userName }, (err, user) => {
       if (err) {
         res.status(500).json({ err });

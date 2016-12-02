@@ -53,7 +53,7 @@ if (isDeveloping) {
 } else {
     // applies if running on production mode
   mongoose.connect(process.env.MONGOLAB_URI);
-  
+
   app.use(bodyParser.json());
   app.use(express.static(__dirname + '/dist'));
   router(app);

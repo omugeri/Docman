@@ -92,9 +92,21 @@ export function selectedUser(row) {
       .set({ 'x-access-token': token })
       .then((res) => {
         if (res.status === 200) {
-          const userDocs = res.body;
-          dispatch(userDoc(userDocs));
-          dispatch(openUserDoc(true));
+          if (res.body.total === 0) {
+            const results = [{
+              id: 'error1',
+              owner: '',
+              title: 'Search Results',
+              content: 'No document found',
+            }];
+            dispatch(userDoc(results));
+            const resultsMenu = true;
+            dispatch(openUserDoc(resultsMenu));
+          } else {
+            const userDocs = res.body;
+            dispatch(userDoc(userDocs));
+            dispatch(openUserDoc(true));
+          }
         } else {
           dispatch(errorSet(res.text));
         }
