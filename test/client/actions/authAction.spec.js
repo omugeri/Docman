@@ -63,7 +63,7 @@ describe('async authentication actions', () => {
     };
     expect(authActions.setPermission(permissions)).to.eql(expectedAction);
   });
-  
+
   it('simulates displays users once reloading is done', () => {
     const res = {
       body: {
