@@ -38,6 +38,18 @@ describe('display actions', () => {
     };
     expect(displayActions.displayDocs(documents)).to.eql(expectedAction);
   });
+  it('simulates setting roles to true to display the roles', () => {
+    const roles = {
+      user: false,
+      documents: false,
+      roles: true,
+    };
+    const expectedAction = {
+      type: 'DISPLAY_ROLES',
+      roles,
+    };
+    expect(displayActions.displayRoles(roles)).to.eql(expectedAction);
+  });
   it('simulates setting dashboard to true to display information', () => {
     const info = {
       info: true,

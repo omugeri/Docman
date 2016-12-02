@@ -11,7 +11,7 @@ describe('menu reducers', () => {
     ).to.eql({
       users: true,
       documents: false,
-      dashboard: false,
+      roles: false,
     });
   });
   it('simulates setting the documents menu', () => {
@@ -23,7 +23,19 @@ describe('menu reducers', () => {
     ).to.eql({
       users: false,
       documents: true,
-      dashboard: false,
+      roles: false,
+    });
+  });
+  it('simulates setting the roles menu to true', () => {
+    expect(
+      reducer({}, {
+        type: 'OPEN_ROLES',
+        roles: true,
+      })
+    ).to.eql({
+      users: false,
+      documents: false,
+      roles: true,
     });
   });
   it('simulates setting the user documents dialog', () => {
