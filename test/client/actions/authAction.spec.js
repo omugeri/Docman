@@ -55,6 +55,15 @@ describe('async authentication actions', () => {
     expect(authActions.registerClose(register)).to.eql(expectedAction);
   });
 
+  it('simulates setting Permissions of the user', () => {
+    const permissions = 'Admin';
+    const expectedAction = {
+      type: 'SET_PERMISSION',
+      permissions,
+    };
+    expect(authActions.setPermission(permissions)).to.eql(expectedAction);
+  });
+  
   it('simulates displays users once reloading is done', () => {
     const res = {
       body: {

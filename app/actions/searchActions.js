@@ -16,6 +16,7 @@ export function searchQuery(datePicked) {
       })
       .accept('json')
       .then((res) => {
+        console.log(res.body);
         if (res.body.total === 0) {
           const results = [{
             id: 'error1',

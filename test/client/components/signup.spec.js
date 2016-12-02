@@ -1,9 +1,7 @@
 import React from 'react';
-import { mount, shallow, render } from 'enzyme';
+import { shallow } from 'enzyme';
 import { expect } from 'chai';
-import sinon from 'sinon';
 
-import { mountWithContext, shallowWithContext } from '../helpers/utils';
 import { Signup } from '../../../app/components/pages/Authentication/Signup.jsx';
 
 describe('<Signup />', () => {
@@ -22,12 +20,5 @@ describe('<Signup />', () => {
     const wrapper = shallow(<Signup />);
     const text = wrapper.find('TextField');
     expect(text.last().props().floatingLabelText).to.contain('password');
-  });
-
-  it('performs submit when the signup button is clicked', () => {
-    const handleSubmit = sinon.stub();
-    const wrapper = shallow(<Signup onTouchTap={handleSubmit} />);
-    const submit = wrapper.debug();
-    expect(handleSubmit.calledOnce).to.be.true;
   });
 });

@@ -40,12 +40,20 @@ describe('menu actions', () => {
     };
     expect(menuActions.openUserDoc(userDocOpen)).to.eql(expectedAction);
   });
-  it('simulates opening the dashboard menu', () => {
-    const dashboard = true;
+  it('simulates opening the roles menu', () => {
+    const roles = true;
     const expectedAction = {
-      type: 'OPEN_DASHBOARD',
-      dashboard,
+      type: 'OPEN_ROLES',
+      roles,
     };
-    expect(menuActions.openDashboard(dashboard)).to.eql(expectedAction);
+    expect(menuActions.openRoles(roles)).to.eql(expectedAction);
+  });
+  it('simulates opening the results dialog', () => {
+    const resultsMenu = true;
+    const expectedAction = {
+      type: 'OPEN_RESULTS',
+      resultsMenu,
+    };
+    expect(menuActions.openResults(resultsMenu)).to.eql(expectedAction);
   });
 });
