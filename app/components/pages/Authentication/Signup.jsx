@@ -1,8 +1,15 @@
 import React from 'react';
 import Dialog from 'material-ui/Dialog';
-import { FlatButton, TextField, Snackbar } from 'material-ui';
+import {
+  FlatButton,
+  TextField,
+  Snackbar,
+  DropDownMenu,
+  MenuItem } from 'material-ui';
+import request from 'superagent';
 import { connect } from 'react-redux';
 import { create } from '../../../actions/authActions';
+import * as displayActions from '../../../actions/displayActions';
 
 const Dstyle = {
   height: '100%',
@@ -23,13 +30,34 @@ export class Signup extends React.Component {
       password: '',
       error: '',
       toast: false,
+      assignedRole: 'User',
     };
+
+    this.handleChange = this.handleChange.bind(this);
     this.handleFirst = this.handleFirst.bind(this);
     this.handleLast = this.handleLast.bind(this);
     this.handleEmail = this.handleEmail.bind(this);
     this.handleUsername = this.handleUsername.bind(this);
     this.handlePassword = this.handlePassword.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+  componentDidMount() {
+    const token = window.localStorage.getItem('token').replace(/"/g, '');
+    request
+      .get('/api/roles/')
+      .set({ 'x-access-token': token })
+      .query({
+        limit: 3,
+        page: 1,
+      })
+      .accept('json')
+      .then((res) => {
+        const roles = res.body;
+        this.props.displayRoles(roles);
+      });
+  }
+  handleChange = (event, index, value) => {
+    this.setState({ assignedRole: value });
   }
   handleFirst = (event) => {
     this.setState({ first: event.target.value });
@@ -53,7 +81,9 @@ export class Signup extends React.Component {
       userName: this.state.username,
       email: this.state.email,
       password: this.state.password,
+      role: this.state.assignedRole,
     };
+    console.log('role is: ', user.role);
     this.props.create(user);
     this.props.handleClose;
   }
@@ -69,6 +99,7 @@ export class Signup extends React.Component {
         onTouchTap={this.handleSubmit}
       />,
     ];
+
     return (
       <div >
         <Dialog
@@ -116,6 +147,13 @@ export class Signup extends React.Component {
                 style={{ width: '80%' }}
               />
               <br />
+
+              { this.props.rolesInfo !== undefined ?
+                <DropDownMenu value={this.state.assignedRole} onChange={this.handleChange}>
+                  {this.props.rolesInfo.map((role) => (
+                    <MenuItem value={role.title} primaryText={role.title} />
+                  ))}
+                </DropDownMenu> : true }
             </form>
           </div>
           <Snackbar
@@ -132,6 +170,10 @@ export class Signup extends React.Component {
 function mapStateToProps(state) {
   return {
     error: state.auth.error,
+    rolesInfo: state.display.roles,
   };
 }
-export default connect(mapStateToProps, { create })(Signup);
+export default connect(
+  mapStateToProps,
+  Object.assign({}, { create }, displayActions)
+)(Signup);

@@ -5,9 +5,7 @@ import { connect } from 'react-redux';
 
 const Dstyle = {
   height: '100%',
-  maxHeight: 'none',
-  width: '25%',
-  maxWidth: 'none',
+  maxWidth: '380.5px',
   borderRadius: '10px',
 };
 
@@ -41,7 +39,7 @@ export class Login extends React.Component {
                 name="username"
                 value={this.props.username}
                 onChange={this.props.handleUsername}
-                style={{ width: '80%' }}
+                fullWidth={true}
               /><br />
               <br />
               <TextField
@@ -51,7 +49,7 @@ export class Login extends React.Component {
                 name='password'
                 value={this.props.password}
                 onChange={this.props.handlePassword}
-                style={{ width: '80%' }}
+                fullWidth={true}
               />
               <br />
             </form>

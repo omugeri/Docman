@@ -81,6 +81,35 @@ p {
   /* Support for IE. */
   font-feature-settings: 'liga';
 }
+@media screen and (max-width: 425px) {
+  .main {
+     position: relative;
+     font-family: 'Roboto', sans-serif;
+     height: 100vh;
+     width: 100%;
+     background-size: cover;
+  }
+    .menu {
+        display: none !important;
+    }
+    .alternateMenu {
+      display: block !important;
+      /*display: flex !important;*/
+    }
+    .doc {
+      /*margin: 0 !important;*/
+      width: 80% !important;
+      float: none;
+    }
+    .docdiv {
+      height: 300px !important;
+      overflow: scroll;
+    }
+    .table {
+      width: 95% !important;
+      float: right;
+    }
+}
 /* Rules for sizing the icon. */
 .material-icons.md-18 { font-size: 18px; }
 .material-icons.md-24 { font-size: 24px; }

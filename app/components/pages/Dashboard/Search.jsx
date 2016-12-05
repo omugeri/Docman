@@ -25,26 +25,23 @@ export class Search extends React.Component {
   }
   render() {
     return (
-      <div>
-        <div style={{ float: 'left' }}>
+      <div style={{display: 'flex'}}>
           <DatePicker
             hintText="Search by date"
             value={this.state.search}
             onChange={this.handleSearch}
-            textFieldStyle={{ width: '80%' }}
             className={Style.search}
           />
-        </div>
-        <div style={{ float: 'right' }}>
           <FlatButton
             label="Search"
             onTouchTap={this.handleSubmit}
             labelStyle={{ color: '#fff' }}
+            backgroundColor='#9C27B0'
+            isKeyboardFocused={true}
           />
           { this.props.resultsMenu ? <Documents
             display={this.props.searchInfo}
           /> : true}
-        </div>
       </div>
     );
   }

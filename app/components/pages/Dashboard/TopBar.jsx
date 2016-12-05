@@ -19,7 +19,7 @@ export class TopBar extends React.Component {
   };
   render() {
     return (
-      <AppBar
+      <AppBar style={{width: '100vw'}}
         title="DOCMAN"
         iconElementLeft={<Search />}
         iconElementRight={<FlatButton

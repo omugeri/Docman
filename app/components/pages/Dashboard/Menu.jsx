@@ -6,6 +6,7 @@ import Usersicon from 'material-ui/svg-icons/action/supervisor-account.js';
 import Documentsicon from 'material-ui/svg-icons/action/assignment.js';
 import Rolesicon from 'material-ui/svg-icons/communication/vpn-key.js';
 import request from 'superagent';
+import AppStyles from '../../../shared/styles/styles.css';
 import * as menuActions from '../../../actions/menuActions';
 import * as displayActions from '../../../actions/displayActions';
 import User from './User.jsx';
@@ -18,6 +19,9 @@ const style = {
     float: 'left',
     marginLeft: '0',
   },
+  mobile: {
+    display: 'none',
+  },
   rightIcon: {
     textAlign: 'center',
     lineHeight: '24px',
@@ -29,6 +33,7 @@ const style = {
     height: '25%',
     padding: '10%',
     color: '#fff',
+    // display: 'flex',
   },
 };
 
@@ -68,8 +73,8 @@ class SideMenu extends React.Component {
     return (
       <div>
         <Paper>
-          <Menu style={style.paper} >
-            <MenuItem
+          <Menu style={style.paper} className={AppStyles.menu}>
+            <MenuItem className={AppStyles.menu}
               primaryText="Users"
               leftIcon={<Usersicon />}
               onClick={this.onUserChange}
@@ -84,6 +89,27 @@ class SideMenu extends React.Component {
             {this.props.permissions === 'Admin' && (
               <MenuItem
                 primaryText="Roles"
+                leftIcon={<Rolesicon />}
+                onClick={this.onRolesChange}
+                style={style.item}
+              />
+            )}
+          </Menu>
+          </Paper>
+          <Paper>
+          <Menu style={{ display: 'none' }} className={AppStyles.alternateMenu}>
+            <MenuItem
+              leftIcon={<Usersicon />}
+              onClick={this.onUserChange}
+              style={style.item}
+            />
+            <MenuItem
+              leftIcon={<Documentsicon />}
+              onClick={this.onDocumentChange}
+              style={style.item}
+            />
+            {this.props.permissions === 'Admin' && (
+              <MenuItem
                 leftIcon={<Rolesicon />}
                 onClick={this.onRolesChange}
                 style={style.item}

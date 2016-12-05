@@ -11,6 +11,7 @@ import {
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import Edit from './Edit.jsx';
 import Delete from './Delete.jsx';
+import AppStyles from '../../../shared/styles/styles.css';
 import * as displayActions from '../../../actions/displayActions';
 import { errorSet } from '../../../actions/authActions';
 import Pagination from './Pagination.jsx';
@@ -18,14 +19,18 @@ import Pagination from './Pagination.jsx';
 const docStyle = {
   width: '70%',
   marginTop: '2%',
-  marginLeft: '20%',
+  marginLeft: '10%',
+  float: 'left',
 };
+const divStyle = {
+  height: '350px',
+  overflow: 'scroll',
+}
 const style = {
   textAlign: 'centre',
   marginLeft: '30%',
   marginTop: '2%',
   marginBottom: '3%',
-  // width: '15%'
 };
 
 class Document extends React.Component {
@@ -136,6 +141,7 @@ class Document extends React.Component {
             style={docStyle}
             expanded={this.state.expanded}
             onExpandChange={this.handleExpandChange}
+            className={AppStyles.doc}
           >
             <IconMenu
               iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
@@ -219,11 +225,10 @@ class Document extends React.Component {
             content={this.state.content}
           />
         </div>
-        <div style={docStyle}>
+        <div style={divStyle} className={AppStyles.docdiv}>
           {docTable}
-          <Pagination onDocumentChange={this.props.reload} />
         </div>
-
+        <Pagination onDocumentChange={this.props.reload} />
         <Snackbar
           open={this.state.toast}
           message={this.props.error}
