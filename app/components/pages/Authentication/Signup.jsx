@@ -83,7 +83,6 @@ export class Signup extends React.Component {
       password: this.state.password,
       role: this.state.assignedRole,
     };
-    console.log('role is: ', user.role);
     this.props.create(user);
     this.props.handleClose;
   }

@@ -92,7 +92,7 @@ export class Home extends React.Component {
               secondary
               label="login"
               onTouchTap={this.handleOpen}
-              className={styles.button}
+              className={styles.buttonHome}
             />
 
             <Login

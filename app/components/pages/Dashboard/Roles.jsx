@@ -11,6 +11,8 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import EditRole from './EditRole.jsx';
 import Delete from './Delete.jsx';
 import * as displayActions from '../../../actions/displayActions';
+import AppStyles from '../../../shared/styles/styles.css';
+
 
 const roleStyle = {
   width: '60%',
@@ -19,7 +21,7 @@ const roleStyle = {
 };
 const style = {
   textAlign: 'centre',
-  marginLeft: '30%',
+  marginLeft: '40%',
   marginTop: '2%',
 };
 
@@ -99,6 +101,7 @@ class Roles extends React.Component {
           <Card
             style={roleStyle}
             onExpandChange={this.handleExpandChange}
+            className={AppStyles.roleCard}
           >
             <IconMenu
               iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
@@ -156,6 +159,7 @@ class Roles extends React.Component {
           secondary={true}
           style={style}
           onTouchTap={this.handleOpen}
+          className={AppStyles.rolesButton}
         />
         <div>
           <EditRole
@@ -167,7 +171,7 @@ class Roles extends React.Component {
             title={this.state.title}
           />
         </div>
-        <div>
+        <div className={AppStyles.roles}>
           {roleTable}
         </div>
         <Snackbar
