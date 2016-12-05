@@ -1,6 +1,6 @@
 # DOCMAN
-[Coverage Status](https://coveralls.io/repos/github/andela-omugeri/Checkpoint_3/badge.svg?branch=develop)](https://coveralls.io/github/andela-omugeri/Checkpoint_3?branch=develop)
-[![CircleCI](https://circleci.com/gh/andela-omugeri/String.svg?style=svg)](https://circleci.com/gh/andela-omugeri/String)
+
+[![Coverage Status](https://coveralls.io/repos/github/andela-omugeri/Docman/badge.svg?branch=test)](https://coveralls.io/github/andela-omugeri/Docman?branch=test)
 
 This Document Management System allows users to manage documents and the administrator to create and manage users & roles.
 Each User has a role while documents have owners and permissions. The Administrator can view all documents, however users can only view their own documents and public ones. The default permission for documents is public. To make a document private toggle the button at the bottom of the form.

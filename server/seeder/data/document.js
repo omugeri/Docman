@@ -65,6 +65,7 @@ const TestDocuments = [
     content: 'Ferrari, Bugatti, Chrysler, Runx, Rolls Royce, Mercedes Benz, BMW',
     createdAt: new Date(Date.now() + 8),
     permissions: 'Public',
+    owner: 'stranger',
   },
 ];
 module.exports = TestDocuments;

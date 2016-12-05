@@ -62,9 +62,44 @@ describe('Display async actions', () => {
     .post('/api/documents', () => {
       return res;
     });
-    const expectedAction = [{ type: 'CHANGE_PAGE', page: 1 }];
+    const expectedAction = [
+      {
+        type: 'SET_ERROR',
+        error: 'Document successfully added',
+      },
+      { type: 'CHANGE_PAGE', page: 1 },
+    ];
     const store = mockStore({});
     return store.dispatch(displayActions.createDoc(doc))
+    .then(() => {
+      expect(store.getActions()).to.eql(expectedAction);
+    });
+  });
+  it('simulates creating roles', () => {
+    const res = {
+      status: 200,
+    };
+    const role = {
+      title: 'General',
+    };
+    window.localStorage = {
+      getItem: () => {
+        return "\"token123\"";
+      },
+    };
+    mock
+    .post('/api/roles', () => {
+      return res;
+    });
+    const expectedAction = [
+      {
+        type: 'SET_ERROR',
+        error: 'Role successfully added',
+      },
+      { type: 'CHANGE_PAGE', page: 1 },
+    ];
+    const store = mockStore({});
+    return store.dispatch(displayActions.createRole(role))
     .then(() => {
       expect(store.getActions()).to.eql(expectedAction);
     });
@@ -82,7 +117,7 @@ describe('Display async actions', () => {
         title: 'Names',
         Content: 'too many names',
         owner: 'ganjez',
-      }
+      },
     };
     const docs = 'hi09876b';
     mock
@@ -124,12 +159,48 @@ describe('Display async actions', () => {
     .put(`/api/documents/${id}`, () => {
       return res;
     });
-    const expectedAction = [{
+    const expectedAction = [
+      { type: 'SET_ERROR',
+        error: 'Document successfully updated',
+      },
+      {
       type: 'CHANGE_PAGE',
       page: 1,
     }];
     const store = mockStore({ doc });
     return store.dispatch(displayActions.handleEditSubmit(doc))
+    .then(() => {
+      expect(store.getActions()).to.eql(expectedAction);
+    });
+  });
+  it('simulates submitting an edited role', () => {
+    window.localStorage = {
+      getItem: () => {
+        return "\"token123\"";
+      },
+    };
+    const role = {
+      id: 'hj098976fvu',
+      title: 'Generalized',
+    };
+    const res = {
+      status: 200,
+    };
+    const id = 'hj098976fvu';
+    mock
+    .put(`/api/roles/${id}`, () => {
+      return res;
+    });
+    const expectedAction = [
+      { type: 'SET_ERROR',
+        error: 'Role successfully updated',
+      },
+      {
+      type: 'CHANGE_PAGE',
+      page: 1,
+    }];
+    const store = mockStore({ role });
+    return store.dispatch(displayActions.handleEditRole(role))
     .then(() => {
       expect(store.getActions()).to.eql(expectedAction);
     });
@@ -140,18 +211,48 @@ describe('Display async actions', () => {
         return "\"token123\"";
       },
     };
-    const res = { status: 200 }
+    const res = { status: 200 };
     const doc = 'hj098976fvu';
     mock
     .del(`/api/documents/${doc}`, () => {
       return res;
     });
-    const expectedAction = [{
+    const expectedAction = [
+      { type: 'SET_ERROR',
+        error: 'Document successfully deleted',
+      },
+      {
       type: 'CHANGE_PAGE',
       page: 1,
     }];
     const store = mockStore({ doc });
     return store.dispatch(displayActions.deleteDoc(doc))
+    .then(() => {
+      expect(store.getActions()).to.eql(expectedAction);
+    });
+  });
+  it('simulates deleting roles', () => {
+    window.localStorage = {
+      getItem: () => {
+        return "\"token123\"";
+      },
+    };
+    const res = { status: 200 };
+    const role = 'hj098976fvu';
+    mock
+    .del(`/api/roles/${role}`, () => {
+      return res;
+    });
+    const expectedAction = [
+      { type: 'SET_ERROR',
+        error: 'Role successfully deleted',
+      },
+      {
+      type: 'CHANGE_PAGE',
+      page: 1,
+    }];
+    const store = mockStore({ role });
+    return store.dispatch(displayActions.deleteRole(role))
     .then(() => {
       expect(store.getActions()).to.eql(expectedAction);
     });

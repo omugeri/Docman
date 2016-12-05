@@ -8,7 +8,7 @@ import { reloadPage } from '../../../actions/displayActions';
 const paperStyle = {
   backgroundColor: '#ffff',
   width: '70%',
-  marginTop: '15%',
+  marginTop: '5%',
   marginLeft: '20%',
 };
 
@@ -38,20 +38,22 @@ class Pagination extends React.Component {
     }
   }
   render() {
-    return (
+    const { page } = this.props;
+    const { pages } = this.props;
+    return page && (
       <BottomNavigation
         style={paperStyle}
       >
-        <BottomNavigationItem
+        { page > 1 ? <BottomNavigationItem
           label="Previous"
           icon={<NavigationArrowBack />}
           onTouchTap={this.previous}
-        />
-        <BottomNavigationItem
+        /> : <span>Page 1 of {pages}</span> }
+        { page !== pages ? <BottomNavigationItem
           label="Next"
           icon={<NavigationArrowForward />}
           onTouchTap={this.next}
-        />
+        /> : <span>Page {pages} of {pages}</span> }
       </BottomNavigation>
     );
   }
@@ -70,4 +72,5 @@ Pagination.propTypes = {
   page: PropTypes.number,
   pages: PropTypes.number,
   reloadPage: PropTypes.func,
+  onDocumentChange: PropTypes.func,
 };

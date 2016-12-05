@@ -16,11 +16,18 @@ export function errorSet(error) {
     error,
   };
 }
+
 export function registerClose() {
   return {
     type: 'REGISTER_OPEN',
     register: false,
-  }
+  };
+}
+export function setPermission(permissions) {
+  return {
+    type: 'SET_PERMISSION',
+    permissions: permissions,
+  };
 }
 export function reloadUser() {
   return (dispatch) => {
@@ -57,15 +64,19 @@ export function create(user) {
       lastName: user.lastName,
       email: user.email,
       password: user.password,
+      role: user.role,
     })
     .then((res) => {
       if (res.status === 200) {
         dispatch(registerClose());
         dispatch(reloadUser());
+      } else if (res.status === 409) {
+        this.setState({ toast: true });
+        dispatch(errorSet('The email address already exists.'));
       }
     })
     .catch((err) => {
-      dispatch(errorSet(err));
+      dispatch(errorSet('The email address already exists.'));
     });
   };
 }

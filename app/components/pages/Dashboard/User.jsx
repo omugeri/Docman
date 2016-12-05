@@ -1,11 +1,12 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { Card, FloatingActionButton } from 'material-ui';
+import { Card, RaisedButton } from 'material-ui';
 import { Table, TableBody, TableHeader,
   TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
-import ContentAdd from 'material-ui/svg-icons/content/add';
 import Signup from '../Authentication/Signup.jsx';
+import AppStyles from '../../../shared/styles/styles.css';
 import { selectedUser } from '../../../actions/displayActions';
+import { errorSet } from '../../../actions/authActions';
 import Documents from './UserDocuments.jsx';
 
 
@@ -13,11 +14,11 @@ const div2 = {
   float: 'left',
   marginTop: '2%',
   marginLeft: '5%',
-  height: '50%',
+  width: '70%',
 };
 const style = {
-  float: 'left',
-  marginLeft: '5%',
+  textAlign: 'centre',
+  marginLeft: '35%',
   marginTop: '2%',
 };
 class User extends React.Component {
@@ -34,6 +35,7 @@ class User extends React.Component {
   }
   handleRegisterClose = () => {
     this.setState({ register: false });
+    this.props.errorSet('')
   }
   render() {
     const userTable = this.props.display.map((user) => {
@@ -45,20 +47,22 @@ class User extends React.Component {
     });
     return (
       <div>
+        <div>
+          <div className={AppStyles.button}>
+          <RaisedButton
+            label="Add User"
+            secondary={true}
+            style={style}
+            onTouchTap={this.handleRegister}
 
-        <FloatingActionButton
-          secondary={true}
-          style={style}
-          onTouchTap={this.handleRegister}
-        >
-          <ContentAdd />
-        </FloatingActionButton>
-        <div style={{ width: '50%', float: 'left' }}>
-          <Card style={div2}>
+          />
+          </div>
+          <Card style={div2} className={AppStyles.table}>
             <Table
               onRowSelection={(row) => {
                 this.props.selectedUser(row);
               }}
+              height='80%'
             >
               <TableHeader>
                 <TableRow >
@@ -90,7 +94,8 @@ function mapStateToProps(state) {
     userDocOpen: state.menu.userDocOpen,
   };
 }
-export default connect(mapStateToProps, { selectedUser })(User);
+const theActions = Object.assign({}, { selectedUser }, { errorSet });
+export default connect(mapStateToProps, theActions)(User);
 User.propTypes = {
   userDocOpen: PropTypes.boolean,
   selectedUser: PropTypes.func,

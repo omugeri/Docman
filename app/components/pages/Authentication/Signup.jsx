@@ -1,8 +1,15 @@
 import React from 'react';
 import Dialog from 'material-ui/Dialog';
-import { FlatButton, TextField } from 'material-ui';
+import {
+  FlatButton,
+  TextField,
+  Snackbar,
+  DropDownMenu,
+  MenuItem } from 'material-ui';
+import request from 'superagent';
 import { connect } from 'react-redux';
 import { create } from '../../../actions/authActions';
+import * as displayActions from '../../../actions/displayActions';
 
 const Dstyle = {
   height: '100%',
@@ -22,13 +29,35 @@ export class Signup extends React.Component {
       username: '',
       password: '',
       error: '',
+      toast: false,
+      assignedRole: 'User',
     };
+
+    this.handleChange = this.handleChange.bind(this);
     this.handleFirst = this.handleFirst.bind(this);
     this.handleLast = this.handleLast.bind(this);
     this.handleEmail = this.handleEmail.bind(this);
     this.handleUsername = this.handleUsername.bind(this);
     this.handlePassword = this.handlePassword.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+  componentDidMount() {
+    const token = window.localStorage.getItem('token').replace(/"/g, '');
+    request
+      .get('/api/roles/')
+      .set({ 'x-access-token': token })
+      .query({
+        limit: 3,
+        page: 1,
+      })
+      .accept('json')
+      .then((res) => {
+        const roles = res.body;
+        this.props.displayRoles(roles);
+      });
+  }
+  handleChange = (event, index, value) => {
+    this.setState({ assignedRole: value });
   }
   handleFirst = (event) => {
     this.setState({ first: event.target.value });
@@ -52,8 +81,10 @@ export class Signup extends React.Component {
       userName: this.state.username,
       email: this.state.email,
       password: this.state.password,
+      role: this.state.assignedRole,
     };
     this.props.create(user);
+    this.props.handleClose;
   }
 
   render() {
@@ -67,6 +98,7 @@ export class Signup extends React.Component {
         onTouchTap={this.handleSubmit}
       />,
     ];
+
     return (
       <div >
         <Dialog
@@ -80,51 +112,67 @@ export class Signup extends React.Component {
           <div>
             <form>
               <TextField
-                errorText={this.props.error}
                 floatingLabelText="First Name"
-                name="first"
                 value={this.first}
                 onChange={this.handleFirst}
+                style={{ width: '80%' }}
+              /><br />
+              <TextField
+                floatingLabelText="Last Name"
+                value={this.last}
+                onChange={this.handleLast}
+                style={{ width: '80%' }}
               /><br />
               <TextField
                 errorText={this.props.error}
-                floatingLabelText="Last Name"
-                name="last"
-                value={this.last}
-                onChange={this.handleLast}
-              /><br />
-              <TextField
-                errorText={this.error}
                 type="email"
                 floatingLabelText="Email"
-                name="email"
                 value={this.email}
                 onChange={this.handleEmail}
+                style={{ width: '80%' }}
               /><br />
               <TextField
                 floatingLabelText="UserName"
-                name="username"
                 value={this.username}
                 onChange={this.handleUsername}
+                style={{ width: '80%' }}
               /><br />
               <br />
               <TextField
-                errorText={this.error}
                 type="password"
                 floatingLabelText="password"
-                name="password"
                 value={this.password}
                 onChange={this.handlePassword}
+                style={{ width: '80%' }}
               />
               <br />
+
+              { this.props.rolesInfo !== undefined ?
+                <DropDownMenu value={this.state.assignedRole} onChange={this.handleChange}>
+                  {this.props.rolesInfo.map((role) => (
+                    <MenuItem value={role.title} primaryText={role.title} />
+                  ))}
+                </DropDownMenu> : true }
             </form>
           </div>
+          <Snackbar
+            open={this.state.toast}
+            message={this.props.error}
+            autoHideDuration={4000}
+            onRequestClose={this.handleRequestClose}
+          />
         </Dialog>
       </div>
        );
   }
 }
 function mapStateToProps(state) {
-  return {};
+  return {
+    error: state.auth.error,
+    rolesInfo: state.display.roles,
+  };
 }
-export default connect(mapStateToProps, { create })(Signup);
+export default connect(
+  mapStateToProps,
+  Object.assign({}, { create }, displayActions)
+)(Signup);

@@ -1,5 +1,5 @@
 import request from 'superagent';
-import { openDocuments, openUserDoc } from './menuActions.js';
+import { openDocuments, openUserDoc, openRoles } from './menuActions.js';
 import { errorSet } from './authActions.js';
 
 export function displayUsers(users) {
@@ -13,6 +13,13 @@ export function displayDocs(documents) {
   return {
     type: 'DISPLAY_DOCUMENTS',
     documents,
+  };
+}
+
+export function displayRoles(roles) {
+  return {
+    type: 'DISPLAY_ROLES',
+    roles,
   };
 }
 
@@ -53,7 +60,25 @@ export function createDoc(doc) {
     })
     .then((res) => {
       if (res.status === 200) {
+        dispatch(errorSet('Document successfully added'));
         dispatch(reloadPage(1));
+      }
+    });
+  };
+}
+export function createRole(role) {
+  return (dispatch) => {
+    const token = window.localStorage.getItem('token').replace(/"/g, '');
+    return request
+    .post('/api/roles')
+    .set({ 'x-access-token': token })
+    .send({
+      title: role.title,
+    })
+    .then((res) => {
+      if (res.status === 200) {
+        dispatch(errorSet('Role successfully added'));
+        dispatch(reloadRoles(1));
       }
     });
   };
@@ -67,9 +92,21 @@ export function selectedUser(row) {
       .set({ 'x-access-token': token })
       .then((res) => {
         if (res.status === 200) {
-          const userDocs = res.body;
-          dispatch(userDoc(userDocs));
-          dispatch(openUserDoc(true));
+          if (res.body.total === 0) {
+            const results = [{
+              id: 'error1',
+              owner: '',
+              title: 'Search Results',
+              content: 'No document found',
+            }];
+            dispatch(userDoc(results));
+            const resultsMenu = true;
+            dispatch(openUserDoc(resultsMenu));
+          } else {
+            const userDocs = res.body;
+            dispatch(userDoc(userDocs));
+            dispatch(openUserDoc(true));
+          }
         } else {
           dispatch(errorSet(res.text));
         }
@@ -95,7 +132,28 @@ export function reloadPage(page) {
         const documentsMenu = true;
         dispatch(openDocuments(documentsMenu));
       })
-    )
+    );
+  };
+}
+export function reloadRoles(page) {
+  return (dispatch) => {
+    dispatch(changePage(page));
+    const token = window.localStorage.getItem('token').replace(/"/g, '');
+    return (request
+      .get('/api/roles/')
+      .set({ 'x-access-token': token })
+      .query({
+        limit: 3,
+        page,
+      })
+      .accept('json')
+      .then((res) => {
+        const roles = res.body;
+        dispatch(displayRoles(roles));
+        const rolesMenu = true;
+        dispatch(openRoles(rolesMenu));
+      })
+    );
   };
 }
 export function handleEditSubmit(doc) {
@@ -112,7 +170,26 @@ export function handleEditSubmit(doc) {
       })
       .then((res) => {
         if (res.status === 200) {
+          dispatch(errorSet('Document successfully updated'));
           dispatch(reloadPage(1));
+        }
+      });
+  };
+}
+export function handleEditRole(role) {
+  return (dispatch) => {
+    const id = role.id;
+    const token = window.localStorage.getItem('token').replace(/"/g, '');
+    return request
+      .put(`/api/roles/${id}`)
+      .set({ 'x-access-token': token })
+      .send({
+        title: role.title,
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          dispatch(errorSet('Role successfully updated'));
+          dispatch(reloadRoles(1));
         }
       });
   };
@@ -125,7 +202,25 @@ export function deleteDoc(doc) {
       .set({ 'x-access-token': token })
       .then((res) => {
         if (res.status === 200) {
+          dispatch(errorSet('Document successfully deleted'));
           dispatch(reloadPage(1));
+        } else {
+          return res;
+        }
+      });
+  };
+}
+
+export function deleteRole(role) {
+  return (dispatch) => {
+    const token = window.localStorage.getItem('token').replace(/"/g, '');
+    return request
+      .del(`/api/roles/${role}`)
+      .set({ 'x-access-token': token })
+      .then((res) => {
+        if (res.status === 200) {
+          dispatch(errorSet('Role successfully deleted'));
+          dispatch(reloadRoles(1));
         } else {
           return res;
         }

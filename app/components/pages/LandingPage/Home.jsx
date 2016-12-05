@@ -1,8 +1,8 @@
 import React from 'react';
-import { Router, browserHistory } from 'react-router';
+import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { purple500 } from 'material-ui/styles/colors';
-import { RaisedButton, AppBar, IconButton } from 'material-ui';
+import { RaisedButton } from 'material-ui';
 import request from 'superagent';
 import bgimage from 'file!../../../shared/images/doc_bg.jpeg';
 import styles from '../../../shared/styles/styles.css';
@@ -50,6 +50,7 @@ export class Home extends React.Component {
 
   handleClose = () => {
     this.setState({ open: false });
+    this.props.errorSet('');
   };
   handleRegister = () => {
     this.setState({ register: true });
@@ -67,7 +68,12 @@ export class Home extends React.Component {
       .end((err, res) => {
         if (res.status === 202) {
           this.setState({ open: false });
-          const token = res.text;
+          const token = res.body.token;
+          const permissions = res.body.permissions;
+          const username = res.body.username;
+          this.props.setPermission(permissions);
+          window.localStorage.setItem('permissions', permissions);
+          window.localStorage.setItem('username', username)
           window.localStorage.setItem('token', token);
           this.props.reloadPage(1);
           browserHistory.push('/dashboard');
@@ -86,7 +92,7 @@ export class Home extends React.Component {
               secondary
               label="login"
               onTouchTap={this.handleOpen}
-              className={styles.button}
+              className={styles.buttonHome}
             />
 
             <Login

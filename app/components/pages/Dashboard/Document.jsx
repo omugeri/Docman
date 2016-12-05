@@ -1,29 +1,36 @@
 import React, { PropTypes } from 'react';
-import { Card, CardText, CardTitle, CardActions } from 'material-ui/Card';
-import { browserHistory } from 'react-router';
+import { Card, CardText, CardTitle } from 'material-ui/Card';
 import { connect } from 'react-redux';
 import {
-  FloatingActionButton,
   IconMenu,
   MenuItem,
-  IconButton } from 'material-ui';
-import ContentAdd from 'material-ui/svg-icons/content/add';
+  IconButton,
+  RaisedButton,
+  Snackbar,
+} from 'material-ui';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import Edit from './Edit.jsx';
 import Delete from './Delete.jsx';
+import AppStyles from '../../../shared/styles/styles.css';
 import * as displayActions from '../../../actions/displayActions';
+import { errorSet } from '../../../actions/authActions';
 import Pagination from './Pagination.jsx';
 
 const docStyle = {
-  width: '60%',
-  // float: 'left',
+  width: '70%',
   marginTop: '2%',
-  marginLeft: '30%',
-};
-const style = {
-  float: 'left',
   marginLeft: '10%',
+  float: 'left',
+};
+const divStyle = {
+  height: '350px',
+  overflow: 'scroll',
+}
+const style = {
+  textAlign: 'centre',
+  marginLeft: '30%',
   marginTop: '2%',
+  marginBottom: '3%',
 };
 
 class Document extends React.Component {
@@ -39,6 +46,7 @@ class Document extends React.Component {
       toggle: false,
       edit: false,
       delete: false,
+      toast: false,
     };
     this.handleId = this.handleId.bind(this);
     this.handleTitle = this.handleTitle.bind(this);
@@ -50,25 +58,42 @@ class Document extends React.Component {
     this.handleDelete = this.handleDelete.bind(this);
     this.handleDialog = this.handleDialog.bind(this);
   }
-  handleDialog = (id) => {
-    this.setState({ delete: id });
+  handleDialog = (doc) => {
+    const id = doc._id;
+
+    if (this.props.user === doc.owner) {
+      this.setState({ toast: false });
+      return this.setState({ delete: id });
+    } else if (!this.props.user) {
+      if (this.props.permissions === 'Admin') {
+        return this.setState({ delete: id });
+      }
+    }
+    this.props.errorSet('Cannot delete another user\'s document');
+    this.setState({ toast: true });
   }
   handleDelClose = () => {
     this.setState({ delete: false });
   }
   handleDelete = (doc) => {
-    this.props.deleteDoc(doc);
+    this.props.deleteDoc(doc.id);
+    this.setState({ toast: true });
   }
   handleExpand = () => {
     this.setState({ expanded: true });
   };
   handleEdit = (doc) => {
     const currentId = doc._id;
-    this.setState({
-      edit: currentId,
-      title: doc.title,
-      content: doc.content,
-    });
+    if (this.props.user === doc.owner) {
+      this.setState({ toast: false });
+      return this.setState({
+        edit: currentId,
+        title: doc.title,
+        content: doc.content,
+      });
+    }
+    this.props.errorSet('Cannot edit another user\'s document');
+    this.setState({ toast: true });
   }
   handleCloseEdit = () => {
     this.setState({ edit: false });
@@ -85,9 +110,10 @@ class Document extends React.Component {
   handleClose = () => {
     this.setState({ open: false });
   }
-  handleEditSubmit = (doc) => {
+  handleEditDoc = (doc) => {
     this.setState({ edit: false });
     this.props.handleEditSubmit(doc);
+    this.setState({ toast: true });
   }
   handleId = (id) => {
     this.setState({ id });
@@ -105,8 +131,8 @@ class Document extends React.Component {
     this.setState({ permissions: 'Private' });
   };
   render() {
-    if(!this.props.display){
-      return (<div> Loading </div>)
+    if (!this.props.display) {
+      return (<div></div>)
     }
     const docTable = this.props.display.map((doc) => {
       return (
@@ -115,25 +141,26 @@ class Document extends React.Component {
             style={docStyle}
             expanded={this.state.expanded}
             onExpandChange={this.handleExpandChange}
+            className={AppStyles.doc}
           >
             <IconMenu
               iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
-              anchorOrigin={{horizontal: 'left', vertical: 'top'}}
-              targetOrigin={{horizontal: 'left', vertical: 'top'}}
-              iconStyle={{float: 'right'}}
+              anchorOrigin={{ horizontal: 'left', vertical: 'top'}}
+              targetOrigin={{ horizontal: 'left', vertical: 'top'}}
+              iconStyle={{ float: 'right' }}
             >
               <MenuItem primaryText="Edit"
-              value={doc._id}
-              onTouchTap={() => { this.handleEdit(doc); }} />
+                value={doc._id}
+                onTouchTap={() => { this.handleEdit(doc); }} />
               <MenuItem primaryText="Delete"
-              value={doc._id}
-              onTouchTap={() => { this.handleDialog(doc._id); }}
+                value={doc._id}
+                onTouchTap={() => { this.handleDialog(doc); }}
               />
             </IconMenu>
             <CardTitle
               title={doc.title}
               subtitle={doc.owner}
-              style={{float:'right'}}
+              style={{ float:'right' }}
             />
             <CardText
               expandable={false}
@@ -142,26 +169,26 @@ class Document extends React.Component {
             </CardText>
           </Card>
           <div>
-          <Edit
-            open={this.state.edit === doc._id}
-            handleToggle={this.handleToggle}
-            handleClose={this.handleCloseEdit}
-            handleSubmit={() => {
-              const doc = {
-                id: this.state.edit,
-                title: this.state.title,
-                content: this.state.content,
-                permissions: this.state.permissions,
-              };
-              this.handleEditSubmit(doc); }}
-            handleContent={this.handleContent}
-            handleTitle={this.handleTitle}
-            doc={doc._id}
-            defaultTitle={doc.title}
-            defaultContent={doc.content}
-            title={this.state.title}
-            content={this.state.content}
-          />
+            <Edit
+              open={this.state.edit === doc._id}
+              handleToggle={this.handleToggle}
+              handleClose={this.handleCloseEdit}
+              handleSubmit={() => {
+                const doc = {
+                  id: this.state.edit,
+                  title: this.state.title,
+                  content: this.state.content,
+                  permissions: this.state.permissions,
+                };
+                this.handleEditDoc(doc); }}
+              handleContent={this.handleContent}
+              handleTitle={this.handleTitle}
+              doc={doc._id}
+              defaultTitle={doc.title}
+              defaultContent={doc.content}
+              title={this.state.title}
+              content={this.state.content}
+            />
           </div>
           <div>
             <Delete
@@ -170,6 +197,7 @@ class Document extends React.Component {
               handleDelete={this.handleDelete}
               title={doc.title}
               id={doc._id}
+              owner={doc.owner}
             />
           </div>
         </div>
@@ -177,30 +205,37 @@ class Document extends React.Component {
     });
     return (
       <div>
-        <FloatingActionButton
-          secondary={true}
-          style={style}
-          onTouchTap={this.handleOpen}
-        >
-          <ContentAdd />
-        </FloatingActionButton>
         <div>
-        <Edit
-          open={this.state.open}
-          handleToggle={this.handleToggle}
-          handleClose={this.handleClose}
-          handleSubmit={this.handleSubmit}
-          handleContent={this.handleContent}
-          handleTitle={this.handleTitle}
-          title={this.state.title}
-          content={this.state.content}
-        />
+          <RaisedButton
+            label='Add Document'
+            secondary={true}
+            style={style}
+            onTouchTap={this.handleOpen}
+          />
         </div>
-        <div>
+        <div >
+          <Edit
+            open={this.state.open}
+            handleToggle={this.handleToggle}
+            handleClose={this.handleClose}
+            handleSubmit={this.handleSubmit}
+            handleContent={this.handleContent}
+            handleTitle={this.handleTitle}
+            title={this.state.title}
+            content={this.state.content}
+          />
+        </div>
+        <div style={divStyle} className={AppStyles.docdiv}>
           {docTable}
         </div>
         <Pagination onDocumentChange={this.props.reload} />
-        </div>
+        <Snackbar
+          open={this.state.toast}
+          message={this.props.error}
+          autoHideDuration={4000}
+          onRequestClose={this.handleRequestClose}
+        />
+      </div>
     );
   }
 }
@@ -215,12 +250,15 @@ function mapStateToProps(state) {
     docInfo: state.display.docs,
     page: state.display.page,
     dashboardInfo: state.display.dashboard,
+    error: state.auth.error,
+    user: window.localStorage.getItem('username'),
+    permissions: window.localStorage.getItem('permissions'),
   };
 }
-export default connect(mapStateToProps, displayActions)(Document);
+const docActions = Object.assign({}, displayActions, { errorSet });
+export default connect(mapStateToProps, docActions)(Document);
 
 Document.propTypes = {
-  page: PropTypes.number,
   handleEditSubmit: PropTypes.func,
   deleteDoc: PropTypes.func,
   createDoc: PropTypes.func,

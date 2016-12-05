@@ -1,18 +1,12 @@
 import React, { PropTypes } from 'react';
 import { Dialog, FlatButton } from 'material-ui';
-import { Card, CardText, CardTitle, CardActions } from 'material-ui/Card';
+import { Card, CardText, CardTitle } from 'material-ui/Card';
 import { connect } from 'react-redux';
 import * as displayActions from '../../../actions/displayActions';
 import { openUserDoc } from '../../../actions/menuActions';
 
 
-const style = {
-  float: 'left',
-  marginLeft: '10%',
-  marginTop: '2%',
-};
-
-class UserDocuments extends React.Component {
+export class UserDocuments extends React.Component {
   constructor(props) {
     super(props);
     this.handleClose = this.handleClose.bind(this);

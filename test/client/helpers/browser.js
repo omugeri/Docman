@@ -14,7 +14,7 @@ Object.keys(document.defaultView).forEach((property) => {
 });
 
 global.navigator = {
-  userAgent: 'node.js'
+  userAgent: 'node.js',
 };
 
 function noop() {
@@ -24,10 +24,11 @@ function noop() {
 require.extensions['.css'] = noop;
 const documentRef = document;
 
-const m = require('module');
-const originalLoader = m._load;
+const module = require('module');
 
-m._load = function hookedLoader(request, parent, isMain) {
+const originalLoader = module._load;
+
+module._load = function hookedLoader(request, parent, isMain) {
   if (request.match(/.jpeg|.jpg|.png$/)) {
     return { uri: request };
   }

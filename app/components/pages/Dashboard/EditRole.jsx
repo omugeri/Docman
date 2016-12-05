@@ -1,13 +1,13 @@
 import React from 'react';
 import Dialog from 'material-ui/Dialog';
-import { FlatButton, TextField, Toggle } from 'material-ui';
+import { FlatButton, TextField } from 'material-ui';
 
 const editStyle = {
   textAlign: 'center',
   fontFamily: 'Bree Serif',
 };
 
-export default class Edit extends React.Component {
+export default class EditRole extends React.Component {
   render() {
     const actions = [
       <FlatButton
@@ -25,7 +25,7 @@ export default class Edit extends React.Component {
     return (
       <div >
         <Dialog
-          title="New Document"
+          title="New Role"
           actions={actions}
           modal={true}
           open={this.props.open}
@@ -40,27 +40,10 @@ export default class Edit extends React.Component {
                 defaultValue={this.props.defaultTitle}
                 onChange={this.props.handleTitle}
                 style={{ width: '80%' }}
-              /><br />
-              <br />
-              <TextField
-                multiLine={true}
-                fullWidth={true}
-                rows={2}
-                floatingLabelText="Content"
-                name="content"
-                defaultValue={this.props.defaultContent}
-                onChange={this.props.handleContent}
-                style={{ width: '80%' }}
               />
               <br />
             </form>
           </div>
-          <Toggle
-            label="make private"
-            defaultToggled={false}
-            onToggle={this.props.handleToggle}
-            labelPosition="right"
-          />
         </Dialog>
       </div>
     );

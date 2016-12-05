@@ -28,9 +28,9 @@ const documentCntrl = {
   all: (req, res) => {
     const permissions = req.token.body.permissions;
     const owner = req.token.body.sub;
-    const limit = req.body.limit || req.query.limit;
-    const page = req.body.page || req.query.page || req.headers.page;
-    const published = req.body.published || req.query.published || req.headers.published;
+    const limit = req.query.limit;
+    const page = req.query.page || req.headers.page;
+    const published = req.query.published || req.headers.published;
     let query;
 
     if (permissions === 'Admin') {
@@ -39,8 +39,9 @@ const documentCntrl = {
         const end = new Date(start.getTime() + 86400000);
 
         query = Document.find({ createdAt: { $gte: start, $lt: end } });
+      } else {
+        query = Document.find();
       }
-      query = Document.find();
     } else if (published) {
       const start = new Date(published);
       const end = new Date(start.getTime() + 86400000);
@@ -57,6 +58,9 @@ const documentCntrl = {
     Document.paginate(query.sort('-createdAt'),
     { page: parseInt(page, 10), limit: parseInt(limit, 10) })
       .then((documents) => {
+        if (!documents) {
+          return res.status(404);
+        }
         return res.status(200).json(documents);
       });
   },
