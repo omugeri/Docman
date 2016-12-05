@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { FlatButton, AppBar } from 'material-ui';
 import { logoutAction, errorSet } from '../../../actions/authActions';
 import Search from './Search.jsx';
+import Style from '../../../shared/styles/styles.css';
+
 
 
 export class TopBar extends React.Component {

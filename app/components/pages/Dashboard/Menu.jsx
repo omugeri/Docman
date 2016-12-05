@@ -19,6 +19,11 @@ const style = {
     float: 'left',
     marginLeft: '0',
   },
+  paperAlternate: {
+    float: 'left',
+    marginLeft: '0',
+    width: '100%'
+  },
   mobile: {
     display: 'none',
   },
@@ -33,7 +38,14 @@ const style = {
     height: '25%',
     padding: '10%',
     color: '#fff',
-    // display: 'flex',
+  },
+  itemAlternate: {
+    marginLeft: ' 15%',
+    marginBottom: '30%',
+    float: 'left',
+    width: '18%',
+    color: '#fff',
+    display: 'flex',
   },
 };
 
@@ -96,26 +108,26 @@ class SideMenu extends React.Component {
             )}
           </Menu>
           </Paper>
-          <Paper>
-          <Menu style={{ display: 'none' }} className={AppStyles.alternateMenu}>
-            <MenuItem
-              leftIcon={<Usersicon />}
-              onClick={this.onUserChange}
-              style={style.item}
-            />
-            <MenuItem
-              leftIcon={<Documentsicon />}
-              onClick={this.onDocumentChange}
-              style={style.item}
-            />
-            {this.props.permissions === 'Admin' && (
+          <Paper style={style.paperAlternate} className={AppStyles.alternateMenu}>
+            <Menu >
               <MenuItem
-                leftIcon={<Rolesicon />}
-                onClick={this.onRolesChange}
-                style={style.item}
+                leftIcon={<Usersicon />}
+                onClick={this.onUserChange}
+                style={style.itemAlternate}
               />
-            )}
-          </Menu>
+              <MenuItem
+                leftIcon={<Documentsicon />}
+                onClick={this.onDocumentChange}
+                style={style.itemAlternate}
+              />
+              {this.props.permissions === 'Admin' && (
+                <MenuItem
+                  leftIcon={<Rolesicon />}
+                  onClick={this.onRolesChange}
+                  style={style.itemAlternate}
+                />
+              )}
+            </Menu>
         </Paper>
         { this.props.documents ? <Documents
           display={this.props.docInfo}

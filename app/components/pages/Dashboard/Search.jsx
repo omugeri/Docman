@@ -18,27 +18,32 @@ export class Search extends React.Component {
   }
   handleSearch = (event, date) => {
     this.setState({ search: date });
-  }
-  handleSubmit = () => {
     const searchDate = (this.state.search).toISOString().replace(/T.*/g, '');
     this.props.searchQuery(searchDate);
   }
+  // handleSubmit = () => {
+  //   const searchDate = (this.state.search).toISOString().replace(/T.*/g, '');
+  //   this.props.searchQuery(searchDate);
+  // }
   render() {
     return (
-      <div style={{display: 'flex'}}>
+      <div style={{ display: 'flex' }}>
           <DatePicker
             hintText="Search by date"
             value={this.state.search}
             onChange={this.handleSearch}
-            className={Style.search}
+            className={Style.datePicker}
+            textFieldStyle={{ width: '70%' }}
+            autoOk={true}
           />
-          <FlatButton
+          {/*<FlatButton
             label="Search"
             onTouchTap={this.handleSubmit}
             labelStyle={{ color: '#fff' }}
             backgroundColor='#9C27B0'
             isKeyboardFocused={true}
-          />
+            className={Style.datePicker}
+          />*/}
           { this.props.resultsMenu ? <Documents
             display={this.props.searchInfo}
           /> : true}
