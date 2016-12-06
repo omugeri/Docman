@@ -54,10 +54,10 @@ if (isDeveloping) {
     // applies if running on production mode
   mongoose.connect(process.env.MONGOLAB_URI);
 
+  app.use(bodyParser.json());
   app.use(express.static(__dirname + '/dist'));
   router(app);
   app.get('*', function response(req, res) {
-    console.log('KITU TU');
     res.sendFile(path.join(__dirname, 'dist/index.html'));
   });
 }

@@ -11,6 +11,12 @@
    width: 100%;
    background-size: cover;
 }
+.buttonHome {
+  position: centre;
+  float: right;
+  margin-top: 3%;
+  margin-right: 5%;
+}
 
 .overlay {
    position: absolute;
@@ -48,14 +54,17 @@ p {
   margin-top: -2%;
   font-family: 'Bree Serif';
 }
-.button {
-  position: centre;
-  float: right;
-  margin-top: 3%;
-  margin-right: 5%;
-}
+
 .title{
   background: #9C27B0;
+}
+.alternateMenu {
+  display: none;
+}
+.table {
+  height: 500px;
+  overflow: scroll;
+  float: right;
 }
 .material-icons {
   font-family: 'Material Icons';
@@ -80,6 +89,55 @@ p {
 
   /* Support for IE. */
   font-feature-settings: 'liga';
+}
+@media screen and (min-width: 426px) {
+  .alternateMenu {
+    display: none;
+  }
+}
+@media screen and (max-width: 425px) {
+  .main {
+     position: relative;
+     font-family: 'Roboto', sans-serif;
+     height: 100vh;
+     width: 100%;
+     background-size: cover;
+  }
+    .menu {
+        display: none !important;
+    }
+    .alternateMenu {
+      display: flex;
+    }
+    .doc {
+      /*margin: 0 !important;*/
+      width: 80% !important;
+      float: none;
+    }
+    .docdiv {
+      height: 400px !important;
+      overflow: scroll;
+    }
+    .roles {
+      width: 90% !important;
+      height: 400px;
+      overflow: scroll;
+    }
+    .rolesButton {
+      justify-content: flex-end;
+   }
+    .roleCard {
+      width: 100%;
+    }
+    .table {
+      width: 90% !important;
+      height: 400px;
+      overflow: scroll;
+      float: right;
+    }
+    .datePicker{
+      width: 50px;
+    }
 }
 /* Rules for sizing the icon. */
 .material-icons.md-18 { font-size: 18px; }

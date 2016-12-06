@@ -4,6 +4,7 @@ import { Card, RaisedButton } from 'material-ui';
 import { Table, TableBody, TableHeader,
   TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
 import Signup from '../Authentication/Signup.jsx';
+import AppStyles from '../../../shared/styles/styles.css';
 import { selectedUser } from '../../../actions/displayActions';
 import { errorSet } from '../../../actions/authActions';
 import Documents from './UserDocuments.jsx';
@@ -13,11 +14,11 @@ const div2 = {
   float: 'left',
   marginTop: '2%',
   marginLeft: '5%',
-  height: '50%',
+  width: '70%',
 };
 const style = {
   textAlign: 'centre',
-  marginLeft: '30%',
+  marginLeft: '35%',
   marginTop: '2%',
 };
 class User extends React.Component {
@@ -46,14 +47,17 @@ class User extends React.Component {
     });
     return (
       <div>
-        <RaisedButton
-          label="Add User"
-          secondary={true}
-          style={style}
-          onTouchTap={this.handleRegister}
-        />
-        <div style={{ width: '70%', float: 'left' }}>
-          <Card style={div2}>
+        <div>
+          <div className={AppStyles.button}>
+          <RaisedButton
+            label="Add User"
+            secondary={true}
+            style={style}
+            onTouchTap={this.handleRegister}
+
+          />
+          </div>
+          <Card style={div2} className={AppStyles.table}>
             <Table
               onRowSelection={(row) => {
                 this.props.selectedUser(row);

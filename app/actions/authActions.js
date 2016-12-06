@@ -64,6 +64,7 @@ export function create(user) {
       lastName: user.lastName,
       email: user.email,
       password: user.password,
+      role: user.role,
     })
     .then((res) => {
       if (res.status === 200) {

@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { FlatButton, AppBar } from 'material-ui';
 import { logoutAction, errorSet } from '../../../actions/authActions';
 import Search from './Search.jsx';
+import Style from '../../../shared/styles/styles.css';
+
 
 
 export class TopBar extends React.Component {
@@ -19,7 +21,7 @@ export class TopBar extends React.Component {
   };
   render() {
     return (
-      <AppBar
+      <AppBar style={{width: '100vw'}}
         title="DOCMAN"
         iconElementLeft={<Search />}
         iconElementRight={<FlatButton
