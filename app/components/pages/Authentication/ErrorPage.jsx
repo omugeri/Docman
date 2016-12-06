@@ -32,6 +32,7 @@ export default class ErrorPage extends React.Component {
             label="Back"
             onTouchTap={this.goBack}
             secondary={true}
+            style={{ marginTop: '2%' }}
           />
         </div>
       </div>
